@@ -1530,6 +1530,13 @@ function App({allQ}){
           )
         )
       ),
+      pass&&!isDrill&&React.createElement('div',{style:{background:'linear-gradient(135deg,rgba(76,175,130,0.08),rgba(245,200,66,0.08))',border:'1.5px solid rgba(76,175,130,0.35)',borderRadius:14,padding:'1.1rem 1.3rem',marginBottom:'1.25rem',textAlign:'center'}},
+        React.createElement('div',{style:{fontSize:22,marginBottom:6}},'💍🎉💙'),
+        React.createElement('p',{style:{fontSize:15,fontWeight:700,color:'#f0f4f7',margin:'0 0 8px',lineHeight:1.4}},'Congratulations, my Love! 🎊'),
+        React.createElement('p',{style:{fontSize:13,color:'#c8dbe8',margin:0,lineHeight:1.65}},
+          'Congratulations my Love 🥹💍 I am so proud of you baby. I knew you could do it. I can\'t wait to marry you and be by the lake in Arkansas. You\'re truly amazing baby and you make me the luckiest man alive. 💙🎉'
+        )
+      ),
       React.createElement('div',{className:'stat-grid',style:{marginBottom:'1.25rem'}},
         [{l:'Correct',v:correct,c:pass?'#4caf82':undefined},{l:'Wrong',v:total-correct-unanswered,c:total-correct-unanswered>0?'#e05252':undefined},{l:'Skipped',v:unanswered},{l:'Score',v:`${scaledScore}/900`,c:pass?'#4caf82':'#e05252'}]
         .map(s=>React.createElement('div',{key:s.l,className:'stat-card'},
