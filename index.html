@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Security+ SY0-701 study app — built with love by Russ for Paige.">
+<meta name="theme-color" content="#0d1b2a">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
 <title>Security+ SY0-701 — Study with Paige</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -478,15 +481,27 @@ function isAuthed(){return sessionStorage.getItem(AK)==='1';}
 function doLogout(){sessionStorage.clear();localStorage.removeItem('sx701_progress');location.reload();}
 
 document.getElementById('auth-submit').addEventListener('click',async()=>{
-  const u=document.getElementById('auth-user').value.trim();
-  const p=document.getElementById('auth-pass').value;
-  const [uh,ph]=await Promise.all([sha256(SALT+u),sha256(SALT+p)]);
-  if(uh===UH&&ph===PH){
-    sessionStorage.setItem(AK,'1');
-    document.getElementById('auth-screen').style.display='none';
-    document.getElementById('logout-btn').style.display='';
-    initApp();
-  }else{document.getElementById('auth-err').textContent='Invalid username or password.';}
+  try {
+    const u=document.getElementById('auth-user').value.trim();
+    const p=document.getElementById('auth-pass').value;
+
+    if (!window.crypto || !window.crypto.subtle) {
+      throw new Error("Secure context required. Ensure GitHub Pages 'Enforce HTTPS' is checked.");
+    }
+
+    const [uh,ph]=await Promise.all([sha256(SALT+u),sha256(SALT+p)]);
+    if(uh===UH&&ph===PH){
+      sessionStorage.setItem(AK,'1');
+      document.getElementById('auth-screen').style.display='none';
+      document.getElementById('logout-btn').style.display='';
+      initApp();
+    } else {
+      document.getElementById('auth-err').textContent='Invalid username or password.';
+    }
+  } catch(err) {
+    document.getElementById('auth-err').textContent = err.message || "An error occurred during login.";
+    console.error("Auth Error:", err);
+  }
 });
 ['auth-pass','auth-user'].forEach((id,i)=>document.getElementById(id).addEventListener('keydown',e=>{
   if(e.key==='Enter')i===0?document.getElementById('auth-submit').click():document.getElementById('auth-pass').focus();
@@ -1713,7 +1728,7 @@ function App({allQ}){
       }
     }else{
       awardXP(XP_PER.correct*correct);
-      if(pct>=83)awardBadge('pass_75');
+      if(pct>=75)awardBadge('pass_75');
       if(pct>=83){awardBadge('pass_83');awardXP(XP_PER.pass_exam);}
       if(pct>=90){awardBadge('pass_90');awardXP(XP_PER.score_90);}
       if(pct===100){awardBadge('perfect');awardXP(XP_PER.score_perfect);}
@@ -1772,7 +1787,7 @@ function App({allQ}){
     ),
     React.createElement(XPBar,{progress}),
     mode==='marathon'&&React.createElement('div',{className:'marathon-bar-wrap'},
-      React.createElement('div',{className:'marathon-label'},progress.marathonIdx>0?`📍 Q${progress.marathonIdx+1} of ${allQ.length}`:'🏃 All 608 questions in order'),
+      React.createElement('div',{className:'marathon-label'},progress.marathonIdx>0?`📍 Q${progress.marathonIdx+1} of ${allQ.length}`:`🏃 All ${allQ.length} questions in order`),
       React.createElement('div',{className:'marathon-bar-track'},
         React.createElement('div',{className:'marathon-bar-fill',style:{width:`${progress.marathonIdx>0?Math.min(100,progress.marathonIdx/allQ.length*100):0}%`}})
       ),
@@ -1794,7 +1809,7 @@ function App({allQ}){
       [{v:'exam',icon:'⏱',t:'Exam Mode',d:'90 min · 90 questions · 7 PBQs first · No feedback until end'},
        {v:'practice',icon:'📖',t:'Practice Mode',d:'Instant reveal after each answer · No timer · Full explanations'},
        {v:'study',icon:'🎯',t:'Study by Domain',d:'Filter by domain · Instant feedback · Targeted prep'},
-       {v:'marathon',icon:'🏃',t:'Marathon Mode',d:'All 608 questions in order · Saves your spot · Great for full review'},
+       {v:'marathon',icon:'🏃',t:'Marathon Mode',d:`All ${allQ.length} questions in order · Saves your spot · Great for full review`},
        {v:'pbq',icon:'🖥️',t:'PBQ Only',d:'All 7 performance-based questions · HOTSPOT + SIMULATION · Real exam scenarios'},
       ].map(m=>React.createElement('div',{key:m.v,className:`mode-card${mode===m.v?' sel':''}`,onClick:()=>setMode(m.v)},
         React.createElement('div',{className:'mode-icon'},m.icon),
@@ -1987,26 +2002,52 @@ function App({allQ}){
 let appRoot=null;
 
 function launchApp(data){
-  const q=Array.isArray(data)?data:data.questions||[];
-  if(!q||!q.length){showErr('No questions found. Load secplus_701_enriched.json.');return;}
-  try{sessionStorage.setItem('sx701_q',JSON.stringify(data));}catch(e){}
-  document.getElementById('load-overlay').style.display='none';
-  document.getElementById('root').style.display='block';
-  if(!appRoot)appRoot=ReactDOM.createRoot(document.getElementById('root'));
-  appRoot.render(React.createElement(App,{allQ:q}));
+  try {
+    const q=Array.isArray(data)?data:data.questions||[];
+    if(!q||!q.length){showErr('JSON loaded, but no questions were found inside it.');return;}
+
+    try{sessionStorage.setItem('sx701_q',JSON.stringify(data));}catch(e){}
+
+    document.getElementById('load-overlay').style.display='none';
+    document.getElementById('root').style.display='block';
+
+    if(!appRoot)appRoot=ReactDOM.createRoot(document.getElementById('root'));
+    appRoot.render(React.createElement(App,{allQ:q}));
+
+  } catch(err) {
+    document.getElementById('root').style.display='block';
+    document.getElementById('root').innerHTML = `
+      <div style="padding: 2rem; color: #e05252; text-align: center; background: var(--navy2); border-radius: var(--radl); margin-top: 2rem; border: 1px solid #e05252;">
+        <h3>Application Render Error</h3>
+        <p style="font-family: monospace;">${err.message}</p>
+      </div>`;
+    console.error("React Render Error:", err);
+  }
 }
 
 function showErr(msg){const el=document.getElementById('load-err');if(el){el.textContent=msg;el.style.display='block';}}
 
 function initApp(){
-  // Try same-directory auto-load first (for GitHub Pages deployment)
   fetch('./secplus_701_enriched.json')
-    .then(r=>{if(!r.ok)throw new Error('not found');return r.json();})
+    .then(r=>{
+      if(!r.ok) throw new Error(`HTTP ${r.status}: JSON not found. Check exact case-sensitivity of the filename!`);
+      return r.json();
+    })
     .then(data=>launchApp(data))
-    .catch(()=>{
-      // Fall back to sessionStorage cache
-      try{const c=sessionStorage.getItem('sx701_q');if(c){launchApp(JSON.parse(c));return;}}catch(e){}
-      // Show file picker
+    .catch((err)=>{
+      console.error("Initialization Error:", err);
+      showErr(`Network Error: ${err.message}`);
+
+      try{
+        const c=sessionStorage.getItem('sx701_q');
+        if(c){
+          launchApp(JSON.parse(c));
+          return;
+        }
+      }catch(e){
+        console.error("Session storage fallback failed:", e);
+      }
+
       document.getElementById('load-overlay').style.display='flex';
     });
 }
