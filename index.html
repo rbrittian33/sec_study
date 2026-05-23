@@ -977,7 +977,10 @@ function calcResults(questions,answers){
     const ok=isPBQ(q)?pbqCorrect(q,answers[q.id]):mcCorrect(q,answers[q.id]);
     if(ok)correct++;else byD[domain].wrong.push(q);
   });
-  return{total,correct,pct:total>0?correct/total*100:0,byD};
+  const pct=total>0?correct/total*100:0;
+  // CompTIA scaled score: 100–900, pass at 750 (= 83.3% correct)
+  const scaledScore=total>0?Math.max(100,Math.round((correct/total)*900)):100;
+  return{total,correct,pct,scaledScore,byD};
 }
 
 function analyzeWeakConcepts(wrongQs){
@@ -1428,15 +1431,16 @@ function MCQuestion({q,answer,onAnswer,revealed}){
 /* ══════════════════════════════════════════════════════════
    SCORE RING
 ══════════════════════════════════════════════════════════ */
-function ScoreRing({pct}){
-  const r=48,c=2*Math.PI*r,pass=pct>=83;
-  const col=pct>=90?'#f5c842':pct>=83?'#4caf82':pct>=60?'#e09b34':'#e05252';
+function ScoreRing({pct,scaledScore}){
+  const r=48,c=2*Math.PI*r,pass=scaledScore>=750;
+  const col=scaledScore>=810?'#f5c842':scaledScore>=750?'#4caf82':scaledScore>=450?'#e09b34':'#e05252';
   return React.createElement('svg',{width:130,height:130,viewBox:'0 0 130 130'},
     React.createElement('circle',{cx:65,cy:65,r,fill:'none',stroke:'#1b2d42',strokeWidth:11}),
     React.createElement('circle',{cx:65,cy:65,r,fill:'none',stroke:col,strokeWidth:11,
       strokeDasharray:`${c*(pct/100)} ${c*(1-pct/100)}`,strokeLinecap:'round',transform:'rotate(-90 65 65)'}),
-    React.createElement('text',{x:65,y:61,textAnchor:'middle',fontSize:22,fontWeight:700,fill:'#f0f4f7',fontFamily:'IBM Plex Mono,monospace'},`${Math.round(pct)}%`),
-    React.createElement('text',{x:65,y:78,textAnchor:'middle',fontSize:12,fill:col,fontWeight:600,fontFamily:'Sora,sans-serif'},pass?'PASS ✓':'FAIL')
+    React.createElement('text',{x:65,y:56,textAnchor:'middle',fontSize:22,fontWeight:700,fill:'#f0f4f7',fontFamily:'IBM Plex Mono,monospace'},scaledScore),
+    React.createElement('text',{x:65,y:69,textAnchor:'middle',fontSize:10,fill:'#8fa3b1',fontFamily:'IBM Plex Mono,monospace'},'/900'),
+    React.createElement('text',{x:65,y:82,textAnchor:'middle',fontSize:11,fill:col,fontWeight:600,fontFamily:'Sora,sans-serif'},pass?'PASS ✓':'FAIL')
   );
 }
 
@@ -1520,11 +1524,11 @@ function ReviewPanel({questions,answers,flags,onDrill}){
     if(tab==='flagged')return flags.has(id);if(tab==='pbq')return pb;
     return true;
   });
-  const{pct}=calcResults(questions,answers);
+  const{scaledScore}=calcResults(questions,answers);
   return React.createElement('div',null,
     React.createElement('div',{style:{display:'flex',alignItems:'center',gap:8,marginBottom:'0.75rem',flexWrap:'wrap'}},
       allWrong.length>0&&React.createElement('button',{className:'btn btn-sm btn-gold',onClick:()=>onDrill(null)},'🎯 Drill missed'),
-      React.createElement('span',{className:`badge ${pct>=83?'badge-green':'badge-red'}`,style:{marginLeft:'auto'}},`${Math.round(pct)}%`)
+      React.createElement('span',{className:`badge ${scaledScore>=750?'badge-green':'badge-red'}`,style:{marginLeft:'auto'}},`${scaledScore}/900`)
     ),
     React.createElement('div',{className:'tabs',style:{marginBottom:'1rem'}},
       [{v:'wrong',l:`Wrong (${allWrong.length})`},{v:'correct',l:'Correct'},{v:'all',l:'All'},{v:'flagged',l:'Flagged'},{v:'pbq',l:'PBQs'}].map(({v,l})=>
@@ -1641,7 +1645,7 @@ function App({allQ}){
   const finishExam=React.useCallback((qs,ans)=>{
     clearInterval(timerRef.current);
     const qToUse=qs||questions;const aToUse=ans||answers;
-    const{total,correct,pct,byD}=calcResults(qToUse,aToUse);
+    const{total,correct,pct,scaledScore,byD}=calcResults(qToUse,aToUse);
     const newSessions=progress.sessions+1;
     const newBest=Math.max(progress.bestScore,pct);
 
@@ -1672,18 +1676,19 @@ function App({allQ}){
       }
     }else{
       awardXP(XP_PER.correct*correct);
-      if(pct>=75)awardBadge('pass_75');
-      if(pct>=83){awardBadge('pass_83');awardXP(XP_PER.pass_exam);}
-      if(pct>=90){awardBadge('pass_90');awardXP(XP_PER.score_90);}
-      if(pct===100){awardBadge('perfect');awardXP(XP_PER.score_perfect);}
+      // Badge thresholds use scaled score to match CompTIA 100–900 scale
+      if(scaledScore>=675)awardBadge('pass_75');           // 75% = 675
+      if(scaledScore>=750){awardBadge('pass_83');awardXP(XP_PER.pass_exam);}  // pass = 750
+      if(scaledScore>=810){awardBadge('pass_90');awardXP(XP_PER.score_90);}   // 90% = 810
+      if(scaledScore===900){awardBadge('perfect');awardXP(XP_PER.score_perfect);}
 
       // Show Paige celebration
       setTimeout(()=>{
-        let msgKey=pct===100?'perfect':pct>=90?'score_90':pct>=83?'pass':null;
+        let msgKey=scaledScore===900?'perfect':scaledScore>=810?'score_90':scaledScore>=750?'pass':null;
         if(msgKey){
           const m=getPaigeMsg(msgKey);
-          showCelebration(m.emoji,m.title,m.msg,pct>=83);
-        }else if(pct<60){
+          showCelebration(m.emoji,m.title,m.msg,scaledScore>=750);
+        }else if(scaledScore<540){  // below 60%
           const m=getPaigeMsg('fail_encouragement');
           showCelebration(m.emoji,m.title,m.msg,false);
         }
@@ -1799,7 +1804,7 @@ function App({allQ}){
     progress.sessions>0&&React.createElement('div',{className:'stat-grid',style:{marginBottom:'1.25rem'}},
       [
         {l:'Sessions',v:progress.sessions},
-        {l:'Best Score',v:`${Math.round(progress.bestScore)}%`},
+        {l:'Best Score',v:progress.bestScore>0?`${Math.round(progress.bestScore*9)}/900`:'—'},
         {l:'Total XP',v:progress.xp},
         {l:'Badges',v:progress.badges.length},
       ].map(s=>React.createElement('div',{key:s.l,className:'stat-card'},
@@ -1905,8 +1910,8 @@ function App({allQ}){
      RESULTS SCREEN
   ══════════════════════════ */
   if(screen==='results'){
-    const{total,correct,pct,byD}=calcResults(questions,answers);
-    const unanswered=total-ansCount;const pass=pct>=83;
+    const{total,correct,pct,scaledScore,byD}=calcResults(questions,answers);
+    const unanswered=total-ansCount;const pass=scaledScore>=750;
     const allWrongQs=questions.filter(q=>isPBQ(q)?!pbqCorrect(q,answers[q.id]):!mcCorrect(q,answers[q.id]));
     const analysis=analyzeWeakConcepts(allWrongQs);
     const drillImproved=isDrill&&prevAnswers?{correct,total}:null;
@@ -1919,7 +1924,7 @@ function App({allQ}){
         )
       ),
       React.createElement('div',{className:'score-ring-wrap'},
-        React.createElement(ScoreRing,{pct}),
+        React.createElement(ScoreRing,{pct,scaledScore}),
         React.createElement('div',null,
           React.createElement('h2',null,isDrill?'Drill complete!':pass?'You passed! 🎉':'Keep going, Paige!'),
           React.createElement('p',{style:{fontSize:13,color:'#8fa3b1',marginTop:4}},
@@ -1929,7 +1934,7 @@ function App({allQ}){
         )
       ),
       React.createElement('div',{className:'stat-grid',style:{marginBottom:'1.25rem'}},
-        [{l:'Correct',v:correct,c:pass?'#4caf82':undefined},{l:'Wrong',v:total-correct-unanswered,c:total-correct-unanswered>0?'#e05252':undefined},{l:'Skipped',v:unanswered},{l:'Score',v:`${Math.round(pct)}%`,c:pct>=83?'#4caf82':'#e05252'}]
+        [{l:'Correct',v:correct,c:pass?'#4caf82':undefined},{l:'Wrong',v:total-correct-unanswered,c:total-correct-unanswered>0?'#e05252':undefined},{l:'Skipped',v:unanswered},{l:'Score',v:`${scaledScore}/900`,c:pass?'#4caf82':'#e05252'}]
         .map(s=>React.createElement('div',{key:s.l,className:'stat-card'},
           React.createElement('div',{className:'stat-num',style:s.c?{background:'none',WebkitTextFillColor:s.c,color:s.c}:{}},s.v),
           React.createElement('div',{className:'stat-lbl'},s.l)
