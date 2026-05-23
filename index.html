@@ -1,0 +1,2039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security+ SY0-701 — Study with Paige</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── RESET ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+/* ── PALETTE ──
+   Navy:  #0d1b2a  #1b2d42  #243447  #2e4057
+   Rose:  #e8637a  #f07c8e  #f5a0ae  #fce4e8
+   Coral: #f4845f  #f9a07d  #fbbda5
+   Gold:  #f5c842  #f7d468  #fae8a0
+   Teal:  #2fb8ac  #5acec4  #a0e6e2
+   Neutral: #8fa3b1  #c4d0d8  #e8edf0  #f4f7f9
+*/
+:root{
+  --navy:     #0d1b2a;
+  --navy2:    #1b2d42;
+  --navy3:    #243447;
+  --navy4:    #2e4057;
+  --navy5:    #3a5068;
+  --rose:     #e8637a;
+  --rose2:    #f07c8e;
+  --rose3:    #f5a0ae;
+  --rose4:    #fce4e8;
+  --coral:    #f4845f;
+  --coral2:   #f9a07d;
+  --gold:     #f5c842;
+  --gold2:    #f7d468;
+  --teal:     #2fb8ac;
+  --teal2:    #5acec4;
+  --grn:      #4caf82;
+  --grn2:     #72c99f;
+  --red:      #e05252;
+  --amb:      #e09b34;
+  --t1:       #f0f4f7;
+  --t2:       #8fa3b1;
+  --t3:       #4a6070;
+  --bdr:      rgba(255,255,255,0.07);
+  --bdr2:     rgba(255,255,255,0.13);
+  --bdr3:     rgba(255,255,255,0.22);
+  --rad:      8px;
+  --radl:     12px;
+  --radx:     16px;
+  --shadow:   0 4px 24px rgba(0,0,0,0.3);
+  --shadowsm: 0 2px 8px rgba(0,0,0,0.2);
+}
+body{
+  font-family:'Sora',system-ui,sans-serif;
+  background:var(--navy);
+  color:var(--t1);
+  min-height:100vh;
+  font-size:15px;
+  line-height:1.6;
+}
+#root{max-width:840px;margin:0 auto;padding:1.5rem 1.25rem 5rem}
+
+/* ── ANIMATED BG GRADIENT ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:-1;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 10%, rgba(232,99,122,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 90%, rgba(47,184,172,0.06) 0%, transparent 60%),
+    var(--navy);
+  pointer-events:none;
+}
+
+/* ── TYPOGRAPHY ── */
+h1{font-size:24px;font-weight:600;letter-spacing:-0.4px}
+h2{font-size:18px;font-weight:600;letter-spacing:-0.2px}
+h3{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--t3)}
+code{font-family:'IBM Plex Mono',monospace;font-size:0.88em;background:var(--navy3);padding:1px 5px;border-radius:4px;color:var(--rose3)}
+
+/* ── BUTTONS ── */
+button{font-family:'Sora',inherit;cursor:pointer;transition:all 0.18s}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--rad);border:1px solid var(--bdr2);background:var(--navy3);color:var(--t1);font-size:13px;font-weight:500}
+.btn:hover{background:var(--navy4);border-color:var(--bdr3);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn:disabled{opacity:0.35;cursor:not-allowed;transform:none}
+.btn-rose{background:linear-gradient(135deg,var(--rose),var(--coral));border:none;color:#fff;font-weight:600}
+.btn-rose:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn-teal{background:linear-gradient(135deg,var(--teal),var(--teal2));border:none;color:#fff;font-weight:600}
+.btn-teal:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--coral2));border:none;color:var(--navy);font-weight:600}
+.btn-gold:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-xs{padding:4px 8px;font-size:11px}
+.btn-ghost{background:transparent;border-color:transparent;color:var(--t2)}
+.btn-ghost:hover{background:var(--navy3);color:var(--t1);border-color:var(--bdr2);transform:none}
+.btn-danger{border-color:rgba(224,82,82,0.4);color:var(--red);background:transparent}
+.btn-danger:hover{background:rgba(224,82,82,0.1)}
+
+/* ── CARDS ── */
+.card{background:var(--navy2);border:1px solid var(--bdr);border-radius:var(--radl);padding:1.25rem}
+.card-glass{background:rgba(27,45,66,0.7);backdrop-filter:blur(12px);border:1px solid var(--bdr2);border-radius:var(--radl);padding:1.25rem}
+.card-header{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--navy3);border-bottom:1px solid var(--bdr);border-radius:var(--radl) var(--radl) 0 0}
+
+/* ── BADGES ── */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:0.02em}
+.badge-rose  {background:rgba(232,99,122,0.15);border:1px solid rgba(232,99,122,0.4);color:var(--rose2)}
+.badge-teal  {background:rgba(47,184,172,0.15);border:1px solid rgba(47,184,172,0.4);color:var(--teal2)}
+.badge-gold  {background:rgba(245,200,66,0.15);border:1px solid rgba(245,200,66,0.4);color:var(--gold)}
+.badge-green {background:rgba(76,175,130,0.15);border:1px solid rgba(76,175,130,0.4);color:var(--grn2)}
+.badge-red   {background:rgba(224,82,82,0.15);border:1px solid rgba(224,82,82,0.4);color:var(--red)}
+.badge-gray  {background:var(--navy3);border:1px solid var(--bdr2);color:var(--t2)}
+.badge-navy  {background:rgba(46,64,87,0.6);border:1px solid var(--bdr2);color:var(--t2)}
+
+/* ── PROGRESS ── */
+.prog{height:4px;background:var(--navy4);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;border-radius:2px;transition:width 0.4s ease;background:linear-gradient(90deg,var(--rose),var(--coral))}
+
+/* ── XP BAR ── */
+.xp-bar-wrap{background:var(--navy3);border:1px solid var(--bdr);border-radius:var(--radl);padding:12px 16px;margin-bottom:1rem}
+.xp-bar-track{height:8px;background:var(--navy4);border-radius:4px;overflow:hidden;margin:6px 0 4px}
+.xp-bar-fill{height:100%;border-radius:4px;transition:width 0.6s cubic-bezier(0.34,1.56,0.64,1);background:linear-gradient(90deg,var(--gold),var(--coral2),var(--rose))}
+.xp-label{display:flex;align-items:center;justify-content:space-between;font-size:12px}
+.xp-level{font-weight:600;color:var(--gold);font-size:13px}
+.xp-pts{color:var(--t3);font-family:'IBM Plex Mono',monospace;font-size:11px}
+
+/* ── STREAK ── */
+.streak-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;background:linear-gradient(135deg,rgba(245,200,66,0.2),rgba(244,132,95,0.2));border:1px solid rgba(245,200,66,0.4);color:var(--gold)}
+.streak-badge.hot{animation:streakPulse 1.2s ease-in-out infinite}
+@keyframes streakPulse{0%,100%{box-shadow:0 0 0 0 rgba(245,200,66,0.4)}50%{box-shadow:0 0 12px 3px rgba(245,200,66,0.3)}}
+
+/* ── XP POPUP ── */
+.xp-popup{position:fixed;pointer-events:none;z-index:9000;font-family:'Sora',sans-serif;font-weight:700;font-size:16px;color:var(--gold);text-shadow:0 2px 8px rgba(0,0,0,0.5);animation:xpFloat 1.4s ease-out forwards}
+@keyframes xpFloat{0%{opacity:1;transform:translateY(0) scale(1)}60%{opacity:1;transform:translateY(-48px) scale(1.1)}100%{opacity:0;transform:translateY(-80px) scale(0.9)}}
+
+/* ── TABS ── */
+.tabs{display:flex;gap:2px;background:var(--navy3);padding:3px;border-radius:var(--rad)}
+.tab{flex:1;padding:7px 10px;text-align:center;font-size:13px;border-radius:6px;cursor:pointer;color:var(--t2);border:none;background:transparent;font-family:'Sora',inherit;transition:all 0.15s;font-weight:400}
+.tab:hover{color:var(--t1)}
+.tab.active{background:var(--navy4);color:var(--t1);font-weight:600;border:1px solid var(--bdr2)}
+
+/* ── MODE CARDS ── */
+.mode-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:1rem 0}
+.mode-card{padding:16px;border:1px solid var(--bdr);border-radius:var(--radl);cursor:pointer;transition:all 0.2s;background:var(--navy2);position:relative;overflow:hidden}
+.mode-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.2s;background:linear-gradient(135deg,rgba(232,99,122,0.06),rgba(47,184,172,0.06))}
+.mode-card:hover{border-color:var(--bdr2);transform:translateY(-2px);box-shadow:var(--shadowsm)}
+.mode-card:hover::before{opacity:1}
+.mode-card.sel{border-color:var(--rose);background:rgba(232,99,122,0.08);box-shadow:0 0 0 1px rgba(232,99,122,0.2)}
+.mode-icon{font-size:22px;margin-bottom:10px}
+.mode-title{font-size:13px;font-weight:600;margin-bottom:5px;color:var(--t1)}
+.mode-desc{font-size:11px;color:var(--t2);line-height:1.55}
+
+/* ── DOMAIN CHIPS ── */
+.chip-row{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:5px 12px;border-radius:20px;border:1px solid var(--bdr2);font-size:12px;font-weight:500;cursor:pointer;color:var(--t2);background:var(--navy3);transition:all 0.15s}
+.chip:hover{border-color:var(--rose3);color:var(--t1)}
+.chip.active{background:rgba(232,99,122,0.15);border-color:var(--rose);color:var(--rose2)}
+
+/* ── QUESTION ── */
+.domain-tag{font-size:10px;color:var(--t3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;display:block;font-weight:600}
+.q-text{font-size:15px;line-height:1.75;color:var(--t1);margin-bottom:1.1rem}
+.multi-hint{font-size:12px;color:var(--amb);margin-bottom:10px;font-style:italic;font-weight:500}
+
+/* ── OPTIONS ── */
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:flex-start;gap:12px;padding:11px 16px;border-radius:var(--rad);border:1px solid var(--bdr);background:var(--navy2);color:var(--t1);font-size:14px;cursor:pointer;transition:all 0.15s;text-align:left;font-family:'Sora',inherit;line-height:1.55}
+.opt:hover:not(:disabled){background:var(--navy3);border-color:var(--bdr2);transform:translateX(2px)}
+.opt.sel{border-color:var(--rose3);background:rgba(232,99,122,0.08)}
+.opt.correct{background:rgba(76,175,130,0.12);border-color:rgba(76,175,130,0.5);color:var(--grn2)}
+.opt.wrong{background:rgba(224,82,82,0.1);border-color:rgba(224,82,82,0.4);color:var(--red)}
+.opt-key{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;min-width:20px;opacity:0.45;margin-top:1px;flex-shrink:0}
+.expl{margin-top:14px;padding:13px 16px;background:var(--navy3);border-left:3px solid var(--rose);border-radius:0 var(--rad) var(--rad) 0;font-size:13px;color:var(--t2);line-height:1.65}
+.expl strong{color:var(--t1);font-weight:600}
+
+/* ── TIMER / FLAG / NAV ── */
+.timer{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;color:var(--t2)}
+.timer.warn{color:var(--red);animation:timerPulse 1s ease-in-out infinite}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:0.6}}
+.flag-btn{background:none;border:none;color:var(--t3);font-size:17px;cursor:pointer;padding:4px;transition:all 0.15s}
+.flag-btn:hover,.flag-btn.flagged{color:var(--gold)}
+.nav-row{display:flex;align-items:center;justify-content:space-between;margin-top:1.25rem;gap:8px;flex-wrap:wrap}
+.q-grid{display:flex;flex-wrap:wrap;gap:4px;margin-top:1rem;max-height:120px;overflow-y:auto;padding:2px}
+.q-dot{width:26px;height:26px;border-radius:5px;border:1px solid var(--bdr);font-size:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--t3);background:var(--navy3);transition:all 0.12s;font-weight:600}
+.q-dot:hover{border-color:var(--bdr2);color:var(--t2)}
+.q-dot.answered{background:var(--navy4);color:var(--t2);border-color:var(--bdr2)}
+.q-dot.current{background:linear-gradient(135deg,var(--rose),var(--coral));color:#fff;border-color:transparent}
+.q-dot.flagged{border-color:rgba(245,200,66,0.5);color:var(--gold)}
+.q-dot.pbq{border-color:rgba(47,184,172,0.5);color:var(--teal2);font-size:8px}
+.q-dot.correct-d{background:rgba(76,175,130,0.2);border-color:rgba(76,175,130,0.4);color:var(--grn2)}
+.q-dot.wrong-d{background:rgba(224,82,82,0.15);border-color:rgba(224,82,82,0.35);color:var(--red)}
+
+/* ── STATS ── */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.stat-card{background:var(--navy3);border-radius:var(--rad);padding:14px;text-align:center;border:1px solid var(--bdr)}
+.stat-num{font-size:26px;font-weight:600;font-family:'IBM Plex Mono',monospace;background:linear-gradient(135deg,var(--rose2),var(--coral2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-lbl{font-size:11px;color:var(--t2);margin-top:4px;font-weight:500}
+
+/* ── DOMAIN BARS ── */
+.dbar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.dbar-lbl{font-size:12px;color:var(--t2);min-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+.dbar-track{flex:1;height:7px;background:var(--navy4);border-radius:4px;overflow:hidden}
+.dbar-fill{height:100%;border-radius:4px;transition:width 0.7s cubic-bezier(0.34,1.56,0.64,1)}
+.dbar-pct{font-size:12px;font-weight:600;font-family:'IBM Plex Mono',monospace;min-width:36px;text-align:right}
+.dbar-count{font-size:11px;color:var(--t3);min-width:40px;text-align:right}
+
+/* ── WEAK AREAS ── */
+.weak-domain{border:1px solid var(--bdr);border-radius:var(--radl);margin-bottom:12px;overflow:hidden}
+.weak-domain-hdr{display:flex;align-items:center;gap:10px;padding:11px 15px;background:var(--navy3);border-bottom:1px solid var(--bdr);cursor:pointer;user-select:none;transition:background 0.15s}
+.weak-domain-hdr:hover{background:var(--navy4)}
+.weak-domain-body{padding:14px 16px}
+.concept-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--bdr)}
+.concept-row:last-child{border-bottom:none}
+.concept-name{font-size:12px;color:var(--t1);min-width:170px;font-weight:500}
+.concept-bar-track{flex:1;height:5px;background:var(--navy4);border-radius:3px;overflow:hidden}
+.concept-bar-fill{height:100%;border-radius:3px}
+.concept-wrong{font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--red);min-width:28px;text-align:right;font-weight:600}
+
+/* ── DRILL ── */
+.drill-header{background:linear-gradient(135deg,rgba(245,200,66,0.08),rgba(244,132,95,0.08));border:1px solid rgba(245,200,66,0.25);border-radius:var(--radl);padding:13px 16px;margin-bottom:1rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* ── REVIEW ── */
+.review-item{border:1px solid var(--bdr);border-radius:var(--radl);padding:1rem;margin-bottom:10px;transition:border-color 0.15s}
+.review-item.correct{border-color:rgba(76,175,130,0.4)}
+.review-item.wrong{border-color:rgba(224,82,82,0.35)}
+.review-item.skipped{border-color:var(--bdr2)}
+
+/* ── PBQ ── */
+.pbq-wrap{border:1px solid var(--bdr2);border-radius:var(--radl);overflow:hidden}
+.pbq-body{padding:18px}
+.diagram-hint{font-size:12px;color:var(--t2);font-style:italic;margin-bottom:10px;font-weight:500}
+.log-table{width:100%;border-collapse:collapse;font-size:12px;font-family:'IBM Plex Mono',monospace}
+.log-table th{padding:8px 10px;text-align:left;font-size:11px;color:var(--t2);font-weight:600;border-bottom:1px solid var(--bdr);background:var(--navy3);font-family:'Sora',sans-serif;letter-spacing:0.04em;text-transform:uppercase}
+.log-table td{padding:7px 10px;border-bottom:1px solid var(--bdr);cursor:pointer;transition:background 0.12s}
+.log-table tr:hover td{background:var(--navy3)}
+.log-table tr.row-sel td{background:var(--navy4)}
+.log-table tr.row-ok td{background:rgba(76,175,130,0.1);color:var(--grn2)}
+.log-table tr.row-bad td{background:rgba(224,82,82,0.1);color:var(--red)}
+.acl-grid-hdr{display:grid;grid-template-columns:68px 70px 1fr 1fr 58px 48px 80px;gap:5px;margin-bottom:5px}
+.acl-head{font-size:10px;color:var(--t3);font-weight:600;padding:0 4px;text-transform:uppercase;letter-spacing:0.06em}
+.acl-row-wrap{display:grid;grid-template-columns:68px 70px 1fr 1fr 58px 48px 80px;gap:5px;align-items:center;margin-bottom:5px;padding:6px;border-radius:var(--rad);border:1px solid var(--bdr);background:var(--navy3)}
+.acl-row-wrap.row-ok{border-color:rgba(76,175,130,0.4);background:rgba(76,175,130,0.08)}
+.acl-row-wrap.row-bad{border-color:rgba(224,82,82,0.35);background:rgba(224,82,82,0.08)}
+.acl-sel,.acl-inp{width:100%;padding:5px 7px;border-radius:5px;border:1px solid var(--bdr2);background:var(--navy2);color:var(--t1);font-size:11px;font-family:'IBM Plex Mono',monospace}
+.acl-sel:focus,.acl-inp:focus{outline:none;border-color:var(--rose)}
+.rbac-table{width:100%;border-collapse:collapse;font-size:12px}
+.rbac-table th{padding:8px 10px;background:var(--navy3);border-bottom:1px solid var(--bdr);font-size:11px;font-weight:600;color:var(--t2);text-align:center;text-transform:uppercase;letter-spacing:0.05em}
+.rbac-table th:first-child{text-align:left}
+.rbac-table td{padding:7px 10px;border-bottom:1px solid var(--bdr);text-align:center;cursor:pointer;transition:background 0.12s}
+.rbac-table td:first-child{text-align:left;font-size:12px;cursor:default}
+.rbac-table td:hover:not(:first-child){background:var(--navy3)}
+.rbac-table td.c-ok{background:rgba(76,175,130,0.1)}
+.rbac-table td.c-bad{background:rgba(224,82,82,0.1)}
+.rbac-table td.c-miss{background:rgba(224,155,52,0.1)}
+
+/* ── BADGES PANEL ── */
+.badge-shelf{display:flex;flex-wrap:wrap;gap:8px;margin:0.5rem 0}
+.badge-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 12px;border-radius:var(--rad);border:1px solid var(--bdr);background:var(--navy3);min-width:80px;text-align:center}
+.badge-item.earned{border-color:rgba(245,200,66,0.4);background:rgba(245,200,66,0.06)}
+.badge-item.locked{opacity:0.35;filter:grayscale(1)}
+.badge-emoji{font-size:22px}
+.badge-name{font-size:10px;font-weight:600;color:var(--t2)}
+.badge-item.earned .badge-name{color:var(--gold)}
+
+/* ── CELEBRATION MODAL ── */
+#celebrate-overlay{
+  position:fixed;inset:0;z-index:9998;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(13,27,42,0.85);backdrop-filter:blur(8px);
+}
+.celebrate-card{
+  position:relative;
+  background:var(--navy2);
+  border:1px solid var(--rose);
+  border-radius:var(--radx);
+  padding:2.5rem 2rem;
+  max-width:420px;width:90%;
+  text-align:center;
+  box-shadow:0 0 80px rgba(232,99,122,0.2);
+  animation:celebPop 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+@keyframes celebPop{from{opacity:0;transform:scale(0.7)}to{opacity:1;transform:scale(1)}}
+.celebrate-emoji{font-size:56px;margin-bottom:16px;animation:bounce 0.8s ease-in-out infinite alternate}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+.celebrate-title{font-size:22px;font-weight:700;margin-bottom:8px;background:linear-gradient(135deg,var(--rose2),var(--coral2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.celebrate-msg{font-size:15px;color:var(--t2);line-height:1.7;margin-bottom:20px}
+.celebrate-msg strong{color:var(--t1);font-weight:600}
+
+/* ── CONFETTI CANVAS ── */
+#confetti-canvas{position:fixed;inset:0;z-index:9997;pointer-events:none}
+
+/* ── AUTH SCREEN ── */
+#auth-screen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center}
+#auth-screen::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 30% 40%,rgba(232,99,122,0.12) 0%,transparent 60%),var(--navy);z-index:-1}
+.auth-box{width:360px;background:rgba(27,45,66,0.9);backdrop-filter:blur(20px);border:1px solid var(--bdr2);border-radius:var(--radx);padding:2.25rem;box-shadow:var(--shadow)}
+.auth-logo{font-size:11px;font-weight:600;color:var(--t3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.75rem;display:flex;align-items:center;gap:6px}
+.auth-logo span{width:6px;height:6px;border-radius:50%;background:var(--rose);display:inline-block}
+.auth-heart{font-size:28px;margin-bottom:10px}
+.auth-title{font-size:22px;font-weight:700;margin-bottom:4px;letter-spacing:-0.3px}
+.auth-sub{font-size:13px;color:var(--t2);margin-bottom:1.75rem;line-height:1.6}
+.auth-field{margin-bottom:14px}
+.auth-field label{display:block;font-size:12px;font-weight:600;color:var(--t2);margin-bottom:6px;letter-spacing:0.04em;text-transform:uppercase}
+.auth-field input{width:100%;padding:10px 14px;background:var(--navy3);border:1px solid var(--bdr2);border-radius:var(--rad);color:var(--t1);font-size:14px;font-family:'Sora',inherit;transition:border-color 0.15s}
+.auth-field input:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 3px rgba(232,99,122,0.12)}
+.auth-err{font-size:12px;color:var(--red);margin-bottom:12px;min-height:18px;font-weight:500}
+.auth-btn{width:100%;padding:11px;background:linear-gradient(135deg,var(--rose),var(--coral));border:none;border-radius:var(--rad);color:#fff;font-size:14px;font-weight:700;font-family:'Sora',inherit;cursor:pointer;transition:all 0.18s;letter-spacing:0.02em}
+.auth-btn:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 8px 20px rgba(232,99,122,0.3)}
+
+/* ── LOAD OVERLAY ── */
+#load-overlay{position:fixed;inset:0;z-index:8888;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--navy);gap:0}
+#file-input{display:none}
+.load-drop-zone{border:2px dashed var(--bdr2);border-radius:var(--radx);padding:3rem 2.5rem;text-align:center;max-width:380px;cursor:pointer;transition:all 0.2s}
+.load-drop-zone:hover{border-color:var(--rose);background:rgba(232,99,122,0.04)}
+.load-drop-zone h2{margin-bottom:8px}
+.load-drop-zone p{font-size:13px;color:var(--t2);line-height:1.6}
+
+/* ── HOME HERO ── */
+.home-hero{margin-bottom:1.5rem;padding:1.5rem 0 0.5rem}
+.home-greeting{font-size:13px;color:var(--rose3);font-weight:600;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px}
+.home-title{font-size:28px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-bottom:8px}
+.home-sub{font-size:14px;color:var(--t2);line-height:1.6}
+
+/* ── SCORE RING ── */
+.score-ring-wrap{display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+
+/* ── LOGOUT ── */
+.logout-btn{position:fixed;top:14px;right:14px;z-index:100}
+
+/* ── INLINE ENCOURAGEMENT ── */
+.enc-toast{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-radius:var(--rad);background:linear-gradient(135deg,rgba(232,99,122,0.08),rgba(244,132,95,0.06));border:1px solid rgba(232,99,122,0.25);margin-top:10px;font-size:13px;color:var(--t2);line-height:1.55;animation:encSlide 0.3s ease-out}
+@keyframes encSlide{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.enc-heart{font-size:18px;flex-shrink:0;margin-top:1px}
+
+/* ── MARATHON PROGRESS ── */
+.marathon-bar-wrap{background:var(--navy3);border:1px solid var(--bdr);border-radius:var(--rad);padding:10px 14px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
+.marathon-bar-track{flex:1;height:7px;background:var(--navy4);border-radius:4px;overflow:hidden}
+.marathon-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--teal),var(--teal2));transition:width 0.5s ease}
+.marathon-label{font-size:12px;color:var(--t2);white-space:nowrap;font-weight:500}
+.marathon-pct{font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--teal2);font-weight:600;min-width:36px;text-align:right}
+
+/* ── LIFETIME STATS ── */
+.lt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:1rem}
+.lt-card{background:var(--navy3);border:1px solid var(--bdr);border-radius:var(--rad);padding:10px 12px}
+.lt-num{font-size:20px;font-weight:600;font-family:'IBM Plex Mono',monospace;background:linear-gradient(135deg,var(--teal2),var(--rose2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lt-lbl{font-size:11px;color:var(--t2);margin-top:2px;font-weight:500}
+
+/* ── VPN CONCENTRATOR SIM ── */
+.vpn-diagram{display:flex;justify-content:center;align-items:center;gap:0;margin:14px 0;flex-wrap:wrap}
+.vpn-office{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:140px}
+.vpn-cloud{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1.2;font-size:12px;color:var(--t2);text-align:center;padding:0 10px}
+.vpn-conc-btn{padding:10px 18px;border-radius:var(--rad);border:1px solid var(--bdr2);background:var(--navy3);color:var(--t1);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.18s;display:flex;flex-direction:column;align-items:center;gap:4px}
+.vpn-conc-btn:hover{border-color:var(--rose);transform:translateY(-2px);box-shadow:var(--shadowsm)}
+.vpn-conc-btn.configured{border-color:var(--teal);background:rgba(47,184,172,0.08)}
+.vpn-conc-btn.active-conc{border-color:var(--rose);background:rgba(232,99,122,0.1);box-shadow:0 0 0 2px rgba(232,99,122,0.25)}
+.vpn-modal{background:var(--navy2);border:1px solid var(--bdr2);border-radius:var(--radl);padding:16px;margin-top:12px;animation:encSlide 0.2s ease-out}
+.vpn-tabs{display:flex;gap:2px;background:var(--navy4);padding:2px;border-radius:5px;margin-bottom:12px}
+.vpn-tab{flex:1;padding:5px 8px;text-align:center;font-size:12px;border-radius:4px;cursor:pointer;color:var(--t2);border:none;background:transparent;font-family:'Sora',inherit;font-weight:500;transition:all 0.15s}
+.vpn-tab.active{background:var(--navy2);color:var(--t1);border:1px solid var(--bdr2)}
+.vpn-field{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--bdr)}
+.vpn-field:last-child{border-bottom:none}
+.vpn-label{font-size:12px;color:var(--t2);min-width:140px;font-weight:500}
+.vpn-value{font-size:12px;color:var(--teal2);font-family:'IBM Plex Mono',monospace;font-weight:600}
+.vpn-select{flex:1;padding:5px 8px;border-radius:var(--rad);border:1px solid var(--bdr2);background:var(--navy3);color:var(--t1);font-size:12px;font-family:'IBM Plex Mono',monospace}
+.vpn-select:focus{outline:none;border-color:var(--rose)}
+.vpn-select.field-ok{border-color:var(--teal);color:var(--teal2);background:rgba(47,184,172,0.08)}
+.vpn-select.field-bad{border-color:var(--red);color:var(--red);background:rgba(224,82,82,0.08)}
+.vpn-line{flex:2;height:2px;background:linear-gradient(90deg,var(--rose),var(--navy5),var(--rose));position:relative}
+
+/* ── NETWORK DIAGRAM SIM ── */
+.netdiag-wrap{position:relative;margin:10px 0}
+.netdiag-svg{width:100%;height:auto;display:block}
+.netdiag-slot{cursor:pointer;transition:all 0.15s}
+.netdiag-slot:hover .slot-circle{fill:rgba(232,99,122,0.2);stroke:#e8637a}
+.netdiag-slot.filled .slot-circle{fill:rgba(47,184,172,0.15);stroke:#2fb8ac}
+.netdiag-slot.slot-ok .slot-circle{fill:rgba(76,175,130,0.2);stroke:#4caf82}
+.netdiag-slot.slot-bad .slot-circle{fill:rgba(224,82,82,0.15);stroke:#e05252}
+.comp-picker{position:absolute;background:var(--navy2);border:1px solid var(--bdr2);border-radius:var(--radl);padding:8px;box-shadow:var(--shadow);z-index:50;min-width:180px;animation:encSlide 0.15s ease-out}
+.comp-picker-item{display:block;width:100%;text-align:left;padding:7px 10px;border-radius:var(--rad);border:none;background:transparent;color:var(--t1);font-size:12px;font-weight:500;cursor:pointer;font-family:'Sora',inherit;transition:background 0.12s}
+.comp-picker-item:hover{background:var(--navy3)}
+.subnet-sel{padding:5px 10px;border-radius:var(--rad);border:1px solid var(--bdr2);background:var(--navy3);color:var(--t1);font-size:12px;font-family:'Sora',inherit}
+.subnet-sel.subnet-ok{border-color:var(--teal);color:var(--teal2);background:rgba(47,184,172,0.08)}
+.subnet-sel.subnet-bad{border-color:var(--red);color:var(--red);background:rgba(224,82,82,0.08)}
+
+/* ── RESILIENCY HOTSPOT ── */
+.resil-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:12px 0}
+.resil-dc{background:var(--navy3);border:1px solid var(--bdr);border-radius:var(--radl);padding:14px}
+.resil-dc-title{font-size:12px;font-weight:700;color:var(--teal2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.resil-row{margin-bottom:10px}
+.resil-row:last-child{margin-bottom:0}
+.resil-cat{font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px}
+.resil-sel{width:100%;padding:6px 9px;border-radius:var(--rad);border:1px solid var(--bdr2);background:var(--navy2);color:var(--t1);font-size:12px;font-family:'Sora',inherit;transition:border-color 0.15s}
+.resil-sel:focus{outline:none;border-color:var(--rose)}
+.resil-sel.r-ok{border-color:var(--teal);color:var(--teal2);background:rgba(47,184,172,0.08)}
+.resil-sel.r-bad{border-color:var(--red);color:var(--red);background:rgba(224,82,82,0.08)}
+
+/* ── MISC ── */
+.div{height:1px;background:var(--bdr);margin:1.25rem 0}
+.node-click{cursor:pointer}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:var(--navy5);border-radius:3px}
+.shimmer{background:linear-gradient(90deg,var(--navy3) 25%,var(--navy4) 50%,var(--navy3) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+@media(max-width:600px){
+  .acl-grid-hdr,.acl-row-wrap{grid-template-columns:58px 60px 1fr 1fr 46px 40px 60px;font-size:10px}
+  .home-title{font-size:22px}
+  .celebrate-card{padding:2rem 1.25rem}
+  .mode-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen">
+  <div class="auth-box">
+    <div class="auth-logo"><span></span>Nexus Integrations LLC</div>
+    <div class="auth-heart">💙</div>
+    <h1 class="auth-title">Hey, Paige!</h1>
+    <p class="auth-sub">Your personal Security+ study companion.<br>Russ made this just for you. 🔐</p>
+    <div class="auth-field"><label>Username</label><input type="text" id="auth-user" placeholder="Enter username" autocomplete="username"></div>
+    <div class="auth-field"><label>Password</label><input type="password" id="auth-pass" placeholder="Enter password" autocomplete="current-password"></div>
+    <div class="auth-err" id="auth-err"></div>
+    <button class="auth-btn" id="auth-submit">Let's Study ✨</button>
+  </div>
+</div>
+
+<!-- LOAD OVERLAY -->
+<div id="load-overlay" style="display:none">
+  <div class="load-drop-zone" onclick="document.getElementById('file-input').click()">
+    <div style="font-size:42px;margin-bottom:16px">📚</div>
+    <h2 style="margin-bottom:8px">Load Question Bank</h2>
+    <p>Click here or drag & drop<br><code>secplus_701_enriched.json</code><br>to get started</p>
+    <p id="load-err" style="color:#e05252;font-size:12px;margin-top:12px;display:none"></p>
+  </div>
+  <input type="file" id="file-input" accept=".json">
+</div>
+
+<!-- CONFETTI CANVAS -->
+<canvas id="confetti-canvas" style="display:none"></canvas>
+
+<!-- CELEBRATION MODAL (hidden by default) -->
+<div id="celebrate-overlay" style="display:none">
+  <div class="celebrate-card" id="celebrate-card">
+    <div class="celebrate-emoji" id="cel-emoji">🎉</div>
+    <div class="celebrate-title" id="cel-title">Amazing!</div>
+    <div class="celebrate-msg" id="cel-msg">You did it!</div>
+    <button class="btn btn-rose" id="cel-close" onclick="closeCelebration()" style="width:100%;justify-content:center;font-size:14px">
+      Keep going! 💪
+    </button>
+  </div>
+</div>
+
+<!-- LOGOUT -->
+<button class="btn btn-sm btn-ghost logout-btn" id="logout-btn" style="display:none" onclick="doLogout()">Sign out</button>
+
+<!-- APP ROOT -->
+<div id="root" style="display:none"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script>
+'use strict';
+const {useState,useEffect,useRef,useCallback,useMemo}=React;
+
+/* ══════════════════════════════════════════════════════════
+   AUTH  — SHA-256 hashed credentials
+   To change: update SALT, USER_HASH, PASS_HASH.
+   Hash = sha256(SALT + value)  via https://emn178.github.io/online-tools/sha256.html
+   Current: secure701 / NexusSecPlus2026!
+══════════════════════════════════════════════════════════ */
+const SALT='nx7s4lt';
+const UH='a2e801c9da41dca63f45577af27bb31f3e6e70facd41d261138916ce6e22871f';
+const PH='fa8467a032e317f1e0ff47d5d2a78b7e2b548e22e1440ea80037f29e7537f091';
+const AK='sx701_auth';
+
+async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
+function isAuthed(){return sessionStorage.getItem(AK)==='1';}
+function doLogout(){sessionStorage.clear();localStorage.removeItem('sx701_progress');location.reload();}
+
+document.getElementById('auth-submit').addEventListener('click',async()=>{
+  const u=document.getElementById('auth-user').value.trim();
+  const p=document.getElementById('auth-pass').value;
+  const [uh,ph]=await Promise.all([sha256(SALT+u),sha256(SALT+p)]);
+  if(uh===UH&&ph===PH){
+    sessionStorage.setItem(AK,'1');
+    document.getElementById('auth-screen').style.display='none';
+    document.getElementById('logout-btn').style.display='';
+    initApp();
+  }else{document.getElementById('auth-err').textContent='Invalid username or password.';}
+});
+['auth-pass','auth-user'].forEach((id,i)=>document.getElementById(id).addEventListener('keydown',e=>{
+  if(e.key==='Enter')i===0?document.getElementById('auth-submit').click():document.getElementById('auth-pass').focus();
+}));
+
+/* ══════════════════════════════════════════════════════════
+   GAME CONSTANTS
+══════════════════════════════════════════════════════════ */
+const LEVELS=[
+  {name:'CompTIA IT Fundamentals',emoji:'🌱',xp:0},
+  {name:'A+ Certified',          emoji:'💻',xp:200},
+  {name:'Network+ Certified',    emoji:'🌐',xp:500},
+  {name:'Security+ Student',     emoji:'🔐',xp:1000},
+  {name:'Security+ Certified',   emoji:'🏆',xp:2000},
+  {name:'CySA+ Analyst',         emoji:'🔍',xp:3500},
+  {name:'Pentest+ Pro',          emoji:'⚔️',xp:5500},
+  {name:'CASP+ Expert',          emoji:'🦅',xp:8000},
+];
+
+const BADGES=[
+  {id:'first_pass',   emoji:'🎯',name:'First Pass',    desc:'Complete your first exam'},
+  {id:'pass_75',      emoji:'✅',name:'Passing Grade',  desc:'Score 75% or higher'},
+  {id:'pass_83',      emoji:'🏅',name:'CompTIA Pass',   desc:'Score 83%+ (CompTIA standard)'},
+  {id:'pass_90',      emoji:'💎',name:'90% Club',       desc:'Score 90% or higher'},
+  {id:'perfect',      emoji:'🌟',name:'Perfect Score',  desc:'Score 100%'},
+  {id:'streak_5',     emoji:'🔥',name:'On Fire',        desc:'5 correct in a row'},
+  {id:'streak_10',    emoji:'🔥🔥',name:'Inferno',      desc:'10 correct in a row'},
+  {id:'streak_20',    emoji:'⚡',name:'Lightning',       desc:'20 correct in a row'},
+  {id:'drill_master', emoji:'⚔️',name:'Drill Master',   desc:'Complete a drill session'},
+  {id:'pbq_perfect',  emoji:'🖥️',name:'PBQ Pro',        desc:'Get all 5 PBQs correct'},
+  {id:'sessions_5',   emoji:'📚',name:'Study Habit',    desc:'Complete 5 study sessions'},
+  {id:'sessions_10',  emoji:'🎓',name:'Scholar',        desc:'Complete 10 study sessions'},
+  {id:'weak_cleared', emoji:'🧹',name:'Area Cleared',   desc:'Get 100% in a weak area drill'},
+];
+
+const XP_PER={correct:15,pbq_correct:40,streak_bonus:5,drill_correct:20,pass_exam:100,score_90:50,score_perfect:150};
+
+/* XP messages from Russ to Paige at milestones */
+const PAIGE_MESSAGES={
+  pass:{
+    emoji:'💙',
+    title:'You passed!!',
+    msgs:[
+      "I knew you could do it, Paige. I'm so proud of you. I love you! 💙",
+      "That's my girl! You just passed! I love you more than you know. 💙",
+      "Look at you go! Certified in my heart already. I love you, Paige! 💙",
+    ]
+  },
+  score_90:{
+    emoji:'🔥',
+    title:'90%?! Are you kidding me?!',
+    msgs:[
+      "90 freaking percent! You're absolutely incredible, Paige. I love you so much! 🔥",
+      "Nobody does it like you do. 90%+ and counting. I love you, Paige! 🔥",
+      "Okay I'm literally bragging about you to everyone. 90%!! Love you! 🔥",
+    ]
+  },
+  perfect:{
+    emoji:'🌟',
+    title:'PERFECT SCORE!!!',
+    msgs:[
+      "A PERFECT SCORE?! Paige, you are absolutely unreal. I am the luckiest person alive. I love you so much!! 🌟",
+      "100%?! Stop it right now. You are the smartest, most amazing person I know. I love you, Paige!! 🌟",
+    ]
+  },
+  level_up:{
+    emoji:'⬆️',
+    title:'Level Up!',
+    msgs:[
+      "You're leveling up, Paige! Unstoppable. Love you! ⬆️",
+      "Another level! You make this look so easy. I love you! ⬆️",
+      "Growing every single day. I'm so proud of you. Love you, Paige! ⬆️",
+    ]
+  },
+  streak_10:{
+    emoji:'🔥',
+    title:'10 in a row!',
+    msgs:[
+      "TEN IN A ROW! You're on absolute fire right now, Paige! Love you! 🔥",
+      "10 straight? That's not luck, that's skill. I love you so much! 🔥",
+    ]
+  },
+  drill_cleared:{
+    emoji:'⚔️',
+    title:'Drill Cleared!',
+    msgs:[
+      "Look at you — zero wrong on the drill! That's my girl. Love you, Paige! ⚔️",
+      "You drilled through every single one! Security+ doesn't stand a chance. Love you! ⚔️",
+    ]
+  },
+  pbq_perfect:{
+    emoji:'🖥️',
+    title:'PBQ Perfect!',
+    msgs:[
+      "All 5 PBQs correct?! Those are the hardest ones! You're incredible, Paige. I love you! 🖥️",
+      "Perfect on every performance-based question! That takes real skill. I love you so much! 🖥️",
+    ]
+  },
+  fail_encouragement:{
+    emoji:'💙',
+    title:'Keep going, Paige!',
+    msgs:[
+      "You're learning! Every wrong answer is one step closer to getting it right. I love you and I believe in you! 💙",
+      "Security+ is hard. You showing up and studying at all makes me incredibly proud. I love you, Paige! 💙",
+      "Not this time, but next time for sure. I've seen you study and you're going to crush it. Love you! 💙",
+    ]
+  },
+  welcome_back:{
+    emoji:'👋',
+    title:'Welcome back, Paige!',
+    msgs:[
+      "You're back! I love that you keep showing up. Let's get some questions right today. Love you! 💙",
+      "Ready to study? I'm rooting for you every step of the way. Love you, Paige! 💙",
+    ]
+  }
+};
+
+const WRONG_ENC=[
+  "So close! Check the explanation — you'll get it next time. 💙",
+  "Not quite! Read through that one, it'll click. Love you, Paige 💙",
+  "That one's tricky! The explanation below breaks it down. 💙",
+  "No worries — this is exactly how you learn. Keep going! 💙",
+  "Good try! Study that explanation and you've got it for next time. 💙",
+  "These are hard! That's okay — you're getting better every question. 💙",
+  "Every wrong answer makes the right one stick harder. Love you! 💙",
+  "I believe in you, Paige. On to the next one 💙",
+];
+function getRandEnc(){return WRONG_ENC[Math.floor(Math.random()*WRONG_ENC.length)];}
+
+function getPaigeMsg(key){
+  const m=PAIGE_MESSAGES[key];if(!m)return null;
+  return{emoji:m.emoji,title:m.title,msg:m.msgs[Math.floor(Math.random()*m.msgs.length)]};
+}
+
+/* ══════════════════════════════════════════════════════════
+   CONFETTI ENGINE
+══════════════════════════════════════════════════════════ */
+function launchConfetti(duration=3500){
+  const canvas=document.getElementById('confetti-canvas');
+  canvas.style.display='block';
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  const ctx=canvas.getContext('2d');
+  const colors=['#e8637a','#f4845f','#f5c842','#2fb8ac','#5acec4','#f07c8e','#f9a07d','#f7d468'];
+  const pieces=Array.from({length:160},()=>({
+    x:Math.random()*canvas.width,y:Math.random()*-200,
+    w:6+Math.random()*8,h:10+Math.random()*8,
+    color:colors[Math.floor(Math.random()*colors.length)],
+    vx:(Math.random()-0.5)*4,vy:2+Math.random()*4,
+    angle:Math.random()*360,va:(Math.random()-0.5)*8,opacity:1
+  }));
+  let start=null;
+  function frame(ts){
+    if(!start)start=ts;
+    const elapsed=ts-start;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;p.angle+=p.va;
+      p.vy+=0.08;
+      if(elapsed>duration-800)p.opacity=Math.max(0,p.opacity-0.015);
+      if(p.y>canvas.height||p.opacity<=0)return;
+      ctx.save();ctx.globalAlpha=p.opacity;
+      ctx.translate(p.x+p.w/2,p.y+p.h/2);
+      ctx.rotate(p.angle*Math.PI/180);
+      ctx.fillStyle=p.color;
+      ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+      ctx.restore();
+    });
+    if(elapsed<duration+400)requestAnimationFrame(frame);
+    else{ctx.clearRect(0,0,canvas.width,canvas.height);canvas.style.display='none';}
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ══════════════════════════════════════════════════════════
+   CELEBRATION MODAL
+══════════════════════════════════════════════════════════ */
+let celQueue=[];let celActive=false;
+function showCelebration(emoji,title,msg,withConfetti=true){
+  celQueue.push({emoji,title,msg,withConfetti});
+  if(!celActive)drainCelQueue();
+}
+function drainCelQueue(){
+  if(!celQueue.length){celActive=false;return;}
+  celActive=true;
+  const{emoji,title,msg,withConfetti}=celQueue.shift();
+  document.getElementById('cel-emoji').textContent=emoji;
+  document.getElementById('cel-title').textContent=title;
+  document.getElementById('cel-msg').innerHTML=msg;
+  document.getElementById('celebrate-overlay').style.display='flex';
+  if(withConfetti)launchConfetti();
+}
+function closeCelebration(){
+  document.getElementById('celebrate-overlay').style.display='none';
+  setTimeout(drainCelQueue,300);
+}
+
+/* ══════════════════════════════════════════════════════════
+   XP POPUP
+══════════════════════════════════════════════════════════ */
+function showXPPopup(amount,x,y){
+  const el=document.createElement('div');
+  el.className='xp-popup';
+  el.textContent=`+${amount} XP`;
+  el.style.left=`${x-30}px`;el.style.top=`${y-10}px`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1400);
+}
+
+/* ══════════════════════════════════════════════════════════
+   PERSISTENT PROGRESS (localStorage)
+══════════════════════════════════════════════════════════ */
+const PROG_KEY='sx701_progress';
+const DEFAULT_PROG={xp:0,sessions:0,bestScore:0,badges:[],marathonIdx:0,domainStats:{},wrongIds:[],lifetimeCorrect:0,lifetimeTotal:0,lastSeen:null};
+
+function loadProgress(){
+  try{const s=localStorage.getItem(PROG_KEY);return s?{...DEFAULT_PROG,...JSON.parse(s)}:DEFAULT_PROG;}
+  catch(e){return DEFAULT_PROG;}
+}
+function saveProgress(p){
+  try{localStorage.setItem(PROG_KEY,JSON.stringify({...p,lastSeen:new Date().toISOString()}));}catch(e){}
+}
+function getLevel(xp){
+  let lv=0;
+  for(let i=0;i<LEVELS.length;i++){if(xp>=LEVELS[i].xp)lv=i;}
+  return lv;
+}
+function nextLevelXP(xp){
+  const lv=getLevel(xp);
+  return lv<LEVELS.length-1?LEVELS[lv+1].xp:null;
+}
+function xpPct(xp){
+  const lv=getLevel(xp);
+  const base=LEVELS[lv].xp;
+  const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:base+1000;
+  return Math.min(100,((xp-base)/(next-base))*100);
+}
+</script>
+<script>
+'use strict';
+/* ══════════════════════════════════════════════════════════
+   DOMAIN / CONCEPT CONSTANTS
+══════════════════════════════════════════════════════════ */
+const DOMAINS=[
+  '1.0 General Security Concepts',
+  '2.0 Threats, Vulnerabilities, and Mitigations',
+  '3.0 Security Architecture',
+  '4.0 Security Operations',
+  '5.0 Security Program Management and Oversight'
+];
+const DSHORT=['General Security','Threats & Vulns','Architecture','Security Ops','Prog. Management'];
+
+const CONCEPT_MAP={
+  '1.0 General Security Concepts':{
+    'CIA Triad':['confidentiality','integrity','availability','cia triad','non-repudiation'],
+    'Authentication & Access':['authentication','authorization','mfa','multifactor','sso','oauth','saml','identity','least privilege','rbac','role-based','aaa','radius','tacacs'],
+    'Cryptography':['encryption','hash','cipher','aes','rsa','ecc','tls','ssl','certificate','pki','symmetric','asymmetric','key','salting','tokenization','steganography'],
+    'Control Types':['preventive','detective','corrective','compensating','deterrent','directive','physical control','technical control','managerial','operational control'],
+  },
+  '2.0 Threats, Vulnerabilities, and Mitigations':{
+    'Social Engineering':['phishing','vishing','smishing','pretexting','tailgating','impersonation','whaling','baiting','social engineering','business email compromise','bec'],
+    'Malware':['ransomware','trojan','rootkit','worm','spyware','virus','malware','backdoor','keylogger','logic bomb','fileless'],
+    'Attack Techniques':['sql injection','xss','cross-site','buffer overflow','ddos','dos','on-path','replay','brute force','password spray','pass-the-hash','race condition','memory injection','directory traversal'],
+    'Threat Actors':['nation-state','hacktivist','insider threat','organized crime','unskilled attacker'],
+    'Vulnerabilities':['cve','cvss','zero-day','end of life','firmware','supply chain','misconfiguration','side loading','jailbreaking'],
+  },
+  '3.0 Security Architecture':{
+    'Network Security':['firewall','ids','ips','waf','ngfw','dmz','vlan','segmentation','nat','acl','port security','mac filtering'],
+    'Cloud & Virtualization':['cloud','iaas','paas','saas','container','virtualization','hypervisor','serverless','vm escape','sase','casb'],
+    'Remote Access & VPN':['vpn','ipsec','ssh','jump server','bastion','remote access','tunnel','zero trust','sd-wan'],
+    'Redundancy & Recovery':['hot site','warm site','cold site','failover','load balancer','redundancy','replication','rto','rpo','mttr','mtbf'],
+  },
+  '4.0 Security Operations':{
+    'Incident Response':['incident response','containment','eradication','recovery','lessons learned','chain of custody','forensics','acquisition','preservation'],
+    'Monitoring & SIEM':['siem','soc','log','monitoring','ueba','anomaly','alert','dashboard','correlation','netflow'],
+    'Identity & Access':['provisioning','deprovisioning','password','account','privilege','pam','directory','ldap','active directory','group policy'],
+    'Vulnerability Mgmt':['vulnerability scan','patching','hardening','baseline','configuration','nessus','remediation'],
+    'Mobile & Endpoints':['mdm','byod','cope','edr','endpoint','mobile','remote wipe','fde','full disk encryption'],
+  },
+  '5.0 Security Program Management and Oversight':{
+    'Risk Management':['risk register','risk assessment','risk tolerance','risk appetite','bia','sle','ale','aro','exposure factor','residual risk'],
+    'Compliance':['gdpr','hipaa','pci dss','compliance','audit','regulation','nist','iso','sox','attestation'],
+    'Agreements & Policies':['sla','mou','moa','bpa','nda','sow','msa','aup','acceptable use'],
+    'Data Privacy':['data classification','data retention','data sovereignty','pii','phi','masking','tokenization','right to be forgotten'],
+    'Business Continuity':['bcp','drp','business continuity','disaster recovery','tabletop','continuity'],
+  }
+};
+
+/* ══════════════════════════════════════════════════════════
+   PBQ DEFINITIONS
+══════════════════════════════════════════════════════════ */
+const PBQS=[
+  {id:'pbq-76',type:'HOTSPOT',subtype:'diagram',domain:'3.0 Security Architecture',
+   q:'A security analyst notices an internal host generating 10 DNS queries/second to 185.220.x.x (a known Tor exit node range) and an active outbound connection on port 4444. Review the network diagram and click the device most likely compromised.',
+   diagram:{width:580,height:320,
+    nodes:[
+      {id:'internet',x:240,y:14,w:96,h:30, label:'Internet',        fill:'#243447',stroke:'#3a5068',tx:'#8fa3b1'},
+      {id:'fw',      x:192,y:82,w:112,h:30,label:'Firewall',         fill:'#1a2040',stroke:'#3a4070',tx:'#7c87e8'},
+      {id:'dmz',     x:400,y:82,w:130,h:30,label:'DMZ Web Server',   fill:'#1a2e1a',stroke:'#2a5a2a',tx:'#4caf82'},
+      {id:'switch',  x:192,y:166,w:112,h:30,label:'Core Switch',     fill:'#243447',stroke:'#3a5068',tx:'#8fa3b1'},
+      {id:'ws_a',    x:30,y:255,w:110,h:30, label:'Workstation A',   fill:'#243447',stroke:'#3a5068',tx:'#8fa3b1'},
+      {id:'ws_b',    x:172,y:255,w:110,h:30,label:'Workstation B ⚠', fill:'#3a1a1a',stroke:'#7a2a2a',tx:'#e05252'},
+      {id:'db',      x:314,y:255,w:110,h:30,label:'DB Server',       fill:'#1a2e1a',stroke:'#2a5a2a',tx:'#4caf82'},
+      {id:'mgmt',    x:450,y:255,w:106,h:30,label:'Mgmt Host',       fill:'#243447',stroke:'#3a5068',tx:'#8fa3b1'},
+    ],
+    edges:[{f:'internet',t:'fw'},{f:'fw',t:'dmz'},{f:'fw',t:'switch'},{f:'switch',t:'ws_a'},{f:'switch',t:'ws_b'},{f:'switch',t:'db'},{f:'switch',t:'mgmt'}],
+    traffic:[{node:'ws_b',color:'#e05252',label:'10 DNS req/s → 185.220.x.x (Tor exit)'},{node:'ws_b',color:'#f5c842',label:'Port 4444 outbound C2 beacon'}],
+    correct:'ws_b',
+    explanation:'Workstation B shows two definitive C2 indicators: high-frequency DNS queries to a Tor exit node range and an active outbound connection on port 4444 (common C2/RAT port). The DMZ server handles expected external traffic. All other internal devices show normal patterns.'
+   }},
+  {id:'pbq-77',type:'HOTSPOT',subtype:'table',domain:'2.0 Threats, Vulnerabilities, and Mitigations',
+   q:'A security analyst is reviewing Windows domain controller authentication logs. Click the entry that most clearly indicates a pass-the-hash (PtH) attack.',
+   table:{
+    headers:['Time','Event ID','Account','Source IP','Logon Type','Auth Package','Status'],
+    rows:[
+      {id:'r1',cells:['08:12:04','4624','jsmith',       '10.0.1.45',    'Interactive (2)','Kerberos','Success'],correct:false},
+      {id:'r2',cells:['08:14:22','4625','administrator','192.168.50.77', 'Network (3)',    'NTLM',    'Failure'],correct:false},
+      {id:'r3',cells:['08:15:01','4624','administrator','192.168.50.77', 'Network (3)',    'NTLM',    'Success'],correct:true},
+      {id:'r4',cells:['08:16:45','4634','jsmith',       '10.0.1.45',    '—',             '—',       '—'],      correct:false},
+      {id:'r5',cells:['08:18:30','4625','helpdesk',     '10.0.2.15',    'Network (3)',    'Kerberos','Failure'],correct:false},
+      {id:'r6',cells:['08:19:11','4771','svc_backup',   '10.0.3.8',     '—',             'Kerberos','Failure'],correct:false},
+    ],
+    explanation:'Row 3 is the PtH indicator: Event 4624 (success), administrator, Logon Type 3 (Network), NTLM from 192.168.50.77. Pass-the-hash always produces a Type 3 network logon using NTLM — Kerberos cannot be used because the attacker has a hash, not a password. Row 2 is the failed attempt immediately before, consistent with hash testing.'
+   }},
+  {id:'pbq-310',type:'SIMULATION',subtype:'vpn',domain:'3.0 Security Architecture',
+   q:'A systems administrator is configuring a site-to-site VPN between two branch offices. Some settings have already been configured correctly.\nRequirements:\n• Most secure algorithms should be selected\n• All traffic should be encrypted over the VPN\n• A secret password will be used to authenticate the two VPN concentrators\n\nClick each VPN Concentrator and configure Phase 1 and Phase 2 with the correct settings.',
+   concentrators:[
+     {id:'conc1',label:'VPN Concentrator 1',peerIP:'5.5.5.20',
+      phase1:{authOpts:['Select','PKI','PSK','RADIUS'],encOpts:['Select','AES256','ECC secp160r1','3DES'],hashOpts:['Select','SHA256','MD5','SHA1'],negMode:'MAIN',dhGroup:'14'},
+      phase2:{modeFixed:'Tunnel',protoOpts:['Select','ESP','AH'],encOpts:['Select','3DES','AES256','BLOWFISH'],hashOpts:['Select','SHA256','MD5','SHA1'],localNet:'192.168.1.0',remotNet:'192.168.2.0'}
+     },
+     {id:'conc2',label:'VPN Concentrator 2',peerIP:'5.5.5.10',
+      phase1:{authOpts:['Select','PSK','RADIUS','PKI'],encOpts:['Select','3DES','AES256','ECC secp160r1'],hashOpts:['Select','SHA256','SHA1','MD5'],negMode:'MAIN',dhGroup:'14'},
+      phase2:{modeFixed:'Tunnel',protoOpts:['Select','ESP','AH'],encOpts:['Select','BLOWFISH','3DES','AES256'],hashOpts:['Select','SHA256','SHA1','MD5'],localNet:'192.168.2.0',remotNet:'192.168.1.0'}
+     }
+   ],
+   correctState:{
+     conc1:{p1auth:'PSK',p1enc:'AES256',p1hash:'SHA256',p2proto:'ESP',p2enc:'AES256',p2hash:'SHA256'},
+     conc2:{p1auth:'PSK',p1enc:'AES256',p1hash:'SHA256',p2proto:'ESP',p2enc:'AES256',p2hash:'SHA256'},
+   },
+   explanation:'PSK (Pre-Shared Key) satisfies the "secret password" authentication requirement — not PKI (certificates) or RADIUS (external server). AES256 is the strongest symmetric cipher available, preferred over 3DES (weak) or ECC secp160r1 (key exchange only). SHA256 is the strongest hash — SHA1 and MD5 are deprecated. ESP (Encapsulating Security Payload) must be selected over AH (Authentication Header) because ESP encrypts traffic — AH only authenticates. Both concentrators must have identical settings. DH Group 14 and Tunnel mode are pre-configured correctly.'
+  },
+  {id:'pbq-322',type:'SIMULATION',subtype:'rbac',domain:'4.0 Security Operations',
+   q:'Assign permissions to three new employees following least privilege. Check only what each role genuinely requires.',
+   users:[
+    {name:'A. Chen',   role:'Junior Security Analyst',needs:['SIEM Read','Vulnerability Scan','Incident View']},
+    {name:'B. Torres', role:'HR Specialist',          needs:['HR Records','Employee Directory']},
+    {name:'C. Walsh',  role:'Network Engineer',       needs:['Network Config','Firewall Read','Network Monitor','VPN Config']},
+   ],
+   allPerms:['SIEM Read','SIEM Write','Vulnerability Scan','Incident View','Incident Modify','HR Records','Employee Directory','Financial Data','Network Config','Firewall Read','Firewall Write','Network Monitor','VPN Config','Admin Console','Backup Access'],
+   explanation:'A. Chen (Analyst): read/view only — no write or modify. B. Torres (HR): HR Records + Directory only — not Financial Data. C. Walsh (Network Engineer): config, read, monitor, VPN — not Firewall Write, Admin Console, or Backup Access. Any extra permission violates least privilege.'
+  },
+  {id:'pbq-462',type:'HOTSPOT',subtype:'diagram',domain:'2.0 Threats, Vulnerabilities, and Mitigations',
+   q:'A threat actor gained access via phishing and is attempting lateral movement to critical servers. Click the security control that would MOST effectively limit lateral movement to those servers.',
+   diagram:{width:580,height:300,
+    nodes:[
+      {id:'ws_pool', x:20, y:20,w:120,h:30,label:'User Workstations',fill:'#3a1a1a',stroke:'#7a2a2a',tx:'#e05252'},
+      {id:'vlan_seg',x:180,y:20,w:120,h:30,label:'VLAN Segmentation',fill:'#1a2040',stroke:'#3a4070',tx:'#7c87e8'},
+      {id:'ids',     x:360,y:20,w:110,h:30,label:'IDS / IPS',         fill:'#243447',stroke:'#3a5068',tx:'#8fa3b1'},
+      {id:'nac',     x:180,y:130,w:120,h:30,label:'NAC Solution',     fill:'#243447',stroke:'#3a5068',tx:'#8fa3b1'},
+      {id:'servers', x:360,y:130,w:120,h:30,label:'Critical Servers', fill:'#1a2e1a',stroke:'#2a5a2a',tx:'#4caf82'},
+      {id:'int_fw',  x:180,y:240,w:120,h:30,label:'Internal Firewall',fill:'#1a2040',stroke:'#3a4070',tx:'#7c87e8'},
+      {id:'edr',     x:20, y:240,w:120,h:30,label:'EDR (Endpoint)',   fill:'#243447',stroke:'#3a5068',tx:'#8fa3b1'},
+      {id:'siem',    x:360,y:240,w:120,h:30,label:'SIEM',             fill:'#243447',stroke:'#3a5068',tx:'#8fa3b1'},
+    ],
+    edges:[{f:'ws_pool',t:'vlan_seg'},{f:'vlan_seg',t:'ids'},{f:'vlan_seg',t:'nac'},{f:'nac',t:'servers'},{f:'ws_pool',t:'int_fw'},{f:'int_fw',t:'servers'},{f:'edr',t:'siem'}],
+    correct:'vlan_seg',
+    explanation:'VLAN Segmentation places workstations and critical servers on separate segments — a compromised workstation cannot directly reach servers without passing through a controlled inter-VLAN routing boundary. IDS/IPS detects but doesn\'t block same-segment lateral movement. NAC controls admission but not already-admitted compromised hosts. EDR is endpoint-only. SIEM is detection-only.'
+   }}
+,
+  {id:'pbq-netdiag',type:'SIMULATION',subtype:'netdiag',domain:'3.0 Security Architecture',
+   q:'A security analyst is creating a network diagram for a new customer-facing payment application hosted by a third-party cloud service provider.\n\nClick each ? slot and select the appropriate component. Then select the correct subnet type from the dropdown. Every slot must be filled to create a secure, redundant architecture.',
+   slots:[
+     {id:'s_top',     label:'Top (Internet entry point)', area:'outside',  correct:'WAF'},
+     {id:'s_pub_l',   label:'Public Subnet — Left',       area:'public',   correct:'Autoscaling Instance'},
+     {id:'s_pub_r',   label:'Public Subnet — Right',      area:'public',   correct:'Load Balancer'},
+     {id:'s_mid',     label:'Middle connector layer',     area:'middle',   correct:'Instance'},
+     {id:'s_low_l',   label:'Lower tier — Left',          area:'lower',    correct:'Database'},
+     {id:'s_low_c',   label:'Lower tier — Center',        area:'lower',    correct:'Instance'},
+     {id:'s_low_r',   label:'Lower tier — Right',         area:'lower',    correct:'Autoscaling Instance'},
+     {id:'s_priv',    label:'Private Subnet — Bottom',    area:'private',  correct:'Instance'},
+   ],
+   subnetDropdown:{opts:['Select Subnet','Public Subnet','Private Subnet'],correct:'Private Subnet'},
+   components:['WAF','Load Balancer','Instance','Autoscaling Instance','Database'],
+   explanation:'WAF (Web Application Firewall) sits at the internet entry point to filter all inbound traffic. The Load Balancer distributes traffic across Autoscaling Instances in the Public Subnet for redundancy and scaling. Instances form the application layer. The middle subnet dropdown must be Private Subnet — backend resources including databases must be isolated from direct internet access. Database in the Private Subnet prevents exposure of payment data. Autoscaling Instance handles dynamic demand.'
+  },
+  {id:'pbq-resiliency',type:'HOTSPOT',subtype:'resiliency',domain:'3.0 Security Architecture',
+   q:'A security architect is tasked with designing a highly resilient, business-critical application. The application SLA is 99.999% (five nines).\n\nSelect the network, power, and server components for each location. Components may be selected more than once.',
+   locations:[
+     {id:'dcA_net',  dc:'Data Center A', category:'Network', opts:['Single switch','Redundant switches','Single router','Load balancer'],                correct:'Redundant switches'},
+     {id:'dcA_pwr',  dc:'Data Center A', category:'Power',   opts:['Single UPS','Dual UPS','Single generator','Dual generators','PDU'],                  correct:'Dual UPS'},
+     {id:'dcA_srv',  dc:'Data Center A', category:'Server',  opts:['Single server','Clustered servers','RAID storage','Hot spare','Virtual machine'],     correct:'Clustered servers'},
+     {id:'dcB_net',  dc:'Data Center B', category:'Network', opts:['Single switch','Redundant switches','Single router','Load balancer'],                correct:'Redundant switches'},
+     {id:'dcB_pwr',  dc:'Data Center B', category:'Power',   opts:['Single UPS','Dual UPS','Single generator','Dual generators','PDU'],                  correct:'Dual UPS'},
+     {id:'dcB_srv',  dc:'Data Center B', category:'Server',  opts:['Single server','Clustered servers','RAID storage','Hot spare','Virtual machine'],     correct:'Clustered servers'},
+   ],
+   explanation:'99.999% uptime allows only ~5.26 minutes of downtime per year — this demands full redundancy at every layer across both data centers. Redundant switches eliminate network single points of failure. Dual UPS provides continuous power during outages and generator spin-up gaps. Clustered servers (active-active or active-passive clustering) enable immediate failover with no data loss. Both data centers must be identically configured since either may be active. Single components at any layer would violate the SLA.'
+  }];
+</script>
+<script>
+'use strict';
+/* ══════════════════════════════════════════════════════════
+   UTILITIES
+══════════════════════════════════════════════════════════ */
+function seededRng(seed){let s=seed%2147483647;if(s<=0)s+=2147483646;return()=>{s=s*16807%2147483647;return(s-1)/2147483646;};}
+function fmtTime(s){return`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;}
+function isPBQ(q){return q&&typeof q.id==='string'&&q.id.startsWith('pbq');}
+function pick(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function normalizeQ(q){return{id:q.id,q:q.question||q.q,o:q.options||q.o,a:q.answer||q.a,t:q.answer_type||q.t||'single',e:q.explanation||q.e||'',d:q.domain||q.d||''};}
+
+function buildExam(allQ,seed,domainFilter,mode){
+  const rng=seededRng(seed);
+  if(mode==='pbq')return PBQS;
+  if(mode==='marathon'){
+    const all=allQ.map(normalizeQ);
+    return all;
+  }
+  let pool=allQ.map(normalizeQ);
+  if(domainFilter&&domainFilter.length)pool=pool.filter(q=>domainFilter.includes(q.d));
+  const byD={};DOMAINS.forEach(d=>{byD[d]=pool.filter(q=>q.d===d);});
+  const pct={'1.0 General Security Concepts':0.12,'2.0 Threats, Vulnerabilities, and Mitigations':0.26,'3.0 Security Architecture':0.20,'4.0 Security Operations':0.26,'5.0 Security Program Management and Oversight':0.16};
+  const totalMC=Math.min(85,pool.length);
+  const sel=[];
+  DOMAINS.forEach(d=>{
+    const avail=byD[d]||[];
+    const need=domainFilter&&domainFilter.length?avail.length:Math.round(totalMC*(pct[d]||0.2));
+    sel.push(...[...avail].sort(()=>rng()-0.5).slice(0,Math.min(need,avail.length)));
+  });
+  const mc=sel.sort(()=>rng()-0.5);
+  if(mode==='practice'||mode==='study')return mc;
+  return[...PBQS,...mc];
+}
+
+function buildDrill(questions,answers){
+  return questions.filter(q=>isPBQ(q)?!pbqCorrect(q,answers[q.id]):!mcCorrect(q,answers[q.id])).map(q=>isPBQ(q)?q:normalizeQ(q));
+}
+
+function mcCorrect(q,ans){
+  if(ans===undefined||ans===null)return false;
+  const ca=Array.isArray(q.a)?q.a:[q.a];
+  if(Array.isArray(ans)){if(ans.length!==ca.length)return false;return ca.every(c=>ans.includes(c));}
+  return ans===q.a;
+}
+
+function pbqCorrect(pbq,ans){
+  if(!ans)return false;
+  if(pbq.type==='HOTSPOT'){
+    if(pbq.subtype==='diagram')return ans.selected===pbq.diagram.correct;
+    if(pbq.subtype==='table')return pbq.table.rows.find(r=>r.id===ans.selected)?.correct===true;
+  }
+  if(pbq.type==='SIMULATION'&&pbq.subtype==='acl'){
+    const rules=ans.aclRules||[];if(rules.length!==pbq.correctRules.length)return false;
+    return pbq.correctRules.every((cr,i)=>{const r=rules[i];return r&&r.action===cr.action&&r.proto===cr.proto&&r.src===cr.src&&r.dst===cr.dst&&r.port===cr.port&&(r.dir||'in')===(cr.dir||'in');});
+  }
+  if(pbq.type==='SIMULATION'&&pbq.subtype==='rbac'){
+    const sel=ans.rbacSelections||{};
+    for(const u of pbq.users)for(const p of pbq.allPerms){const k=`${u.name}|${p}`;if(!!sel[k]!==u.needs.includes(p))return false;}
+    return true;
+  }
+  if(pbq.subtype==='vpn')return vpnCorrect(pbq,ans);
+  if(pbq.subtype==='netdiag')return netdiagCorrect(pbq,ans);
+  if(pbq.subtype==='resiliency')return resilCorrect(pbq,ans);
+  return false;
+}
+
+function calcResults(questions,answers){
+  let total=0,correct=0;
+  const byD={};DOMAINS.forEach(d=>{byD[d]={total:0,correct:0,wrong:[]};});
+  questions.forEach(q=>{
+    total++;
+    const domain=isPBQ(q)?q.domain:q.d;
+    if(!byD[domain])byD[domain]={total:0,correct:0,wrong:[]};
+    byD[domain].total++;
+    const ok=isPBQ(q)?pbqCorrect(q,answers[q.id]):mcCorrect(q,answers[q.id]);
+    if(ok)correct++;else byD[domain].wrong.push(q);
+  });
+  return{total,correct,pct:total>0?correct/total*100:0,byD};
+}
+
+function analyzeWeakConcepts(wrongQs){
+  const res={};
+  for(const[domain,concepts]of Object.entries(CONCEPT_MAP)){
+    const dw=wrongQs.filter(q=>(isPBQ(q)?q.domain:q.d)===domain);
+    if(!dw.length)continue;
+    const cc={};
+    for(const[concept,kws]of Object.entries(concepts)){
+      let count=0;
+      dw.forEach(q=>{const txt=((isPBQ(q)?q.q:q.q)||'').toLowerCase()+' '+((isPBQ(q)?'':q.e)||'').toLowerCase();if(kws.some(kw=>txt.includes(kw)))count++;});
+      if(count>0)cc[concept]=count;
+    }
+    if(Object.keys(cc).length)res[domain]={total:dw.length,concepts:cc,questions:dw};
+  }
+  return res;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PBQ COMPONENTS
+══════════════════════════════════════════════════════════ */
+function DiagramPBQ({data,selected,onSelect,revealed}){
+  const{nodes,edges,width,height,traffic}=data;
+  const gn=id=>nodes.find(n=>n.id===id);
+  return React.createElement('div',{style:{overflowX:'auto'}},
+    React.createElement('svg',{width,height,viewBox:`0 0 ${width} ${height}`,style:{display:'block',minWidth:Math.min(width,360)}},
+      edges.map((e,i)=>{const a=gn(e.f),b=gn(e.t);if(!a||!b)return null;return React.createElement('line',{key:i,x1:a.x+a.w/2,y1:a.y+a.h/2,x2:b.x+b.w/2,y2:b.y+b.h/2,stroke:'#2e4057',strokeWidth:1.5,strokeDasharray:'5 3'});}),
+      nodes.map(n=>{
+        const isSel=selected===n.id,isOk=revealed&&n.id===data.correct,isBad=revealed&&isSel&&n.id!==data.correct;
+        return React.createElement('g',{key:n.id,className:'node-click',onClick:()=>!revealed&&onSelect(n.id)},
+          React.createElement('rect',{x:n.x,y:n.y,width:n.w,height:n.h,rx:6,fill:n.fill,stroke:isOk?'#4caf82':isBad?'#e05252':isSel?'#e8637a':n.stroke,strokeWidth:isOk||isBad||isSel?2:0.8}),
+          React.createElement('text',{x:n.x+n.w/2,y:n.y+n.h/2+1,textAnchor:'middle',dominantBaseline:'middle',fontSize:10.5,fontWeight:600,fill:n.tx,fontFamily:'Sora, sans-serif'},n.label)
+        );
+      }),
+      traffic&&traffic.map((t,i)=>{const node=nodes.find(n=>n.id===t.node);if(!node)return null;return React.createElement('circle',{key:i,cx:node.x+node.w-4,cy:node.y+4,r:5,fill:t.color});})
+    ),
+    traffic&&React.createElement('div',{style:{display:'flex',flexWrap:'wrap',gap:8,marginTop:8}},
+      traffic.map((t,i)=>React.createElement('span',{key:i,style:{display:'flex',alignItems:'center',gap:5,fontSize:11,color:'#8fa3b1'}},
+        React.createElement('span',{style:{width:8,height:8,borderRadius:'50%',background:t.color,display:'inline-block',flexShrink:0}}),t.label
+      ))
+    )
+  );
+}
+
+function TablePBQ({data,selected,onSelect,revealed}){
+  return React.createElement('div',{style:{overflowX:'auto'}},
+    React.createElement('table',{className:'log-table'},
+      React.createElement('thead',null,React.createElement('tr',null,data.headers.map((h,i)=>React.createElement('th',{key:i},h)))),
+      React.createElement('tbody',null,
+        data.rows.map(row=>{
+          const isSel=selected===row.id,isOk=revealed&&row.correct,isBad=revealed&&isSel&&!row.correct;
+          return React.createElement('tr',{key:row.id,className:isOk?'row-ok':isBad?'row-bad':isSel?'row-sel':'',onClick:()=>!revealed&&onSelect(row.id)},
+            row.cells.map((c,i)=>React.createElement('td',{key:i},c))
+          );
+        })
+      )
+    )
+  );
+}
+
+function ACLBuilderPBQ({rules,onChange,revealed,correctRules}){
+  const add=()=>onChange([...rules,{action:'permit',proto:'tcp',src:'0.0.0.0/0',dst:'0.0.0.0/0',port:'any',dir:'in'}]);
+  const del=i=>onChange(rules.filter((_,j)=>j!==i));
+  const upd=(i,f,v)=>{const r=[...rules];r[i]={...r[i],[f]:v};onChange(r);};
+  const up=i=>{if(!i)return;const r=[...rules];[r[i-1],r[i]]=[r[i],r[i-1]];onChange(r);};
+  const dn=i=>{if(i===rules.length-1)return;const r=[...rules];[r[i],r[i+1]]=[r[i+1],r[i]];onChange(r);};
+  const match=(r,c)=>r&&c&&r.action===c.action&&r.proto===c.proto&&r.src===c.src&&r.dst===c.dst&&r.port===c.port&&(r.dir||'in')===(c.dir||'in');
+  return React.createElement('div',null,
+    React.createElement('div',{className:'acl-grid-hdr'},['Action','Proto','Source','Destination','Port','Dir',''].map((h,i)=>React.createElement('span',{key:i,className:'acl-head'},h))),
+    rules.map((r,i)=>{
+      const isOk=revealed&&match(r,correctRules[i]),isBad=revealed&&!match(r,correctRules[i]);
+      return React.createElement('div',{key:i,className:`acl-row-wrap${isOk?' row-ok':isBad?' row-bad':''}`},
+        React.createElement('select',{className:'acl-sel',value:r.action,disabled:revealed,onChange:e=>upd(i,'action',e.target.value)},['permit','deny'].map(v=>React.createElement('option',{key:v},v))),
+        React.createElement('select',{className:'acl-sel',value:r.proto,disabled:revealed,onChange:e=>upd(i,'proto',e.target.value)},['tcp','udp','icmp','any'].map(v=>React.createElement('option',{key:v},v))),
+        React.createElement('input',{className:'acl-inp',value:r.src,disabled:revealed,placeholder:'0.0.0.0/0',onChange:e=>upd(i,'src',e.target.value)}),
+        React.createElement('input',{className:'acl-inp',value:r.dst,disabled:revealed,placeholder:'0.0.0.0/0',onChange:e=>upd(i,'dst',e.target.value)}),
+        React.createElement('input',{className:'acl-inp',value:r.port,disabled:revealed,placeholder:'any',onChange:e=>upd(i,'port',e.target.value)}),
+        React.createElement('select',{className:'acl-sel',value:r.dir||'in',disabled:revealed,onChange:e=>upd(i,'dir',e.target.value)},['in','out'].map(v=>React.createElement('option',{key:v},v))),
+        React.createElement('div',{style:{display:'flex',gap:2}},
+          React.createElement('button',{className:'btn btn-xs btn-ghost',disabled:revealed||!i,onClick:()=>up(i)},'↑'),
+          React.createElement('button',{className:'btn btn-xs btn-ghost',disabled:revealed||i===rules.length-1,onClick:()=>dn(i)},'↓'),
+          !revealed&&React.createElement('button',{className:'btn btn-xs btn-danger',onClick:()=>del(i)},'✕')
+        )
+      );
+    }),
+    !revealed&&React.createElement('button',{className:'btn btn-sm',style:{marginTop:8},onClick:add},'+ Add rule')
+  );
+}
+
+function RBACGridPBQ({users,allPerms,selections,onChange,revealed}){
+  const correct=new Set();users.forEach(u=>u.needs.forEach(p=>correct.add(`${u.name}|${p}`)));
+  const toggle=(u,p)=>{if(revealed)return;const k=`${u}|${p}`;onChange({...selections,[k]:!selections[k]});};
+  return React.createElement('div',{style:{overflowX:'auto'}},
+    React.createElement('table',{className:'rbac-table'},
+      React.createElement('thead',null,React.createElement('tr',null,
+        React.createElement('th',null,'Permission'),
+        ...users.map(u=>React.createElement('th',{key:u.name},
+          React.createElement('div',null,u.name),
+          React.createElement('div',{style:{fontSize:10,fontWeight:400,color:'#4a6070',marginTop:2}},u.role)
+        ))
+      )),
+      React.createElement('tbody',null,
+        allPerms.map(perm=>React.createElement('tr',{key:perm},
+          React.createElement('td',null,perm),
+          ...users.map(u=>{
+            const k=`${u.name}|${perm}`,checked=!!selections[k];
+            const isOk=revealed&&correct.has(k)&&checked,isMiss=revealed&&correct.has(k)&&!checked,isBad=revealed&&!correct.has(k)&&checked;
+            return React.createElement('td',{key:u.name,className:isOk?'c-ok':isBad?'c-bad':isMiss?'c-miss':'',onClick:()=>toggle(u.name,perm)},
+              checked?React.createElement('span',{style:{color:isOk&&revealed?'#4caf82':isBad&&revealed?'#e05252':'#f0f4f7',fontSize:17}},'☑')
+                     :React.createElement('span',{style:{color:isMiss?'#f5c842':'#3a5068',fontSize:17}},'☐')
+            );
+          })
+        ))
+      )
+    )
+  );
+}
+
+/* ══ VPN CONCENTRATOR COMPONENT ══ */
+function VPNConcSim({pbq,ans,upd,revealed}){
+  const [activeConcIdx,setActiveConcIdx]=React.useState(null);
+  const [activeTab,setActiveTab]=React.useState('p1');
+  const state=ans.vpn||{};
+  const setState=v=>upd('vpn',v);
+
+  const getF=(ci,phase,field)=>(state[`c${ci}_${phase}_${field}`]||'Select');
+  const setF=(ci,phase,field,val)=>setState({...state,[`c${ci}_${phase}_${field}`]:val});
+
+  const correctState=pbq.correctState;
+  const isFieldOk=(ci,field,val,correctVal)=>revealed&&val===correctVal;
+  const isFieldBad=(ci,field,val,correctVal)=>revealed&&val!=='Select'&&val!==correctVal;
+
+  const isConcConfigured=(ci)=>{
+    const c=ci===0?'conc1':'conc2';
+    const keys=[`c${ci}_p1_auth`,`c${ci}_p1_enc`,`c${ci}_p1_hash`,`c${ci}_p2_proto`,`c${ci}_p2_enc`,`c${ci}_p2_hash`];
+    return keys.some(k=>state[k]&&state[k]!=='Select');
+  };
+
+  return React.createElement('div',null,
+    React.createElement('p',{className:'diagram-hint'},'👆 Click a VPN Concentrator to configure its settings'),
+    /* Diagram row */
+    React.createElement('div',{className:'vpn-diagram'},
+      React.createElement('div',{className:'vpn-office'},
+        React.createElement('div',{style:{fontSize:11,color:'var(--t2)',fontWeight:600,marginBottom:4}},'Branch Office 1'),
+        React.createElement('div',{style:{fontSize:10,color:'var(--t3)',fontFamily:'IBM Plex Mono,monospace',marginBottom:6}},'192.168.1.0/24'),
+        React.createElement('button',{
+          className:`vpn-conc-btn${isConcConfigured(0)?' configured':''}${activeConcIdx===0?' active-conc':''}`,
+          onClick:()=>{setActiveConcIdx(activeConcIdx===0?null:0);setActiveTab('p1');}
+        },
+          React.createElement('span',{style:{fontSize:22}},'🔒'),
+          React.createElement('span',null,'VPN Concentrator 1'),
+          React.createElement('span',{style:{fontSize:10,fontFamily:'IBM Plex Mono,monospace',color:'var(--t3)'}},pbq.concentrators[0].peerIP)
+        )
+      ),
+      React.createElement('div',{className:'vpn-cloud'},
+        React.createElement('div',{style:{fontSize:28}},'☁️'),
+        React.createElement('div',{style:{fontWeight:600,fontSize:11}},'Internet'),
+        React.createElement('div',{className:'vpn-line',style:{width:'80%',margin:'6px auto'}})
+      ),
+      React.createElement('div',{className:'vpn-office'},
+        React.createElement('div',{style:{fontSize:11,color:'var(--t2)',fontWeight:600,marginBottom:4}},'Branch Office 2'),
+        React.createElement('div',{style:{fontSize:10,color:'var(--t3)',fontFamily:'IBM Plex Mono,monospace',marginBottom:6}},'192.168.2.0/24'),
+        React.createElement('button',{
+          className:`vpn-conc-btn${isConcConfigured(1)?' configured':''}${activeConcIdx===1?' active-conc':''}`,
+          onClick:()=>{setActiveConcIdx(activeConcIdx===1?null:1);setActiveTab('p1');}
+        },
+          React.createElement('span',{style:{fontSize:22}},'🔒'),
+          React.createElement('span',null,'VPN Concentrator 2'),
+          React.createElement('span',{style:{fontSize:10,fontFamily:'IBM Plex Mono,monospace',color:'var(--t3)'}},pbq.concentrators[1].peerIP)
+        )
+      )
+    ),
+    /* Config panel */
+    activeConcIdx!==null&&React.createElement('div',{className:'vpn-modal'},
+      React.createElement('div',{style:{display:'flex',alignItems:'center',gap:8,marginBottom:10}},
+        React.createElement('span',{style:{fontWeight:700,fontSize:13,color:'var(--rose2)'}},pbq.concentrators[activeConcIdx].label),
+        React.createElement('button',{className:'btn btn-xs btn-ghost',style:{marginLeft:'auto'},onClick:()=>setActiveConcIdx(null)},'✕ Close')
+      ),
+      React.createElement('div',{className:'vpn-tabs'},
+        ['p1','p2'].map((t,i)=>React.createElement('button',{key:t,className:`vpn-tab${activeTab===t?' active':''}`,onClick:()=>setActiveTab(t)},`Phase ${i+1}`))
+      ),
+      /* Phase 1 */
+      activeTab==='p1'&&React.createElement('div',null,
+        React.createElement('div',{className:'vpn-field'},React.createElement('span',{className:'vpn-label'},'Peer IP address:'),React.createElement('span',{className:'vpn-value'},pbq.concentrators[activeConcIdx].peerIP)),
+        React.createElement('div',{className:'vpn-field'},
+          React.createElement('span',{className:'vpn-label'},'Auth method:'),
+          React.createElement('select',{className:`vpn-select${revealed?(getF(activeConcIdx,'p1','auth')===(activeConcIdx===0?correctState.conc1.p1auth:correctState.conc2.p1auth)?'field-ok':'field-bad'):''}`,
+            value:getF(activeConcIdx,'p1','auth'),disabled:revealed,
+            onChange:e=>setF(activeConcIdx,'p1','auth',e.target.value)},
+            pbq.concentrators[activeConcIdx].phase1.authOpts.map(o=>React.createElement('option',{key:o},o))
+          )
+        ),
+        React.createElement('div',{className:'vpn-field'},React.createElement('span',{className:'vpn-label'},'Negotiation mode:'),React.createElement('span',{className:'vpn-value'},'MAIN')),
+        React.createElement('div',{className:'vpn-field'},
+          React.createElement('span',{className:'vpn-label'},'Encryption algorithm:'),
+          React.createElement('select',{className:`vpn-select${revealed?(getF(activeConcIdx,'p1','enc')===(activeConcIdx===0?correctState.conc1.p1enc:correctState.conc2.p1enc)?'field-ok':'field-bad'):''}`,
+            value:getF(activeConcIdx,'p1','enc'),disabled:revealed,
+            onChange:e=>setF(activeConcIdx,'p1','enc',e.target.value)},
+            pbq.concentrators[activeConcIdx].phase1.encOpts.map(o=>React.createElement('option',{key:o},o))
+          )
+        ),
+        React.createElement('div',{className:'vpn-field'},
+          React.createElement('span',{className:'vpn-label'},'Hash algorithm:'),
+          React.createElement('select',{className:`vpn-select${revealed?(getF(activeConcIdx,'p1','hash')===(activeConcIdx===0?correctState.conc1.p1hash:correctState.conc2.p1hash)?'field-ok':'field-bad'):''}`,
+            value:getF(activeConcIdx,'p1','hash'),disabled:revealed,
+            onChange:e=>setF(activeConcIdx,'p1','hash',e.target.value)},
+            pbq.concentrators[activeConcIdx].phase1.hashOpts.map(o=>React.createElement('option',{key:o},o))
+          )
+        ),
+        React.createElement('div',{className:'vpn-field'},React.createElement('span',{className:'vpn-label'},'DH key group:'),React.createElement('span',{className:'vpn-value'},'14'))
+      ),
+      /* Phase 2 */
+      activeTab==='p2'&&React.createElement('div',null,
+        React.createElement('div',{className:'vpn-field'},React.createElement('span',{className:'vpn-label'},'Mode:'),React.createElement('span',{className:'vpn-value'},'Tunnel')),
+        React.createElement('div',{className:'vpn-field'},
+          React.createElement('span',{className:'vpn-label'},'Protocol:'),
+          React.createElement('select',{className:`vpn-select${revealed?(getF(activeConcIdx,'p2','proto')===(activeConcIdx===0?correctState.conc1.p2proto:correctState.conc2.p2proto)?'field-ok':'field-bad'):''}`,
+            value:getF(activeConcIdx,'p2','proto'),disabled:revealed,
+            onChange:e=>setF(activeConcIdx,'p2','proto',e.target.value)},
+            pbq.concentrators[activeConcIdx].phase2.protoOpts.map(o=>React.createElement('option',{key:o},o))
+          )
+        ),
+        React.createElement('div',{className:'vpn-field'},
+          React.createElement('span',{className:'vpn-label'},'Encryption algorithm:'),
+          React.createElement('select',{className:`vpn-select${revealed?(getF(activeConcIdx,'p2','enc')===(activeConcIdx===0?correctState.conc1.p2enc:correctState.conc2.p2enc)?'field-ok':'field-bad'):''}`,
+            value:getF(activeConcIdx,'p2','enc'),disabled:revealed,
+            onChange:e=>setF(activeConcIdx,'p2','enc',e.target.value)},
+            pbq.concentrators[activeConcIdx].phase2.encOpts.map(o=>React.createElement('option',{key:o},o))
+          )
+        ),
+        React.createElement('div',{className:'vpn-field'},
+          React.createElement('span',{className:'vpn-label'},'Hash algorithm:'),
+          React.createElement('select',{className:`vpn-select${revealed?(getF(activeConcIdx,'p2','hash')===(activeConcIdx===0?correctState.conc1.p2hash:correctState.conc2.p2hash)?'field-ok':'field-bad'):''}`,
+            value:getF(activeConcIdx,'p2','hash'),disabled:revealed,
+            onChange:e=>setF(activeConcIdx,'p2','hash',e.target.value)},
+            pbq.concentrators[activeConcIdx].phase2.hashOpts.map(o=>React.createElement('option',{key:o},o))
+          )
+        ),
+        React.createElement('div',{className:'vpn-field'},React.createElement('span',{className:'vpn-label'},'Local network/mask:'),React.createElement('span',{className:'vpn-value'},pbq.concentrators[activeConcIdx].phase2.localNet+'/255.255.255.0')),
+        React.createElement('div',{className:'vpn-field'},React.createElement('span',{className:'vpn-label'},'Remote network/mask:'),React.createElement('span',{className:'vpn-value'},pbq.concentrators[activeConcIdx].phase2.remotNet+'/255.255.255.0'))
+      )
+    )
+  );
+}
+
+/* VPN SCORING HELPER */
+function vpnCorrect(pbq,ans){
+  if(!ans||!ans.vpn)return false;
+  const s=ans.vpn;const cs=pbq.correctState;
+  return s.c0_p1_auth===cs.conc1.p1auth&&s.c0_p1_enc===cs.conc1.p1enc&&s.c0_p1_hash===cs.conc1.p1hash&&
+         s.c0_p2_proto===cs.conc1.p2proto&&s.c0_p2_enc===cs.conc1.p2enc&&s.c0_p2_hash===cs.conc1.p2hash&&
+         s.c1_p1_auth===cs.conc2.p1auth&&s.c1_p1_enc===cs.conc2.p1enc&&s.c1_p1_hash===cs.conc2.p1hash&&
+         s.c1_p2_proto===cs.conc2.p2proto&&s.c1_p2_enc===cs.conc2.p2enc&&s.c1_p2_hash===cs.conc2.p2hash;
+}
+
+/* ══ NETWORK DIAGRAM COMPONENT ══ */
+function NetDiagSim({pbq,ans,upd,revealed}){
+  const [pickerOpen,setPickerOpen]=React.useState(null);
+  const slots=pbq.slots;
+  const subnetVal=ans.subnet||'Select Subnet';
+  const slotVals=ans.slots||{};
+  const setSlot=(id,val)=>{setPickerOpen(null);upd('slots',{...slotVals,[id]:val});};
+  const setSubnet=v=>upd('subnet',v);
+
+  const ICONS={'WAF':'🧱','Load Balancer':'⚖️','Instance':'🖥️','Autoscaling Instance':'📈','Database':'🗄️'};
+  const areaColor={outside:'#2e4057',public:'#1a2e1a',middle:'#2e2e10',lower:'#1a2038',private:'#1a1a30'};
+  const areaBorder={outside:'#3a5068',public:'#2a5a2a',middle:'#5a5a10',lower:'#2a2a50',private:'#2a2a5a'};
+
+  return React.createElement('div',{style:{position:'relative'}},
+    React.createElement('p',{className:'diagram-hint'},'👆 Click a ? slot to assign a component · Use the dropdown to set the middle subnet type'),
+    /* Legend */
+    React.createElement('div',{style:{display:'flex',flexWrap:'wrap',gap:8,marginBottom:10}},
+      Object.entries(ICONS).map(([name,icon])=>React.createElement('span',{key:name,style:{fontSize:11,display:'flex',alignItems:'center',gap:4,color:'var(--t2)',background:'var(--navy3)',padding:'3px 8px',borderRadius:4,border:'1px solid var(--bdr)'}},icon,' ',name))
+    ),
+    /* Diagram */
+    React.createElement('div',{style:{background:'var(--navy3)',border:'1px solid var(--bdr)',borderRadius:'var(--radl)',padding:16}},
+      /* Top slot */
+      React.createElement('div',{style:{display:'flex',justifyContent:'center',marginBottom:8}},
+        React.createElement(SlotBtn,{slot:slots[0],val:slotVals[slots[0].id],icons:ICONS,revealed,pickerOpen,setPickerOpen,onSet:setSlot,pbq})
+      ),
+      /* Cloud / internet gateway connectors */
+      React.createElement('div',{style:{display:'flex',justifyContent:'center',gap:4,marginBottom:8}},
+        React.createElement('div',{style:{width:1,height:16,background:'var(--bdr2)',margin:'0 auto'}})
+      ),
+      /* Public subnet box */
+      React.createElement('div',{style:{border:'2px solid #2a5a2a',borderRadius:8,padding:'10px 12px',background:'rgba(26,46,26,0.5)',marginBottom:6}},
+        React.createElement('div',{style:{fontSize:10,color:'#4caf82',fontWeight:700,marginBottom:8,textTransform:'uppercase',letterSpacing:'0.07em'}},'Public Subnet'),
+        React.createElement('div',{style:{display:'flex',justifyContent:'space-around'}},
+          React.createElement(SlotBtn,{slot:slots[1],val:slotVals[slots[1].id],icons:ICONS,revealed,pickerOpen,setPickerOpen,onSet:setSlot,pbq}),
+          React.createElement(SlotBtn,{slot:slots[2],val:slotVals[slots[2].id],icons:ICONS,revealed,pickerOpen,setPickerOpen,onSet:setSlot,pbq})
+        )
+      ),
+      /* Middle connector + subnet dropdown */
+      React.createElement('div',{style:{display:'flex',alignItems:'center',justifyContent:'center',gap:12,margin:'8px 0'}},
+        React.createElement('div',{style:{width:1,height:16,background:'var(--bdr2)'}}),
+        React.createElement(SlotBtn,{slot:slots[3],val:slotVals[slots[3].id],icons:ICONS,revealed,pickerOpen,setPickerOpen,onSet:setSlot,pbq}),
+        React.createElement('div',{style:{width:1,height:16,background:'var(--bdr2)'}})
+      ),
+      /* Middle dropdown */
+      React.createElement('div',{style:{display:'flex',justifyContent:'center',marginBottom:6}},
+        React.createElement('div',{style:{display:'flex',alignItems:'center',gap:8,background:'var(--navy4)',padding:'6px 10px',borderRadius:6,border:'1px solid var(--bdr)'}},
+          React.createElement('span',{style:{fontSize:11,color:'var(--t2)',fontWeight:600}},'Subnet type:'),
+          React.createElement('select',{
+            className:`subnet-sel${revealed?(subnetVal===pbq.subnetDropdown.correct?' subnet-ok':' subnet-bad'):''}`,
+            value:subnetVal,disabled:revealed,onChange:e=>setSubnet(e.target.value)},
+            pbq.subnetDropdown.opts.map(o=>React.createElement('option',{key:o},o))
+          )
+        )
+      ),
+      /* Lower tier (3 slots) */
+      React.createElement('div',{style:{border:'2px solid #2a2a60',borderRadius:8,padding:'10px 12px',background:'rgba(26,26,48,0.5)',marginBottom:6}},
+        React.createElement('div',{style:{fontSize:10,color:'#7c87e8',fontWeight:700,marginBottom:8,textTransform:'uppercase',letterSpacing:'0.07em'}},'Application Tier'),
+        React.createElement('div',{style:{display:'flex',justifyContent:'space-around'}},
+          React.createElement(SlotBtn,{slot:slots[4],val:slotVals[slots[4].id],icons:ICONS,revealed,pickerOpen,setPickerOpen,onSet:setSlot,pbq}),
+          React.createElement(SlotBtn,{slot:slots[5],val:slotVals[slots[5].id],icons:ICONS,revealed,pickerOpen,setPickerOpen,onSet:setSlot,pbq}),
+          React.createElement(SlotBtn,{slot:slots[6],val:slotVals[slots[6].id],icons:ICONS,revealed,pickerOpen,setPickerOpen,onSet:setSlot,pbq})
+        )
+      ),
+      /* Private subnet */
+      React.createElement('div',{style:{border:'2px solid #2a2a80',borderRadius:8,padding:'10px 12px',background:'rgba(20,20,50,0.5)'}},
+        React.createElement('div',{style:{fontSize:10,color:'#9999e8',fontWeight:700,marginBottom:8,textTransform:'uppercase',letterSpacing:'0.07em'}},'Private Subnet'),
+        React.createElement('div',{style:{display:'flex',justifyContent:'center'}},
+          React.createElement(SlotBtn,{slot:slots[7],val:slotVals[slots[7].id],icons:ICONS,revealed,pickerOpen,setPickerOpen,onSet:setSlot,pbq})
+        )
+      )
+    ),
+    /* Component picker dropdown */
+    pickerOpen&&!revealed&&React.createElement('div',{className:'comp-picker',style:{top:'50%',left:'50%',transform:'translate(-50%,-50%)'}},
+      React.createElement('div',{style:{fontSize:11,color:'var(--t2)',fontWeight:600,padding:'4px 10px 8px',borderBottom:'1px solid var(--bdr)',marginBottom:4}},'Select component:'),
+      pbq.components.map(c=>React.createElement('button',{key:c,className:'comp-picker-item',onClick:()=>setSlot(pickerOpen,c)},`${ICONS[c]} ${c}`))
+    )
+  );
+}
+
+function SlotBtn({slot,val,icons,revealed,pickerOpen,setPickerOpen,onSet,pbq}){
+  const hasVal=val&&val!=='?';
+  const isOk=revealed&&val===slot.correct;
+  const isBad=revealed&&hasVal&&val!==slot.correct;
+  const showCorrect=revealed&&!hasVal;
+  return React.createElement('div',{style:{display:'flex',flexDirection:'column',alignItems:'center',gap:3}},
+    React.createElement('button',{
+      onClick:()=>!revealed&&setPickerOpen(pickerOpen===slot.id?null:slot.id),
+      style:{width:52,height:52,borderRadius:'50%',border:`2px solid ${isOk?'#4caf82':isBad?'#e05252':'var(--bdr2)'}`,
+        background:isOk?'rgba(76,175,130,0.15)':isBad?'rgba(224,82,82,0.12)':'var(--navy4)',
+        cursor:revealed?'default':'pointer',fontSize:20,display:'flex',alignItems:'center',justifyContent:'center',
+        transition:'all 0.15s',transform:pickerOpen===slot.id?'scale(1.15)':'',
+        boxShadow:pickerOpen===slot.id?'0 0 0 3px rgba(232,99,122,0.3)':''}
+      },
+      hasVal?icons[val]||'?':'❓'
+    ),
+    React.createElement('span',{style:{fontSize:9,color:isOk?'#4caf82':isBad?'#e05252':'var(--t3)',fontWeight:600,textAlign:'center',maxWidth:70,lineHeight:1.2}},
+      hasVal?(isOk?`✓ ${val}`:isBad?`✗ ${val}`:val):(showCorrect?slot.correct:'?')
+    )
+  );
+}
+
+function netdiagCorrect(pbq,ans){
+  if(!ans)return false;
+  const sv=ans.slots||{};const subnet=ans.subnet||'';
+  const slotsOk=pbq.slots.every(s=>sv[s.id]===s.correct);
+  return slotsOk&&subnet===pbq.subnetDropdown.correct;
+}
+
+/* ══ RESILIENCY COMPONENT ══ */
+function ResiliencySim({pbq,ans,upd,revealed}){
+  const sel=ans.resil||{};
+  const setSel=(id,val)=>upd('resil',{...sel,[id]:val});
+  return React.createElement('div',null,
+    React.createElement('p',{className:'diagram-hint'},'🏢 Select the appropriate component for each location. 99.999% SLA = 5 nines = ~5 min downtime/year'),
+    React.createElement('div',{className:'resil-grid'},
+      ['Data Center A','Data Center B'].map((dc,dci)=>React.createElement('div',{key:dc,className:'resil-dc'},
+        React.createElement('div',{className:'resil-dc-title'},
+          React.createElement('span',null,dci===0?'🏢':'🏗️'),
+          dc
+        ),
+        pbq.locations.filter(l=>l.dc===dc).map(loc=>React.createElement('div',{key:loc.id,className:'resil-row'},
+          React.createElement('div',{className:'resil-cat'},loc.category),
+          React.createElement('select',{
+            className:`resil-sel${revealed?(sel[loc.id]===loc.correct?' r-ok':sel[loc.id]?' r-bad':''):''}`,
+            value:sel[loc.id]||'',disabled:revealed,
+            onChange:e=>setSel(loc.id,e.target.value)},
+            React.createElement('option',{value:''},'— Select —'),
+            loc.opts.map(o=>React.createElement('option',{key:o},o))
+          ),
+          revealed&&sel[loc.id]!==loc.correct&&React.createElement('div',{style:{fontSize:10,color:'var(--teal2)',marginTop:3}},`✓ ${loc.correct}`)
+        ))
+      ))
+    )
+  );
+}
+
+function resilCorrect(pbq,ans){
+  if(!ans||!ans.resil)return false;
+  return pbq.locations.every(l=>ans.resil[l.id]===l.correct);
+}
+
+function PBQQuestion({pbq,answer,onAnswer,revealed}){
+  const ans=answer||{};const upd=(k,v)=>onAnswer({...ans,[k]:v});
+  const defACL=[{action:'permit',proto:'tcp',src:'0.0.0.0/0',dst:'0.0.0.0/0',port:'any',dir:'in'}];
+  const explText=pbq.type==='HOTSPOT'&&pbq.subtype==='diagram'?pbq.diagram.explanation:pbq.type==='HOTSPOT'&&pbq.subtype==='table'?pbq.table.explanation:pbq.explanation||'';
+  return React.createElement('div',{className:'pbq-wrap'},
+    React.createElement('div',{className:'card-header'},
+      React.createElement('span',{className:'badge badge-teal'},'PBQ'),
+      React.createElement('span',{className:'badge badge-rose',style:{marginLeft:4}},pbq.type),
+      React.createElement('span',{style:{fontSize:10,color:'#4a6070',marginLeft:'auto',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.06em'}},pbq.domain.split(' ')[0])
+    ),
+    React.createElement('div',{className:'pbq-body'},
+      pbq.q.split('\n').map((line,i)=>React.createElement('p',{key:i,className:'q-text',style:{marginBottom:4}},line)),
+      pbq.type==='HOTSPOT'&&pbq.subtype==='diagram'&&React.createElement('div',null,
+        React.createElement('p',{className:'diagram-hint'},'👆 Click the correct device in the diagram'),
+        React.createElement(DiagramPBQ,{data:pbq.diagram,selected:ans.selected,onSelect:v=>upd('selected',v),revealed})
+      ),
+      pbq.type==='HOTSPOT'&&pbq.subtype==='table'&&React.createElement('div',null,
+        React.createElement('p',{className:'diagram-hint'},'👆 Click the log row matching the described attack'),
+        React.createElement(TablePBQ,{data:pbq.table,selected:ans.selected,onSelect:v=>upd('selected',v),revealed})
+      ),
+      pbq.type==='SIMULATION'&&pbq.subtype==='acl'&&React.createElement(ACLBuilderPBQ,{rules:ans.aclRules||defACL,onChange:r=>upd('aclRules',r),revealed,correctRules:pbq.correctRules}),
+      pbq.type==='SIMULATION'&&pbq.subtype==='rbac'&&React.createElement(RBACGridPBQ,{users:pbq.users,allPerms:pbq.allPerms,selections:ans.rbacSelections||{},onChange:s=>upd('rbacSelections',s),revealed}),
+      pbq.type==='SIMULATION'&&pbq.subtype==='vpn'&&React.createElement(VPNConcSim,{pbq,ans,upd,revealed}),
+      pbq.type==='SIMULATION'&&pbq.subtype==='netdiag'&&React.createElement(NetDiagSim,{pbq,ans,upd,revealed}),
+      pbq.type==='HOTSPOT'&&pbq.subtype==='resiliency'&&React.createElement(ResiliencySim,{pbq,ans,upd,revealed}),
+      revealed&&React.createElement('div',{className:'expl'},React.createElement('strong',null,'Explanation: '),explText)
+    )
+  );
+}
+
+function MCQuestion({q,answer,onAnswer,revealed}){
+  const isMulti=q.t==='multi',ca=Array.isArray(q.a)?q.a:[q.a],optKeys=Object.keys(q.o),chooseN=Array.isArray(q.a)?q.a.length:1;
+  const toggle=key=>{if(revealed)return;if(isMulti){const cur=answer||[];onAnswer(cur.includes(key)?cur.filter(k=>k!==key):[...cur,key]);}else onAnswer(key);};
+  const isSel=key=>isMulti?(answer||[]).includes(key):answer===key;
+  const isOk=key=>ca.includes(key);
+  const cls=key=>{if(!revealed)return isSel(key)?'opt sel':'opt';if(isOk(key))return'opt correct';if(isSel(key)&&!isOk(key))return'opt wrong';return'opt';};
+  return React.createElement('div',null,
+    React.createElement('span',{className:'domain-tag'},q.d),
+    isMulti&&React.createElement('p',{className:'multi-hint'},`⚠ Choose ${chooseN} — select all that apply`),
+    React.createElement('p',{className:'q-text'},q.q),
+    React.createElement('div',{className:'options'},
+      optKeys.map(key=>React.createElement('button',{key,className:cls(key),disabled:revealed,onClick:()=>toggle(key)},
+        React.createElement('span',{className:'opt-key'},key),React.createElement('span',null,q.o[key])
+      ))
+    ),
+    revealed&&React.createElement('div',{className:'expl'},React.createElement('strong',null,'Explanation: '),q.e)
+  );
+}
+</script>
+<script>
+'use strict';
+/* ══════════════════════════════════════════════════════════
+   SCORE RING
+══════════════════════════════════════════════════════════ */
+function ScoreRing({pct}){
+  const r=48,c=2*Math.PI*r,pass=pct>=83;
+  const col=pct>=90?'#f5c842':pct>=83?'#4caf82':pct>=60?'#e09b34':'#e05252';
+  return React.createElement('svg',{width:130,height:130,viewBox:'0 0 130 130'},
+    React.createElement('circle',{cx:65,cy:65,r,fill:'none',stroke:'#1b2d42',strokeWidth:11}),
+    React.createElement('circle',{cx:65,cy:65,r,fill:'none',stroke:col,strokeWidth:11,
+      strokeDasharray:`${c*(pct/100)} ${c*(1-pct/100)}`,strokeLinecap:'round',transform:'rotate(-90 65 65)'}),
+    React.createElement('text',{x:65,y:61,textAnchor:'middle',fontSize:22,fontWeight:700,fill:'#f0f4f7',fontFamily:'IBM Plex Mono,monospace'},`${Math.round(pct)}%`),
+    React.createElement('text',{x:65,y:78,textAnchor:'middle',fontSize:12,fill:col,fontWeight:600,fontFamily:'Sora,sans-serif'},pass?'PASS ✓':'FAIL')
+  );
+}
+
+/* XP BAR */
+function XPBar({progress}){
+  const lv=getLevel(progress.xp);const L=LEVELS[lv];
+  const nextXP=nextLevelXP(progress.xp);const pct=xpPct(progress.xp);
+  return React.createElement('div',{className:'xp-bar-wrap'},
+    React.createElement('div',{className:'xp-label'},
+      React.createElement('span',{className:'xp-level'},`${L.emoji} ${L.name}`),
+      React.createElement('span',{className:'xp-pts'},nextXP?`${progress.xp} / ${nextXP} XP`:`${progress.xp} XP — MAX LEVEL`)
+    ),
+    React.createElement('div',{className:'xp-bar-track'},
+      React.createElement('div',{className:'xp-bar-fill',style:{width:`${pct}%`}})
+    )
+  );
+}
+
+/* BADGE SHELF */
+function BadgeShelf({earned}){
+  return React.createElement('div',{className:'badge-shelf'},
+    BADGES.map(b=>{
+      const own=earned.includes(b.id);
+      return React.createElement('div',{key:b.id,className:`badge-item${own?' earned':' locked'}`,title:b.desc},
+        React.createElement('div',{className:'badge-emoji'},b.emoji),
+        React.createElement('div',{className:'badge-name'},b.name)
+      );
+    })
+  );
+}
+
+/* WEAK AREAS PANEL */
+function WeakAreasPanel({analysis,onDrill}){
+  const [open,setOpen]=React.useState({});
+  const allWrong=Object.values(analysis).reduce((s,d)=>s+d.total,0);
+  if(!allWrong)return React.createElement('div',{style:{textAlign:'center',padding:'2rem',color:'#8fa3b1',fontSize:14}},
+    React.createElement('div',{style:{fontSize:40,marginBottom:8}},'🎉'),
+    'No wrong answers to analyze! You nailed it.'
+  );
+  return React.createElement('div',null,
+    React.createElement('div',{style:{display:'flex',alignItems:'center',gap:10,marginBottom:'1rem',flexWrap:'wrap'}},
+      React.createElement('p',{style:{fontSize:13,color:'#8fa3b1',flex:1}},`${allWrong} questions need attention`),
+      React.createElement('button',{className:'btn btn-gold',onClick:()=>onDrill(null)},'🎯 Drill all missed')
+    ),
+    Object.entries(analysis).map(([domain,data])=>{
+      const di=DOMAINS.indexOf(domain);const isOpen=open[domain];
+      return React.createElement('div',{key:domain,className:'weak-domain'},
+        React.createElement('div',{className:'weak-domain-hdr',onClick:()=>setOpen(o=>({...o,[domain]:!o[domain]}))},
+          React.createElement('span',{className:'badge badge-red'},`${data.total} wrong`),
+          React.createElement('span',{style:{fontWeight:600,fontSize:13,flex:1}},DSHORT[di]||domain),
+          React.createElement('span',{style:{fontSize:13,color:'#4a6070'}},isOpen?'▲':'▼')
+        ),
+        isOpen&&React.createElement('div',{className:'weak-domain-body'},
+          React.createElement('p',{style:{fontSize:11,color:'#8fa3b1',marginBottom:10,textTransform:'uppercase',letterSpacing:'0.05em',fontWeight:600}},'Concept areas with most errors'),
+          Object.entries(data.concepts).sort((a,b)=>b[1]-a[1]).map(([concept,count])=>{
+            const pctBar=Math.min(100,count/data.total*100);
+            const col=pctBar>60?'#e05252':pctBar>30?'#e09b34':'#f5c842';
+            return React.createElement('div',{key:concept,className:'concept-row'},
+              React.createElement('span',{className:'concept-name'},concept),
+              React.createElement('div',{className:'concept-bar-track'},React.createElement('div',{className:'concept-bar-fill',style:{width:`${pctBar}%`,background:col}})),
+              React.createElement('span',{className:'concept-wrong'},count)
+            );
+          }),
+          React.createElement('div',{style:{marginTop:12,display:'flex',gap:8,flexWrap:'wrap',justifyContent:'flex-end'}},
+            React.createElement('button',{className:'btn btn-sm btn-gold',onClick:()=>onDrill(data.questions)},`Drill ${DSHORT[di]||'domain'}`)
+          )
+        )
+      );
+    })
+  );
+}
+
+/* REVIEW PANEL */
+function ReviewPanel({questions,answers,flags,onDrill}){
+  const [tab,setTab]=React.useState('wrong');
+  const allWrong=questions.filter(q=>isPBQ(q)?!pbqCorrect(q,answers[q.id]):!mcCorrect(q,answers[q.id]));
+  const filtered=questions.filter(q=>{
+    const id=q.id;const pb=isPBQ(q);
+    const ok=pb?pbqCorrect(q,answers[id]):mcCorrect(q,answers[id]);
+    if(tab==='wrong')return!ok;if(tab==='correct')return ok;
+    if(tab==='flagged')return flags.has(id);if(tab==='pbq')return pb;
+    return true;
+  });
+  const{pct}=calcResults(questions,answers);
+  return React.createElement('div',null,
+    React.createElement('div',{style:{display:'flex',alignItems:'center',gap:8,marginBottom:'0.75rem',flexWrap:'wrap'}},
+      allWrong.length>0&&React.createElement('button',{className:'btn btn-sm btn-gold',onClick:()=>onDrill(null)},'🎯 Drill missed'),
+      React.createElement('span',{className:`badge ${pct>=83?'badge-green':'badge-red'}`,style:{marginLeft:'auto'}},`${Math.round(pct)}%`)
+    ),
+    React.createElement('div',{className:'tabs',style:{marginBottom:'1rem'}},
+      [{v:'wrong',l:`Wrong (${allWrong.length})`},{v:'correct',l:'Correct'},{v:'all',l:'All'},{v:'flagged',l:'Flagged'},{v:'pbq',l:'PBQs'}].map(({v,l})=>
+        React.createElement('button',{key:v,className:`tab${tab===v?' active':''}`,onClick:()=>setTab(v)},l)
+      )
+    ),
+    React.createElement('p',{style:{fontSize:12,color:'#8fa3b1',marginBottom:12}},`${filtered.length} question${filtered.length!==1?'s':''}`),
+    filtered.map((q,i)=>{
+      const id=q.id;const pb=isPBQ(q);
+      const ok=pb?pbqCorrect(q,answers[id]):mcCorrect(q,answers[id]);
+      const hasAns=pb?(answers[id]&&(answers[id].selected!==undefined||answers[id].aclRules||answers[id].rbacSelections)):answers[id]!==undefined;
+      let cls='review-item';if(!hasAns)cls+=' skipped';else if(ok)cls+=' correct';else cls+=' wrong';
+      return React.createElement('div',{key:id,className:cls},
+        React.createElement('div',{style:{display:'flex',alignItems:'center',gap:6,marginBottom:10,flexWrap:'wrap'}},
+          React.createElement('span',{className:`badge ${!hasAns?'badge-gray':ok?'badge-green':'badge-red'}`},!hasAns?'Skipped':ok?'✓ Correct':'✗ Wrong'),
+          pb&&React.createElement('span',{className:'badge badge-teal'},'PBQ'),
+          flags.has(id)&&React.createElement('span',{style:{color:'#f5c842'}},`⚑`),
+          React.createElement('span',{style:{fontSize:11,color:'#4a6070',marginLeft:'auto'}},`Q${i+1}`)
+        ),
+        pb?React.createElement(PBQQuestion,{pbq:q,answer:answers[id]||{},onAnswer:()=>{},revealed:true})
+          :React.createElement(MCQuestion,{q,answer:answers[id],onAnswer:()=>{},revealed:true})
+      );
+    })
+  );
+}
+</script>
+<script>
+'use strict';
+/* ══════════════════════════════════════════════════════════
+   MAIN APP
+══════════════════════════════════════════════════════════ */
+function App({allQ}){
+  const [screen,setScreen]=React.useState('home');
+  const [mode,setMode]=React.useState('exam');
+  const [domainFilter,setDF]=React.useState([]);
+  const [questions,setQuestions]=React.useState([]);
+  const [idx,setIdx]=React.useState(0);
+  const [answers,setAnswers]=React.useState({});
+  const [flags,setFlags]=React.useState(new Set());
+  const [revealed,setRevealed]=React.useState(new Set());
+  const [timeLeft,setTimeLeft]=React.useState(90*60);
+  const [resultsTab,setResultsTab]=React.useState('score');
+  const [isDrill,setIsDrill]=React.useState(false);
+  const [prevAnswers,setPrevAnswers]=React.useState(null);
+  const [streak,setStreak]=React.useState(0);
+  const [progress,setProgress]=React.useState(loadProgress);
+  const timerRef=React.useRef(null);
+  const seedRef=React.useRef(Date.now()%99999999);
+
+  /* ── PROGRESS UPDATER ── */
+  const awardXP=React.useCallback((amount,x,y)=>{
+    setProgress(p=>{
+      const oldLv=getLevel(p.xp);
+      const newXP=p.xp+amount;
+      const newLv=getLevel(newXP);
+      const updated={...p,xp:newXP};
+      saveProgress(updated);
+      if(newLv>oldLv){
+        const m=getPaigeMsg('level_up');
+        setTimeout(()=>showCelebration(m.emoji,`${LEVELS[newLv].emoji} ${m.title} — ${LEVELS[newLv].name}!`,`<strong>${LEVELS[newLv].name}</strong><br>${m.msg}`,true),500);
+      }
+      return updated;
+    });
+    if(x!==undefined&&y!==undefined)showXPPopup(amount,x,y);
+  },[]);
+
+  const awardBadge=React.useCallback((badgeId)=>{
+    setProgress(p=>{
+      if(p.badges.includes(badgeId))return p;
+      const updated={...p,badges:[...p.badges,badgeId]};
+      saveProgress(updated);
+      const b=BADGES.find(x=>x.id===badgeId);
+      if(b)setTimeout(()=>showCelebration(b.emoji,`Badge Earned: ${b.name}`,b.desc,false),800);
+      return updated;
+    });
+  },[]);
+
+  /* ── EXAM LAUNCH ── */
+  const launchExam=React.useCallback((qs,practiceMode,startIdx=0)=>{
+    clearInterval(timerRef.current);
+    setQuestions(qs);setAnswers({});setFlags(new Set());setRevealed(new Set());
+    setIdx(startIdx);setTimeLeft(90*60);setStreak(0);setEncMsg(null);setScreen('exam');
+    if(!practiceMode&&mode==='exam'){
+      timerRef.current=setInterval(()=>setTimeLeft(t=>{
+        if(t<=1){clearInterval(timerRef.current);finishExam(qs,{});return 0;}
+        return t-1;
+      }),1000);
+    }
+  },[mode]);
+
+  const startExam=React.useCallback(()=>{
+    seedRef.current=Date.now()%99999999;
+    setIsDrill(false);setPrevAnswers(null);
+    const examQs=buildExam(allQ,seedRef.current,domainFilter,mode);
+    const startIdx=mode==='marathon'?(progress.marathonIdx||0):0;
+    launchExam(examQs,mode!=='exam',startIdx);
+  },[allQ,domainFilter,mode,launchExam]);
+
+  const startDrill=React.useCallback((specificQs)=>{
+    const drillQs=specificQs||buildDrill(questions,answers);
+    if(!drillQs.length)return;
+    clearInterval(timerRef.current);
+    setPrevAnswers({...answers});setIsDrill(true);
+    setQuestions(drillQs);setAnswers({});setFlags(new Set());setRevealed(new Set());
+    setIdx(0);setStreak(0);setTimeLeft(90*60);setScreen('exam');
+  },[questions,answers]);
+
+  /* ── ANSWER HANDLING with streak + XP ── */
+  const [encMsg,setEncMsg]=React.useState(null);
+
+  const handleAnswer=React.useCallback((qid,ans,event)=>{
+    setAnswers(a=>{
+      const newA={...a,[qid]:ans};
+      const q=questions.find(x=>x.id===qid);if(!q)return newA;
+      const ok=isPBQ(q)?pbqCorrect(q,ans):mcCorrect(q,ans);
+      const domain=isPBQ(q)?q.domain:q.d;
+      const autoReveal=mode==='practice'||mode==='marathon'||isDrill;
+      if(autoReveal){
+        setRevealed(r=>new Set([...r,qid]));
+        if(!ok)setEncMsg({qid,msg:getRandEnc()});
+        else setEncMsg(null);
+      }
+      setProgress(p=>{
+        const ds={...p.domainStats};
+        if(!ds[domain])ds[domain]={correct:0,total:0};
+        ds[domain]={correct:ds[domain].correct+(ok?1:0),total:ds[domain].total+1};
+        const wi=ok?p.wrongIds:[...new Set([...(p.wrongIds||[]),String(qid)])];
+        const upd={...p,domainStats:ds,wrongIds:wi,
+          lifetimeCorrect:(p.lifetimeCorrect||0)+(ok?1:0),
+          lifetimeTotal:(p.lifetimeTotal||0)+1};
+        saveProgress(upd);return upd;
+      });
+      if(ok){
+        const xpAmt=isPBQ(q)?XP_PER.pbq_correct:(isDrill?XP_PER.drill_correct:XP_PER.correct);
+        const x=event?event.clientX:window.innerWidth/2;
+        const y=event?event.clientY:200;
+        setStreak(s=>{
+          const ns=s+1;
+          const bonus=ns>1?Math.min(ns,5)*XP_PER.streak_bonus:0;
+          awardXP(xpAmt+bonus,x,y);
+          if(ns===5){awardBadge('streak_5');showCelebration('🔥','5 in a Row!','You\'re on fire, Paige! Keep going! 🔥',false);}
+          if(ns===10){const m=getPaigeMsg('streak_10');showCelebration(m.emoji,m.title,m.msg,true);}
+          if(ns===20)awardBadge('streak_20');
+          return ns;
+        });
+      }else{
+        setStreak(0);
+      }
+      if(mode==='marathon'&&autoReveal){
+        const delay=ok?1800:3200;
+        setTimeout(()=>{
+          setEncMsg(null);
+          setIdx(i=>{
+            const ni=i+1;
+            if(ni>=questions.length){
+              setProgress(p=>{const u={...p,marathonIdx:0};saveProgress(u);return u;});
+              finishExam(questions,newA);
+              return i;
+            }
+            setProgress(p=>{const u={...p,marathonIdx:ni};saveProgress(u);return u;});
+            return ni;
+          });
+        },delay);
+      }
+      return newA;
+    });
+  },[questions,mode,isDrill,idx,awardXP,awardBadge,finishExam]);
+
+  /* ── FINISH / SUBMIT ── */
+  const finishExam=React.useCallback((qs,ans)=>{
+    clearInterval(timerRef.current);
+    const qToUse=qs||questions;const aToUse=ans||answers;
+    const{total,correct,pct,byD}=calcResults(qToUse,aToUse);
+    const newSessions=progress.sessions+1;
+    const newBest=Math.max(progress.bestScore,pct);
+
+    setProgress(p=>{
+      const updated={...p,sessions:newSessions,bestScore:newBest};
+      saveProgress(updated);return updated;
+    });
+
+    awardBadge('first_pass');
+    if(newSessions>=5)awardBadge('sessions_5');
+    if(newSessions>=10)awardBadge('sessions_10');
+
+    // Check PBQ perfect
+    const pbqQs=qToUse.filter(q=>isPBQ(q));
+    if(pbqQs.length>0&&pbqQs.every(q=>pbqCorrect(q,aToUse[q.id]))){
+      awardBadge('pbq_perfect');
+      setTimeout(()=>{const m=getPaigeMsg('pbq_perfect');showCelebration(m.emoji,m.title,m.msg,true);},1200);
+    }
+
+    if(isDrill){
+      awardBadge('drill_master');
+      if(pct===100){
+        awardBadge('weak_cleared');
+        const m=getPaigeMsg('drill_cleared');
+        setTimeout(()=>showCelebration(m.emoji,m.title,m.msg,true),400);
+      }else{
+        awardXP(XP_PER.drill_correct*Math.floor(correct/2));
+      }
+    }else{
+      awardXP(XP_PER.correct*correct);
+      if(pct>=83)awardBadge('pass_75');
+      if(pct>=83){awardBadge('pass_83');awardXP(XP_PER.pass_exam);}
+      if(pct>=90){awardBadge('pass_90');awardXP(XP_PER.score_90);}
+      if(pct===100){awardBadge('perfect');awardXP(XP_PER.score_perfect);}
+
+      // Show Paige celebration
+      setTimeout(()=>{
+        let msgKey=pct===100?'perfect':pct>=90?'score_90':pct>=83?'pass':null;
+        if(msgKey){
+          const m=getPaigeMsg(msgKey);
+          showCelebration(m.emoji,m.title,m.msg,pct>=83);
+        }else if(pct<60){
+          const m=getPaigeMsg('fail_encouragement');
+          showCelebration(m.emoji,m.title,m.msg,false);
+        }
+      },300);
+    }
+    setScreen('results');setResultsTab('score');
+  },[questions,answers,progress,mode,isDrill,awardXP,awardBadge]);
+
+  const submit=React.useCallback(()=>finishExam(questions,answers),[finishExam,questions,answers]);
+
+  const newExam=React.useCallback(()=>{
+    clearInterval(timerRef.current);
+    setIsDrill(false);setPrevAnswers(null);setStreak(0);setScreen('home');
+  },[]);
+
+  React.useEffect(()=>()=>clearInterval(timerRef.current),[]);
+
+  /* ── SHOW WELCOME BACK ── */
+  React.useEffect(()=>{
+    if(progress.sessions>0&&progress.lastSeen){
+      const m=getPaigeMsg('welcome_back');
+      setTimeout(()=>showCelebration(m.emoji,m.title,m.msg,false),800);
+    }
+  },[]);// eslint-disable-line
+
+  const toggleFlag=React.useCallback(qid=>setFlags(f=>{const nf=new Set(f);nf.has(qid)?nf.delete(qid):nf.add(qid);return nf;}),[]);
+
+  const q=questions[idx];const qid=q?.id;const isRev=revealed.has(qid);const hasPBQ=q&&isPBQ(q);
+  const hasAns=hasPBQ?(answers[qid]&&(answers[qid].selected!==undefined||answers[qid].aclRules||answers[qid].rbacSelections)):answers[qid]!==undefined;
+  const timerWarn=timeLeft<600&&mode==='exam'&&!isDrill;
+  const ansCount=Object.keys(answers).length;
+
+  /* ══════════════════════════
+     HOME SCREEN
+  ══════════════════════════ */
+  if(screen==='home') return React.createElement('div',{style:{paddingTop:'0.5rem'}},
+    React.createElement('div',{className:'home-hero'},
+      React.createElement('div',{className:'home-greeting'},
+        progress.sessions>0?`Welcome back, Paige! 👋 Session ${progress.sessions+1}`:'Ready to study, Paige? 💙'
+      ),
+      React.createElement('h1',{className:'home-title'},'Security+ SY0-701'),
+      React.createElement('p',{className:'home-sub'},
+        `${allQ.length} questions · 5 PBQs · You\'ve got this 💪`
+      )
+    ),
+    React.createElement(XPBar,{progress}),
+    mode==='marathon'&&React.createElement('div',{className:'marathon-bar-wrap'},
+      React.createElement('div',{className:'marathon-label'},progress.marathonIdx>0?`📍 Q${progress.marathonIdx+1} of ${allQ.length}`:'🏃 All 608 questions in order'),
+      React.createElement('div',{className:'marathon-bar-track'},
+        React.createElement('div',{className:'marathon-bar-fill',style:{width:`${progress.marathonIdx>0?Math.min(100,progress.marathonIdx/allQ.length*100):0}%`}})
+      ),
+      React.createElement('span',{className:'marathon-pct'},progress.marathonIdx>0?`${Math.round(progress.marathonIdx/allQ.length*100)}%`:'0%')
+    ),
+    progress.sessions>0&&React.createElement('div',{className:'stat-grid',style:{marginBottom:'1.25rem'}},
+      [
+        {l:'Sessions',v:progress.sessions},
+        {l:'Best Score',v:`${Math.round(progress.bestScore)}%`},
+        {l:'Total XP',v:progress.xp},
+        {l:'Badges',v:progress.badges.length},
+      ].map(s=>React.createElement('div',{key:s.l,className:'stat-card'},
+        React.createElement('div',{className:'stat-num'},s.v),
+        React.createElement('div',{className:'stat-lbl'},s.l)
+      ))
+    ),
+    React.createElement('h3',{style:{marginBottom:10}},'Choose your mode'),
+    React.createElement('div',{className:'mode-grid'},
+      [{v:'exam',icon:'⏱',t:'Exam Mode',d:'90 min · 90 questions · 7 PBQs first · No feedback until end'},
+       {v:'practice',icon:'📖',t:'Practice Mode',d:'Instant reveal after each answer · No timer · Full explanations'},
+       {v:'study',icon:'🎯',t:'Study by Domain',d:'Filter by domain · Instant feedback · Targeted prep'},
+       {v:'marathon',icon:'🏃',t:'Marathon Mode',d:'All 608 questions in order · Saves your spot · Great for full review'},
+       {v:'pbq',icon:'🖥️',t:'PBQ Only',d:'All 7 performance-based questions · HOTSPOT + SIMULATION · Real exam scenarios'},
+      ].map(m=>React.createElement('div',{key:m.v,className:`mode-card${mode===m.v?' sel':''}`,onClick:()=>setMode(m.v)},
+        React.createElement('div',{className:'mode-icon'},m.icon),
+        React.createElement('div',{className:'mode-title'},m.t),
+        React.createElement('p',{className:'mode-desc'},m.d)
+      ))
+    ),
+    (mode==='study'||mode==='practice')&&React.createElement('div',{style:{marginBottom:'1.25rem'}},
+      React.createElement('p',{style:{fontSize:12,color:'#8fa3b1',marginBottom:8,fontWeight:600,textTransform:'uppercase',letterSpacing:'0.06em'}},'Filter by domain'),
+      React.createElement('div',{className:'chip-row'},
+        DOMAINS.map((d,i)=>React.createElement('button',{key:d,className:`chip${domainFilter.includes(d)?' active':''}`,onClick:()=>setDF(f=>f.includes(d)?f.filter(x=>x!==d):[...f,d])},DSHORT[i]))
+      )
+    ),
+    React.createElement('div',{className:'div'}),
+    React.createElement('div',{style:{display:'flex',gap:8,alignItems:'center',flexWrap:'wrap'}},
+      React.createElement('button',{className:'btn btn-rose',onClick:startExam,style:{minWidth:160,justifyContent:'center',fontSize:15}},
+        mode==='marathon'&&progress.marathonIdx>0?'▶  Continue Marathon 🏃':'▶  '+
+        (mode==='exam'?'Start Exam':mode==='practice'?'Start Practice':mode==='pbq'?'Start PBQs':mode==='marathon'?'Start Marathon':'Start Study')
+      ),
+      mode==='marathon'&&progress.marathonIdx>0&&React.createElement('button',{className:'btn btn-sm btn-ghost',onClick:()=>setProgress(p=>{const u={...p,marathonIdx:0};saveProgress(u);return u;})},
+        'Restart from Q1'
+      )
+    ),
+    React.createElement('div',{style:{display:'flex',gap:8,alignItems:'center',marginTop:'1rem',flexWrap:'wrap'}},
+      React.createElement('span',{style:{fontSize:11,color:'#4a6070',flex:1}},'Progress saves automatically across sessions'),
+      React.createElement('button',{className:'btn btn-xs btn-ghost',style:{color:'#4a6070'},
+        onClick:()=>{if(window.confirm('Reset ALL progress, XP, badges, marathon position, and stats?')){localStorage.removeItem(PROG_KEY);setProgress({...DEFAULT_PROG});}}},
+        'Reset progress'
+      )
+    ),
+    progress.badges.length>0&&React.createElement('div',{style:{marginTop:'1.5rem'}},
+      React.createElement('h3',{style:{marginBottom:10}},'Your badges'),
+      React.createElement(BadgeShelf,{earned:progress.badges})
+    )
+  );
+
+  /* ══════════════════════════
+     EXAM SCREEN
+  ══════════════════════════ */
+  if(screen==='exam'&&q) return React.createElement('div',null,
+    isDrill&&React.createElement('div',{className:'drill-header'},
+      React.createElement('span',{className:'badge badge-gold'},'🎯 Drill Mode'),
+      React.createElement('span',{style:{fontSize:13,color:'#f5c842',fontWeight:500}},`${idx+1} of ${questions.length} missed questions`),
+      streak>=3&&React.createElement('span',{className:`streak-badge${streak>=5?' hot':''}`,style:{marginLeft:'auto'}},`🔥 ${streak} streak`)
+    ),
+    !isDrill&&streak>=3&&React.createElement('div',{style:{display:'flex',justifyContent:'flex-end',marginBottom:8}},
+      React.createElement('span',{className:`streak-badge${streak>=5?' hot':''}`},`🔥 ${streak} in a row!`)
+    ),
+    React.createElement('div',{style:{display:'flex',alignItems:'center',gap:10,marginBottom:'1rem',flexWrap:'wrap'}},
+      React.createElement('div',{className:'prog',style:{flex:1,minWidth:100}},React.createElement('div',{className:'prog-fill',style:{width:`${(idx+1)/questions.length*100}%`}})),
+      React.createElement('span',{style:{fontSize:12,color:'#8fa3b1',minWidth:52,fontFamily:'IBM Plex Mono,monospace'}},`${idx+1}/${questions.length}`),
+      mode==='exam'&&!isDrill&&React.createElement('span',{className:`timer${timerWarn?' warn':''}`},'⏱ ',fmtTime(timeLeft)),
+      React.createElement('button',{className:`flag-btn${flags.has(qid)?' flagged':''}`,onClick:()=>toggleFlag(qid),title:'Flag for review'},'⚑'),
+      hasPBQ&&React.createElement('span',{className:'badge badge-teal'},'PBQ')
+    ),
+    hasPBQ
+      ?React.createElement(PBQQuestion,{pbq:q,answer:answers[qid],onAnswer:(ans,ev)=>handleAnswer(qid,ans,ev),revealed:isRev||(mode==='practice')||isDrill})
+      :React.createElement(MCQuestion,{q,answer:answers[qid],onAnswer:(ans)=>{
+          handleAnswer(qid,ans,null);
+        },revealed:isRev||(mode==='practice'&&hasAns)||isDrill||mode==='marathon'}),
+    encMsg&&encMsg.qid===qid&&React.createElement('div',{className:'enc-toast'},
+      React.createElement('span',{className:'enc-heart'},'💙'),
+      React.createElement('span',null,encMsg.msg)
+    ),
+    React.createElement('div',{className:'nav-row'},
+      React.createElement('button',{className:'btn btn-ghost',onClick:()=>setIdx(i=>Math.max(0,i-1)),disabled:!idx},'← Prev'),
+      React.createElement('div',{style:{display:'flex',gap:8,alignItems:'center',flexWrap:'wrap',justifyContent:'center'}},
+        mode==='practice'&&!isRev&&hasAns&&!hasPBQ&&!isDrill&&React.createElement('button',{className:'btn btn-sm',onClick:()=>setRevealed(r=>new Set([...r,qid]))},'Show answer'),
+        idx<questions.length-1
+          ?React.createElement('button',{className:'btn btn-rose',onClick:()=>setIdx(i=>i+1)},'Next →')
+          :React.createElement('button',{className:'btn btn-rose',onClick:submit},isDrill?'Finish drill ✓':'Submit exam ✓')
+      ),
+      React.createElement('button',{className:'btn btn-ghost btn-sm',onClick:submit,style:{color:'#4a6070'}},isDrill?'Finish':'Submit')
+    ),
+    React.createElement('div',{className:'div',style:{margin:'1rem 0 0.5rem'}}),
+    React.createElement('div',{className:'q-grid'},
+      questions.map((qn,i)=>{
+        const id=qn.id;const isCur=i===idx;const isPBQn=isPBQ(qn);
+        const a=answers[id];const hasA=isPBQn?(a&&(a.selected!==undefined||a.aclRules||a.rbacSelections||a.vpn||a.slots||a.resil)):a!==undefined;
+        let revOk=false,revBad=false;
+        if((mode==='practice'||isDrill)&&hasA){const ok=isPBQn?pbqCorrect(qn,a):mcCorrect(qn,a);revOk=ok;revBad=!ok;}
+        let cls='q-dot';
+        if(isCur)cls+=' current';else if(flags.has(id))cls+=' flagged';else if(revOk)cls+=' correct-d';else if(revBad)cls+=' wrong-d';else if(hasA)cls+=' answered';else if(isPBQn)cls+=' pbq';
+        return React.createElement('div',{key:i,className:cls,onClick:()=>setIdx(i),title:`Q${i+1}${isPBQn?' (PBQ)':''}${flags.has(id)?' ⚑':''}`},isPBQn?'PBQ':i+1);
+      })
+    )
+  );
+
+  /* ══════════════════════════
+     RESULTS SCREEN
+  ══════════════════════════ */
+  if(screen==='results'){
+    const{total,correct,pct,byD}=calcResults(questions,answers);
+    const unanswered=total-ansCount;const pass=pct>=83;
+    const allWrongQs=questions.filter(q=>isPBQ(q)?!pbqCorrect(q,answers[q.id]):!mcCorrect(q,answers[q.id]));
+    const analysis=analyzeWeakConcepts(allWrongQs);
+    const drillImproved=isDrill&&prevAnswers?{correct,total}:null;
+
+    return React.createElement('div',{style:{paddingTop:'0.5rem'}},
+      isDrill&&React.createElement('div',{className:'drill-header',style:{marginBottom:'1rem'}},
+        React.createElement('span',{className:'badge badge-gold'},'🎯 Drill Results'),
+        drillImproved&&React.createElement('span',{style:{fontSize:13,color:'#f5c842',fontWeight:500}},
+          `${drillImproved.correct} of ${drillImproved.total} corrected this time`
+        )
+      ),
+      React.createElement('div',{className:'score-ring-wrap'},
+        React.createElement(ScoreRing,{pct}),
+        React.createElement('div',null,
+          React.createElement('h2',null,isDrill?'Drill complete!':pass?'You passed! 🎉':'Keep going, Paige!'),
+          React.createElement('p',{style:{fontSize:13,color:'#8fa3b1',marginTop:4}},
+            isDrill?`${correct}/${total} missed questions corrected`:`CompTIA threshold: 750/900 (≈83%)`
+          ),
+          React.createElement(XPBar,{progress})
+        )
+      ),
+      React.createElement('div',{className:'stat-grid',style:{marginBottom:'1.25rem'}},
+        [{l:'Correct',v:correct,c:pass?'#4caf82':undefined},{l:'Wrong',v:total-correct-unanswered,c:total-correct-unanswered>0?'#e05252':undefined},{l:'Skipped',v:unanswered},{l:'Score',v:`${Math.round(pct)}%`,c:pct>=83?'#4caf82':'#e05252'}]
+        .map(s=>React.createElement('div',{key:s.l,className:'stat-card'},
+          React.createElement('div',{className:'stat-num',style:s.c?{background:'none',WebkitTextFillColor:s.c,color:s.c}:{}},s.v),
+          React.createElement('div',{className:'stat-lbl'},s.l)
+        ))
+      ),
+      React.createElement('div',{className:'tabs',style:{marginBottom:'1.25rem'}},
+        [{v:'score',l:'📊 Domain Scores'},{v:'weak',l:'🔍 Weak Areas'},{v:'badges',l:'🏅 Badges'},{v:'review',l:'📋 Review'}].map(({v,l})=>
+          React.createElement('button',{key:v,className:`tab${resultsTab===v?' active':''}`,onClick:()=>setResultsTab(v)},l)
+        )
+      ),
+      resultsTab==='score'&&React.createElement('div',null,
+        progress.lifetimeTotal>0&&React.createElement('div',null,
+          React.createElement('h3',{style:{marginBottom:10}},'All-time stats'),
+          React.createElement('div',{className:'lt-grid'},
+            [{l:'Lifetime Answered',v:(progress.lifetimeTotal||0).toLocaleString()},
+             {l:'Lifetime Correct',v:(progress.lifetimeCorrect||0).toLocaleString()},
+             {l:'Lifetime Accuracy',v:progress.lifetimeTotal?`${Math.round((progress.lifetimeCorrect||0)/progress.lifetimeTotal*100)}%`:'—'},
+             {l:'Questions Missed',v:(progress.wrongIds||[]).length},
+            ].map(s=>React.createElement('div',{key:s.l,className:'lt-card'},
+              React.createElement('div',{className:'lt-num'},s.v),React.createElement('div',{className:'lt-lbl'},s.l)
+            ))
+          )
+        ),
+        React.createElement('h3',{style:{marginBottom:12,marginTop:progress.lifetimeTotal>0?'1.25rem':0}},'This session — by domain'),
+        React.createElement('div',{style:{marginBottom:'1.5rem'}},
+          DOMAINS.map((d,i)=>{
+            const st=byD[d]||{total:0,correct:0};if(!st.total)return null;
+            const dp=st.total>0?st.correct/st.total*100:0;
+            const col=dp>=75?'#4caf82':dp>=50?'#e09b34':'#e05252';
+            return React.createElement('div',{key:d,className:'dbar-row'},
+              React.createElement('span',{className:'dbar-lbl'},DSHORT[i]),
+              React.createElement('div',{className:'dbar-track'},React.createElement('div',{className:'dbar-fill',style:{width:`${dp}%`,background:col}})),
+              React.createElement('span',{className:'dbar-pct',style:{color:col}},`${Math.round(dp)}%`),
+              React.createElement('span',{className:'dbar-count'},`${st.correct}/${st.total}`)
+            );
+          })
+        ),
+        Object.keys(progress.domainStats||{}).length>0&&React.createElement('div',null,
+          React.createElement('h3',{style:{margin:'1.25rem 0 10px'}},'All-time accuracy by domain'),
+          DOMAINS.map((d,i)=>{
+            const st=(progress.domainStats||{})[d];if(!st||!st.total)return null;
+            const dp=st.correct/st.total*100;
+            const col=dp>=75?'#4caf82':dp>=50?'#e09b34':'#e05252';
+            return React.createElement('div',{key:d,className:'dbar-row'},
+              React.createElement('span',{className:'dbar-lbl'},DSHORT[i]),
+              React.createElement('div',{className:'dbar-track'},React.createElement('div',{className:'dbar-fill',style:{width:`${dp}%`,background:col}})),
+              React.createElement('span',{className:'dbar-pct',style:{color:col}},`${Math.round(dp)}%`),
+              React.createElement('span',{className:'dbar-count'},`${st.correct}/${st.total}`)
+            );
+          })
+        ),
+        React.createElement('div',{style:{display:'flex',gap:10,flexWrap:'wrap'}},
+          allWrongQs.length>0&&React.createElement('button',{className:'btn btn-gold',onClick:()=>startDrill(null)},'🎯 Drill missed'),
+          React.createElement('button',{className:'btn btn-rose',onClick:newExam},'↺ New exam'),
+          isDrill&&React.createElement('button',{className:'btn',onClick:startExam},'↺ Full exam')
+        )
+      ),
+      resultsTab==='weak'&&React.createElement(WeakAreasPanel,{analysis,onDrill:startDrill}),
+      resultsTab==='badges'&&React.createElement('div',null,
+        React.createElement('p',{style:{fontSize:13,color:'#8fa3b1',marginBottom:12}},`${progress.badges.length} of ${BADGES.length} badges earned`),
+        React.createElement(BadgeShelf,{earned:progress.badges})
+      ),
+      resultsTab==='review'&&React.createElement(ReviewPanel,{questions,answers,flags,onDrill:startDrill})
+    );
+  }
+
+  return React.createElement('div',{style:{padding:'2rem',color:'#8fa3b1'}},'Loading...');
+}
+
+/* ══════════════════════════════════════════════════════════
+   FILE LOADER + BOOTSTRAP
+══════════════════════════════════════════════════════════ */
+let appRoot=null;
+
+function launchApp(data){
+  const q=Array.isArray(data)?data:data.questions||[];
+  if(!q||!q.length){showErr('No questions found. Load secplus_701_enriched.json.');return;}
+  try{sessionStorage.setItem('sx701_q',JSON.stringify(data));}catch(e){}
+  document.getElementById('load-overlay').style.display='none';
+  document.getElementById('root').style.display='block';
+  if(!appRoot)appRoot=ReactDOM.createRoot(document.getElementById('root'));
+  appRoot.render(React.createElement(App,{allQ:q}));
+}
+
+function showErr(msg){const el=document.getElementById('load-err');if(el){el.textContent=msg;el.style.display='block';}}
+
+function initApp(){
+  // Try same-directory auto-load first (for GitHub Pages deployment)
+  fetch('./secplus_701_enriched.json')
+    .then(r=>{if(!r.ok)throw new Error('not found');return r.json();})
+    .then(data=>launchApp(data))
+    .catch(()=>{
+      // Fall back to sessionStorage cache
+      try{const c=sessionStorage.getItem('sx701_q');if(c){launchApp(JSON.parse(c));return;}}catch(e){}
+      // Show file picker
+      document.getElementById('load-overlay').style.display='flex';
+    });
+}
+
+document.getElementById('file-input').addEventListener('change',e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{try{launchApp(JSON.parse(ev.target.result));}catch{showErr('Invalid JSON file.');}};
+  r.readAsText(f);
+});
+
+document.addEventListener('dragover',e=>e.preventDefault());
+document.addEventListener('drop',e=>{
+  e.preventDefault();
+  const f=e.dataTransfer.files[0];
+  if(!f||!f.name.endsWith('.json')){showErr('Please drop a .json file.');return;}
+  const r=new FileReader();
+  r.onload=ev=>{try{launchApp(JSON.parse(ev.target.result));}catch{showErr('Invalid JSON.');}};
+  r.readAsText(f);
+});
+
+// Boot
+if(isAuthed()){
+  document.getElementById('auth-screen').style.display='none';
+  document.getElementById('logout-btn').style.display='';
+  initApp();
+}
+</script>
+</body>
+</html>
