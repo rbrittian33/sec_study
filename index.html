@@ -119,22 +119,6 @@ button{font-family:'Sora',inherit;cursor:pointer;transition:all 0.18s}
 .prog{height:4px;background:var(--navy4);border-radius:2px;overflow:hidden}
 .prog-fill{height:100%;border-radius:2px;transition:width 0.4s ease;background:linear-gradient(90deg,var(--rose),var(--coral))}
 
-/* ── XP BAR ── */
-.xp-bar-wrap{background:var(--navy3);border:1px solid var(--bdr);border-radius:var(--radl);padding:12px 16px;margin-bottom:1rem}
-.xp-bar-track{height:8px;background:var(--navy4);border-radius:4px;overflow:hidden;margin:6px 0 4px}
-.xp-bar-fill{height:100%;border-radius:4px;transition:width 0.6s cubic-bezier(0.34,1.56,0.64,1);background:linear-gradient(90deg,var(--gold),var(--coral2),var(--rose))}
-.xp-label{display:flex;align-items:center;justify-content:space-between;font-size:12px}
-.xp-level{font-weight:600;color:var(--gold);font-size:13px}
-.xp-pts{color:var(--t3);font-family:'IBM Plex Mono',monospace;font-size:11px}
-
-/* ── STREAK ── */
-.streak-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;background:linear-gradient(135deg,rgba(245,200,66,0.2),rgba(244,132,95,0.2));border:1px solid rgba(245,200,66,0.4);color:var(--gold)}
-.streak-badge.hot{animation:streakPulse 1.2s ease-in-out infinite}
-@keyframes streakPulse{0%,100%{box-shadow:0 0 0 0 rgba(245,200,66,0.4)}50%{box-shadow:0 0 12px 3px rgba(245,200,66,0.3)}}
-
-/* ── XP POPUP ── */
-.xp-popup{position:fixed;pointer-events:none;z-index:9000;font-family:'Sora',sans-serif;font-weight:700;font-size:16px;color:var(--gold);text-shadow:0 2px 8px rgba(0,0,0,0.5);animation:xpFloat 1.4s ease-out forwards}
-@keyframes xpFloat{0%{opacity:1;transform:translateY(0) scale(1)}60%{opacity:1;transform:translateY(-48px) scale(1.1)}100%{opacity:0;transform:translateY(-80px) scale(0.9)}}
 
 /* ── TABS ── */
 .tabs{display:flex;gap:2px;background:var(--navy3);padding:3px;border-radius:var(--rad)}
@@ -255,41 +239,6 @@ button{font-family:'Sora',inherit;cursor:pointer;transition:all 0.18s}
 .rbac-table td.c-bad{background:rgba(224,82,82,0.1)}
 .rbac-table td.c-miss{background:rgba(224,155,52,0.1)}
 
-/* ── BADGES PANEL ── */
-.badge-shelf{display:flex;flex-wrap:wrap;gap:8px;margin:0.5rem 0}
-.badge-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 12px;border-radius:var(--rad);border:1px solid var(--bdr);background:var(--navy3);min-width:80px;text-align:center}
-.badge-item.earned{border-color:rgba(245,200,66,0.4);background:rgba(245,200,66,0.06)}
-.badge-item.locked{opacity:0.35;filter:grayscale(1)}
-.badge-emoji{font-size:22px}
-.badge-name{font-size:10px;font-weight:600;color:var(--t2)}
-.badge-item.earned .badge-name{color:var(--gold)}
-
-/* ── CELEBRATION MODAL ── */
-#celebrate-overlay{
-  position:fixed;inset:0;z-index:9998;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(13,27,42,0.85);backdrop-filter:blur(8px);
-}
-.celebrate-card{
-  position:relative;
-  background:var(--navy2);
-  border:1px solid var(--rose);
-  border-radius:var(--radx);
-  padding:2.5rem 2rem;
-  max-width:420px;width:90%;
-  text-align:center;
-  box-shadow:0 0 80px rgba(232,99,122,0.2);
-  animation:celebPop 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
-}
-@keyframes celebPop{from{opacity:0;transform:scale(0.7)}to{opacity:1;transform:scale(1)}}
-.celebrate-emoji{font-size:56px;margin-bottom:16px;animation:bounce 0.8s ease-in-out infinite alternate}
-@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-10px)}}
-.celebrate-title{font-size:22px;font-weight:700;margin-bottom:8px;background:linear-gradient(135deg,var(--rose2),var(--coral2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.celebrate-msg{font-size:15px;color:var(--t2);line-height:1.7;margin-bottom:20px}
-.celebrate-msg strong{color:var(--t1);font-weight:600}
-
-/* ── CONFETTI CANVAS ── */
-#confetti-canvas{position:fixed;inset:0;z-index:9997;pointer-events:none}
 
 /* ── AUTH SCREEN ── */
 #auth-screen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center}
@@ -328,10 +277,6 @@ button{font-family:'Sora',inherit;cursor:pointer;transition:all 0.18s}
 /* ── LOGOUT ── */
 .logout-btn{position:fixed;top:14px;right:14px;z-index:100}
 
-/* ── INLINE ENCOURAGEMENT ── */
-.enc-toast{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-radius:var(--rad);background:linear-gradient(135deg,rgba(232,99,122,0.08),rgba(244,132,95,0.06));border:1px solid rgba(232,99,122,0.25);margin-top:10px;font-size:13px;color:var(--t2);line-height:1.55;animation:encSlide 0.3s ease-out}
-@keyframes encSlide{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.enc-heart{font-size:18px;flex-shrink:0;margin-top:1px}
 
 /* ── MARATHON PROGRESS ── */
 .marathon-bar-wrap{background:var(--navy3);border:1px solid var(--bdr);border-radius:var(--rad);padding:10px 14px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
@@ -438,21 +383,6 @@ button{font-family:'Sora',inherit;cursor:pointer;transition:all 0.18s}
   <input type="file" id="file-input" accept=".json">
 </div>
 
-<!-- CONFETTI CANVAS -->
-<canvas id="confetti-canvas" style="display:none"></canvas>
-
-<!-- CELEBRATION MODAL (hidden by default) -->
-<div id="celebrate-overlay" style="display:none">
-  <div class="celebrate-card" id="celebrate-card">
-    <div class="celebrate-emoji" id="cel-emoji">🎉</div>
-    <div class="celebrate-title" id="cel-title">Amazing!</div>
-    <div class="celebrate-msg" id="cel-msg">You did it!</div>
-    <button class="btn btn-rose" id="cel-close" onclick="closeCelebration()" style="width:100%;justify-content:center;font-size:14px">
-      Keep going! 💪
-    </button>
-  </div>
-</div>
-
 <!-- LOGOUT -->
 <button class="btn btn-sm btn-ghost logout-btn" id="logout-btn" style="display:none" onclick="doLogout()">Sign out</button>
 
@@ -508,213 +438,10 @@ document.getElementById('auth-submit').addEventListener('click',async()=>{
 }));
 
 /* ══════════════════════════════════════════════════════════
-   GAME CONSTANTS
-══════════════════════════════════════════════════════════ */
-const LEVELS=[
-  {name:'CompTIA IT Fundamentals',emoji:'🌱',xp:0},
-  {name:'A+ Certified',          emoji:'💻',xp:200},
-  {name:'Network+ Certified',    emoji:'🌐',xp:500},
-  {name:'Security+ Student',     emoji:'🔐',xp:1000},
-  {name:'Security+ Certified',   emoji:'🏆',xp:2000},
-  {name:'CySA+ Analyst',         emoji:'🔍',xp:3500},
-  {name:'Pentest+ Pro',          emoji:'⚔️',xp:5500},
-  {name:'CASP+ Expert',          emoji:'🦅',xp:8000},
-];
-
-const BADGES=[
-  {id:'first_pass',   emoji:'🎯',name:'First Pass',    desc:'Complete your first exam'},
-  {id:'pass_75',      emoji:'✅',name:'Passing Grade',  desc:'Score 75% or higher'},
-  {id:'pass_83',      emoji:'🏅',name:'CompTIA Pass',   desc:'Score 83%+ (CompTIA standard)'},
-  {id:'pass_90',      emoji:'💎',name:'90% Club',       desc:'Score 90% or higher'},
-  {id:'perfect',      emoji:'🌟',name:'Perfect Score',  desc:'Score 100%'},
-  {id:'streak_5',     emoji:'🔥',name:'On Fire',        desc:'5 correct in a row'},
-  {id:'streak_10',    emoji:'🔥🔥',name:'Inferno',      desc:'10 correct in a row'},
-  {id:'streak_20',    emoji:'⚡',name:'Lightning',       desc:'20 correct in a row'},
-  {id:'drill_master', emoji:'⚔️',name:'Drill Master',   desc:'Complete a drill session'},
-  {id:'pbq_perfect',  emoji:'🖥️',name:'PBQ Pro',        desc:'Get all 5 PBQs correct'},
-  {id:'sessions_5',   emoji:'📚',name:'Study Habit',    desc:'Complete 5 study sessions'},
-  {id:'sessions_10',  emoji:'🎓',name:'Scholar',        desc:'Complete 10 study sessions'},
-  {id:'weak_cleared', emoji:'🧹',name:'Area Cleared',   desc:'Get 100% in a weak area drill'},
-];
-
-const XP_PER={correct:15,pbq_correct:40,streak_bonus:5,drill_correct:20,pass_exam:100,score_90:50,score_perfect:150};
-
-/* XP messages from Russ to Paige at milestones */
-const PAIGE_MESSAGES={
-  pass:{
-    emoji:'💙',
-    title:'You passed!!',
-    msgs:[
-      "I knew you could do it, Paige. I'm so proud of you. I love you! 💙",
-      "That's my girl! You just passed! I love you more than you know. 💙",
-      "Look at you go! Certified in my heart already. I love you, Paige! 💙",
-    ]
-  },
-  score_90:{
-    emoji:'🔥',
-    title:'90%?! Are you kidding me?!',
-    msgs:[
-      "90 freaking percent! You're absolutely incredible, Paige. I love you so much! 🔥",
-      "Nobody does it like you do. 90%+ and counting. I love you, Paige! 🔥",
-      "Okay I'm literally bragging about you to everyone. 90%!! Love you! 🔥",
-    ]
-  },
-  perfect:{
-    emoji:'🌟',
-    title:'PERFECT SCORE!!!',
-    msgs:[
-      "A PERFECT SCORE?! Paige, you are absolutely unreal. I am the luckiest person alive. I love you so much!! 🌟",
-      "100%?! Stop it right now. You are the smartest, most amazing person I know. I love you, Paige!! 🌟",
-    ]
-  },
-  level_up:{
-    emoji:'⬆️',
-    title:'Level Up!',
-    msgs:[
-      "You're leveling up, Paige! Unstoppable. Love you! ⬆️",
-      "Another level! You make this look so easy. I love you! ⬆️",
-      "Growing every single day. I'm so proud of you. Love you, Paige! ⬆️",
-    ]
-  },
-  streak_10:{
-    emoji:'🔥',
-    title:'10 in a row!',
-    msgs:[
-      "TEN IN A ROW! You're on absolute fire right now, Paige! Love you! 🔥",
-      "10 straight? That's not luck, that's skill. I love you so much! 🔥",
-    ]
-  },
-  drill_cleared:{
-    emoji:'⚔️',
-    title:'Drill Cleared!',
-    msgs:[
-      "Look at you — zero wrong on the drill! That's my girl. Love you, Paige! ⚔️",
-      "You drilled through every single one! Security+ doesn't stand a chance. Love you! ⚔️",
-    ]
-  },
-  pbq_perfect:{
-    emoji:'🖥️',
-    title:'PBQ Perfect!',
-    msgs:[
-      "All 5 PBQs correct?! Those are the hardest ones! You're incredible, Paige. I love you! 🖥️",
-      "Perfect on every performance-based question! That takes real skill. I love you so much! 🖥️",
-    ]
-  },
-  fail_encouragement:{
-    emoji:'💙',
-    title:'Keep going, Paige!',
-    msgs:[
-      "You're learning! Every wrong answer is one step closer to getting it right. I love you and I believe in you! 💙",
-      "Security+ is hard. You showing up and studying at all makes me incredibly proud. I love you, Paige! 💙",
-      "Not this time, but next time for sure. I've seen you study and you're going to crush it. Love you! 💙",
-    ]
-  },
-  welcome_back:{
-    emoji:'👋',
-    title:'Welcome back, Paige!',
-    msgs:[
-      "You're back! I love that you keep showing up. Let's get some questions right today. Love you! 💙",
-      "Ready to study? I'm rooting for you every step of the way. Love you, Paige! 💙",
-    ]
-  }
-};
-
-const WRONG_ENC=[
-  "So close! Check the explanation — you'll get it next time. 💙",
-  "Not quite! Read through that one, it'll click. Love you, Paige 💙",
-  "That one's tricky! The explanation below breaks it down. 💙",
-  "No worries — this is exactly how you learn. Keep going! 💙",
-  "Good try! Study that explanation and you've got it for next time. 💙",
-  "These are hard! That's okay — you're getting better every question. 💙",
-  "Every wrong answer makes the right one stick harder. Love you! 💙",
-  "I believe in you, Paige. On to the next one 💙",
-];
-function getRandEnc(){return WRONG_ENC[Math.floor(Math.random()*WRONG_ENC.length)];}
-
-function getPaigeMsg(key){
-  const m=PAIGE_MESSAGES[key];if(!m)return null;
-  return{emoji:m.emoji,title:m.title,msg:m.msgs[Math.floor(Math.random()*m.msgs.length)]};
-}
-
-/* ══════════════════════════════════════════════════════════
-   CONFETTI ENGINE
-══════════════════════════════════════════════════════════ */
-function launchConfetti(duration=3500){
-  const canvas=document.getElementById('confetti-canvas');
-  canvas.style.display='block';
-  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
-  const ctx=canvas.getContext('2d');
-  const colors=['#e8637a','#f4845f','#f5c842','#2fb8ac','#5acec4','#f07c8e','#f9a07d','#f7d468'];
-  const pieces=Array.from({length:160},()=>({
-    x:Math.random()*canvas.width,y:Math.random()*-200,
-    w:6+Math.random()*8,h:10+Math.random()*8,
-    color:colors[Math.floor(Math.random()*colors.length)],
-    vx:(Math.random()-0.5)*4,vy:2+Math.random()*4,
-    angle:Math.random()*360,va:(Math.random()-0.5)*8,opacity:1
-  }));
-  let start=null;
-  function frame(ts){
-    if(!start)start=ts;
-    const elapsed=ts-start;
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    pieces.forEach(p=>{
-      p.x+=p.vx;p.y+=p.vy;p.angle+=p.va;
-      p.vy+=0.08;
-      if(elapsed>duration-800)p.opacity=Math.max(0,p.opacity-0.015);
-      if(p.y>canvas.height||p.opacity<=0)return;
-      ctx.save();ctx.globalAlpha=p.opacity;
-      ctx.translate(p.x+p.w/2,p.y+p.h/2);
-      ctx.rotate(p.angle*Math.PI/180);
-      ctx.fillStyle=p.color;
-      ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
-      ctx.restore();
-    });
-    if(elapsed<duration+400)requestAnimationFrame(frame);
-    else{ctx.clearRect(0,0,canvas.width,canvas.height);canvas.style.display='none';}
-  }
-  requestAnimationFrame(frame);
-}
-
-/* ══════════════════════════════════════════════════════════
-   CELEBRATION MODAL
-══════════════════════════════════════════════════════════ */
-let celQueue=[];let celActive=false;
-function showCelebration(emoji,title,msg,withConfetti=true){
-  celQueue.push({emoji,title,msg,withConfetti});
-  if(!celActive)drainCelQueue();
-}
-function drainCelQueue(){
-  if(!celQueue.length){celActive=false;return;}
-  celActive=true;
-  const{emoji,title,msg,withConfetti}=celQueue.shift();
-  document.getElementById('cel-emoji').textContent=emoji;
-  document.getElementById('cel-title').textContent=title;
-  document.getElementById('cel-msg').innerHTML=msg;
-  document.getElementById('celebrate-overlay').style.display='flex';
-  if(withConfetti)launchConfetti();
-}
-function closeCelebration(){
-  document.getElementById('celebrate-overlay').style.display='none';
-  setTimeout(drainCelQueue,300);
-}
-
-/* ══════════════════════════════════════════════════════════
-   XP POPUP
-══════════════════════════════════════════════════════════ */
-function showXPPopup(amount,x,y){
-  const el=document.createElement('div');
-  el.className='xp-popup';
-  el.textContent=`+${amount} XP`;
-  el.style.left=`${x-30}px`;el.style.top=`${y-10}px`;
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(),1400);
-}
-
-/* ══════════════════════════════════════════════════════════
    PERSISTENT PROGRESS (localStorage)
 ══════════════════════════════════════════════════════════ */
 const PROG_KEY='sx701_progress';
-const DEFAULT_PROG={xp:0,sessions:0,bestScore:0,badges:[],marathonIdx:0,domainStats:{},wrongIds:[],lifetimeCorrect:0,lifetimeTotal:0,lastSeen:null};
+const DEFAULT_PROG={sessions:0,bestScore:0,marathonIdx:0,domainStats:{},wrongIds:[],lifetimeCorrect:0,lifetimeTotal:0,lastSeen:null};
 
 function loadProgress(){
   try{const s=localStorage.getItem(PROG_KEY);return s?{...DEFAULT_PROG,...JSON.parse(s)}:DEFAULT_PROG;}
@@ -722,21 +449,6 @@ function loadProgress(){
 }
 function saveProgress(p){
   try{localStorage.setItem(PROG_KEY,JSON.stringify({...p,lastSeen:new Date().toISOString()}));}catch(e){}
-}
-function getLevel(xp){
-  let lv=0;
-  for(let i=0;i<LEVELS.length;i++){if(xp>=LEVELS[i].xp)lv=i;}
-  return lv;
-}
-function nextLevelXP(xp){
-  const lv=getLevel(xp);
-  return lv<LEVELS.length-1?LEVELS[lv+1].xp:null;
-}
-function xpPct(xp){
-  const lv=getLevel(xp);
-  const base=LEVELS[lv].xp;
-  const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:base+1000;
-  return Math.min(100,((xp-base)/(next-base))*100);
 }
 </script>
 <script>
@@ -1444,34 +1156,6 @@ function ScoreRing({pct,scaledScore}){
   );
 }
 
-/* XP BAR */
-function XPBar({progress}){
-  const lv=getLevel(progress.xp);const L=LEVELS[lv];
-  const nextXP=nextLevelXP(progress.xp);const pct=xpPct(progress.xp);
-  return React.createElement('div',{className:'xp-bar-wrap'},
-    React.createElement('div',{className:'xp-label'},
-      React.createElement('span',{className:'xp-level'},`${L.emoji} ${L.name}`),
-      React.createElement('span',{className:'xp-pts'},nextXP?`${progress.xp} / ${nextXP} XP`:`${progress.xp} XP — MAX LEVEL`)
-    ),
-    React.createElement('div',{className:'xp-bar-track'},
-      React.createElement('div',{className:'xp-bar-fill',style:{width:`${pct}%`}})
-    )
-  );
-}
-
-/* BADGE SHELF */
-function BadgeShelf({earned}){
-  return React.createElement('div',{className:'badge-shelf'},
-    BADGES.map(b=>{
-      const own=earned.includes(b.id);
-      return React.createElement('div',{key:b.id,className:`badge-item${own?' earned':' locked'}`,title:b.desc},
-        React.createElement('div',{className:'badge-emoji'},b.emoji),
-        React.createElement('div',{className:'badge-name'},b.name)
-      );
-    })
-  );
-}
-
 /* WEAK AREAS PANEL */
 function WeakAreasPanel({analysis,onDrill}){
   const [open,setOpen]=React.useState({});
@@ -1573,44 +1257,15 @@ function App({allQ}){
   const [resultsTab,setResultsTab]=React.useState('score');
   const [isDrill,setIsDrill]=React.useState(false);
   const [prevAnswers,setPrevAnswers]=React.useState(null);
-  const [streak,setStreak]=React.useState(0);
   const [progress,setProgress]=React.useState(loadProgress);
   const timerRef=React.useRef(null);
   const seedRef=React.useRef(Date.now()%99999999);
-
-  /* ── PROGRESS UPDATER ── */
-  const awardXP=React.useCallback((amount,x,y)=>{
-    setProgress(p=>{
-      const oldLv=getLevel(p.xp);
-      const newXP=p.xp+amount;
-      const newLv=getLevel(newXP);
-      const updated={...p,xp:newXP};
-      saveProgress(updated);
-      if(newLv>oldLv){
-        const m=getPaigeMsg('level_up');
-        setTimeout(()=>showCelebration(m.emoji,`${LEVELS[newLv].emoji} ${m.title} — ${LEVELS[newLv].name}!`,`<strong>${LEVELS[newLv].name}</strong><br>${m.msg}`,true),500);
-      }
-      return updated;
-    });
-    if(x!==undefined&&y!==undefined)showXPPopup(amount,x,y);
-  },[]);
-
-  const awardBadge=React.useCallback((badgeId)=>{
-    setProgress(p=>{
-      if(p.badges.includes(badgeId))return p;
-      const updated={...p,badges:[...p.badges,badgeId]};
-      saveProgress(updated);
-      const b=BADGES.find(x=>x.id===badgeId);
-      if(b)setTimeout(()=>showCelebration(b.emoji,`Badge Earned: ${b.name}`,b.desc,false),800);
-      return updated;
-    });
-  },[]);
 
   /* ── EXAM LAUNCH ── */
   const launchExam=React.useCallback((qs,practiceMode,startIdx=0)=>{
     clearInterval(timerRef.current);
     setQuestions(qs);setAnswers({});setFlags(new Set());setRevealed(new Set());
-    setIdx(startIdx);setTimeLeft(90*60);setStreak(0);setEncMsg(null);setScreen('exam');
+    setIdx(startIdx);setTimeLeft(90*60);setScreen('exam');
     if(!practiceMode&&mode==='exam'){
       timerRef.current=setInterval(()=>setTimeLeft(t=>{
         if(t<=1){clearInterval(timerRef.current);finishExam(qs,{});return 0;}
@@ -1622,10 +1277,17 @@ function App({allQ}){
   const startExam=React.useCallback(()=>{
     seedRef.current=Date.now()%99999999;
     setIsDrill(false);setPrevAnswers(null);
+    if(mode==='missed'){
+      const wrongSet=new Set(progress.wrongIds||[]);
+      const missedQs=allQ.filter(q=>wrongSet.has(String(q.id))).map(normalizeQ);
+      if(!missedQs.length)return;
+      launchExam(missedQs,true,0);
+      return;
+    }
     const examQs=buildExam(allQ,seedRef.current,domainFilter,mode);
     const startIdx=mode==='marathon'?(progress.marathonIdx||0):0;
     launchExam(examQs,mode!=='exam',startIdx);
-  },[allQ,domainFilter,mode,launchExam]);
+  },[allQ,domainFilter,mode,progress.wrongIds,progress.marathonIdx,launchExam]);
 
   const startDrill=React.useCallback((specificQs)=>{
     const drillQs=specificQs||buildDrill(questions,answers);
@@ -1633,120 +1295,64 @@ function App({allQ}){
     clearInterval(timerRef.current);
     setPrevAnswers({...answers});setIsDrill(true);
     setQuestions(drillQs);setAnswers({});setFlags(new Set());setRevealed(new Set());
-    setIdx(0);setStreak(0);setTimeLeft(90*60);setScreen('exam');
+    setIdx(0);setTimeLeft(90*60);setScreen('exam');
   },[questions,answers]);
 
   /* ── FINISH / SUBMIT ── */
-  /* NOTE: finishExam must be declared before handleAnswer because handleAnswer
-     lists it in its useCallback dep array, which is evaluated immediately on
-     render. const has a Temporal Dead Zone — forward references in dep arrays crash. */
-  const [encMsg,setEncMsg]=React.useState(null);
-
   const finishExam=React.useCallback((qs,ans)=>{
     clearInterval(timerRef.current);
-    const qToUse=qs||questions;const aToUse=ans||answers;
-    const{total,correct,pct,scaledScore,byD}=calcResults(qToUse,aToUse);
-    const newSessions=progress.sessions+1;
-    const newBest=Math.max(progress.bestScore,pct);
-
+    const qToUse=qs||questions;
+    const aToUse=ans||answers;
+    const{pct}=calcResults(qToUse,aToUse);
     setProgress(p=>{
-      const updated={...p,sessions:newSessions,bestScore:newBest};
+      let ds={...p.domainStats};
+      let wi=[...(p.wrongIds||[])];
+      let lc=p.lifetimeCorrect||0;
+      let lt=p.lifetimeTotal||0;
+      qToUse.forEach(q=>{
+        const a=aToUse[q.id];
+        const hasA=isPBQ(q)
+          ?(a&&(a.selected!==undefined||a.aclRules||a.rbacSelections||a.vpn||a.slots||a.resil))
+          :a!==undefined;
+        if(!hasA)return;
+        const ok=isPBQ(q)?pbqCorrect(q,a):mcCorrect(q,a);
+        const domain=isPBQ(q)?q.domain:q.d;
+        if(!ds[domain])ds[domain]={correct:0,total:0};
+        ds[domain]={correct:ds[domain].correct+(ok?1:0),total:ds[domain].total+1};
+        const sid=String(q.id);
+        if(ok){wi=wi.filter(id=>id!==sid);}
+        else if(!wi.includes(sid)){wi.push(sid);}
+        lc+=ok?1:0;lt+=1;
+      });
+      const updated={...p,sessions:p.sessions+1,bestScore:Math.max(p.bestScore,pct),
+        domainStats:ds,wrongIds:wi,lifetimeCorrect:lc,lifetimeTotal:lt};
       saveProgress(updated);return updated;
     });
-
-    awardBadge('first_pass');
-    if(newSessions>=5)awardBadge('sessions_5');
-    if(newSessions>=10)awardBadge('sessions_10');
-
-    // Check PBQ perfect
-    const pbqQs=qToUse.filter(q=>isPBQ(q));
-    if(pbqQs.length>0&&pbqQs.every(q=>pbqCorrect(q,aToUse[q.id]))){
-      awardBadge('pbq_perfect');
-      setTimeout(()=>{const m=getPaigeMsg('pbq_perfect');showCelebration(m.emoji,m.title,m.msg,true);},1200);
-    }
-
-    if(isDrill){
-      awardBadge('drill_master');
-      if(pct===100){
-        awardBadge('weak_cleared');
-        const m=getPaigeMsg('drill_cleared');
-        setTimeout(()=>showCelebration(m.emoji,m.title,m.msg,true),400);
-      }else{
-        awardXP(XP_PER.drill_correct*Math.floor(correct/2));
-      }
-    }else{
-      awardXP(XP_PER.correct*correct);
-      // Badge thresholds use scaled score to match CompTIA 100–900 scale
-      if(scaledScore>=675)awardBadge('pass_75');           // 75% = 675
-      if(scaledScore>=750){awardBadge('pass_83');awardXP(XP_PER.pass_exam);}  // pass = 750
-      if(scaledScore>=810){awardBadge('pass_90');awardXP(XP_PER.score_90);}   // 90% = 810
-      if(scaledScore===900){awardBadge('perfect');awardXP(XP_PER.score_perfect);}
-
-      // Show Paige celebration
-      setTimeout(()=>{
-        let msgKey=scaledScore===900?'perfect':scaledScore>=810?'score_90':scaledScore>=750?'pass':null;
-        if(msgKey){
-          const m=getPaigeMsg(msgKey);
-          showCelebration(m.emoji,m.title,m.msg,scaledScore>=750);
-        }else if(scaledScore<540){  // below 60%
-          const m=getPaigeMsg('fail_encouragement');
-          showCelebration(m.emoji,m.title,m.msg,false);
-        }
-      },300);
-    }
     setScreen('results');setResultsTab('score');
-  },[questions,answers,progress,mode,isDrill,awardXP,awardBadge]);
+  },[questions,answers]);
 
   const submit=React.useCallback(()=>finishExam(questions,answers),[finishExam,questions,answers]);
 
   const newExam=React.useCallback(()=>{
     clearInterval(timerRef.current);
-    setIsDrill(false);setPrevAnswers(null);setStreak(0);setScreen('home');
+    setIsDrill(false);setPrevAnswers(null);setScreen('home');
   },[]);
 
-  /* ── ANSWER HANDLING with streak + XP ── */
-  const handleAnswer=React.useCallback((qid,ans,event)=>{
+  /* ── ANSWER HANDLING ── */
+  const handleAnswer=React.useCallback((qid,ans)=>{
+    const q=questions.find(x=>x.id===qid);
+    // For multi-select, only reveal once all required options are chosen
+    const autoReveal=mode==='practice'||mode==='marathon'||mode==='missed'||isDrill;
+    const chooseN=q&&!isPBQ(q)&&Array.isArray(q.a)?q.a.length:1;
+    const selCount=Array.isArray(ans)?ans.length:1;
+    const revealNow=autoReveal&&selCount>=chooseN;
+
     setAnswers(a=>{
       const newA={...a,[qid]:ans};
-      const q=questions.find(x=>x.id===qid);if(!q)return newA;
-      const ok=isPBQ(q)?pbqCorrect(q,ans):mcCorrect(q,ans);
-      const domain=isPBQ(q)?q.domain:q.d;
-      const autoReveal=mode==='practice'||mode==='marathon'||isDrill;
-      if(autoReveal){
-        setRevealed(r=>new Set([...r,qid]));
-        if(!ok)setEncMsg({qid,msg:getRandEnc()});
-        else setEncMsg(null);
-      }
-      setProgress(p=>{
-        const ds={...p.domainStats};
-        if(!ds[domain])ds[domain]={correct:0,total:0};
-        ds[domain]={correct:ds[domain].correct+(ok?1:0),total:ds[domain].total+1};
-        const wi=ok?p.wrongIds:[...new Set([...(p.wrongIds||[]),String(qid)])];
-        const upd={...p,domainStats:ds,wrongIds:wi,
-          lifetimeCorrect:(p.lifetimeCorrect||0)+(ok?1:0),
-          lifetimeTotal:(p.lifetimeTotal||0)+1};
-        saveProgress(upd);return upd;
-      });
-      if(ok){
-        const xpAmt=isPBQ(q)?XP_PER.pbq_correct:(isDrill?XP_PER.drill_correct:XP_PER.correct);
-        const x=event?event.clientX:window.innerWidth/2;
-        const y=event?event.clientY:200;
-        setStreak(s=>{
-          const ns=s+1;
-          const bonus=ns>1?Math.min(ns,5)*XP_PER.streak_bonus:0;
-          awardXP(xpAmt+bonus,x,y);
-          if(ns===5){awardBadge('streak_5');showCelebration('🔥','5 in a Row!','You\'re on fire, Paige! Keep going! 🔥',false);}
-          if(ns===10){const m=getPaigeMsg('streak_10');showCelebration(m.emoji,m.title,m.msg,true);}
-          if(ns===20)awardBadge('streak_20');
-          return ns;
-        });
-      }else{
-        setStreak(0);
-      }
-      if(mode==='marathon'&&autoReveal){
+      if(mode==='marathon'&&revealNow){
+        const ok=q?(isPBQ(q)?pbqCorrect(q,ans):mcCorrect(q,ans)):false;
         const delay=ok?1800:3200;
         setTimeout(()=>{
-          setEncMsg(null);
           setIdx(i=>{
             const ni=i+1;
             if(ni>=questions.length){
@@ -1761,17 +1367,11 @@ function App({allQ}){
       }
       return newA;
     });
-  },[questions,mode,isDrill,idx,awardXP,awardBadge,finishExam]);
+
+    if(revealNow) setRevealed(r=>new Set([...r,qid]));
+  },[questions,mode,isDrill,finishExam]);
 
   React.useEffect(()=>()=>clearInterval(timerRef.current),[]);
-
-  /* ── SHOW WELCOME BACK ── */
-  React.useEffect(()=>{
-    if(progress.sessions>0&&progress.lastSeen){
-      const m=getPaigeMsg('welcome_back');
-      setTimeout(()=>showCelebration(m.emoji,m.title,m.msg,false),800);
-    }
-  },[]);// eslint-disable-line
 
   const toggleFlag=React.useCallback(qid=>setFlags(f=>{const nf=new Set(f);nf.has(qid)?nf.delete(qid):nf.add(qid);return nf;}),[]);
 
@@ -1790,10 +1390,9 @@ function App({allQ}){
       ),
       React.createElement('h1',{className:'home-title'},'Security+ SY0-701'),
       React.createElement('p',{className:'home-sub'},
-        `${allQ.length} questions · 5 PBQs · You\'ve got this 💪`
+        `${allQ.length} questions · 5 PBQs · You've got this 💪`
       )
     ),
-    React.createElement(XPBar,{progress}),
     mode==='marathon'&&React.createElement('div',{className:'marathon-bar-wrap'},
       React.createElement('div',{className:'marathon-label'},progress.marathonIdx>0?`📍 Q${progress.marathonIdx+1} of ${allQ.length}`:`🏃 All ${allQ.length} questions in order`),
       React.createElement('div',{className:'marathon-bar-track'},
@@ -1805,8 +1404,8 @@ function App({allQ}){
       [
         {l:'Sessions',v:progress.sessions},
         {l:'Best Score',v:progress.bestScore>0?`${Math.round(progress.bestScore*9)}/900`:'—'},
-        {l:'Total XP',v:progress.xp},
-        {l:'Badges',v:progress.badges.length},
+        {l:'Lifetime Accuracy',v:progress.lifetimeTotal>0?`${Math.round((progress.lifetimeCorrect||0)/progress.lifetimeTotal*100)}%`:'—'},
+        {l:'Missed Questions',v:(progress.wrongIds||[]).length},
       ].map(s=>React.createElement('div',{key:s.l,className:'stat-card'},
         React.createElement('div',{className:'stat-num'},s.v),
         React.createElement('div',{className:'stat-lbl'},s.l)
@@ -1819,6 +1418,7 @@ function App({allQ}){
        {v:'study',icon:'🎯',t:'Study by Domain',d:'Filter by domain · Instant feedback · Targeted prep'},
        {v:'marathon',icon:'🏃',t:'Marathon Mode',d:`All ${allQ.length} questions in order · Saves your spot · Great for full review`},
        {v:'pbq',icon:'🖥️',t:'PBQ Only',d:'All 7 performance-based questions · HOTSPOT + SIMULATION · Real exam scenarios'},
+       {v:'missed',icon:'🔁',t:'Missed Questions',d:`Review the ${(progress.wrongIds||[]).length} questions you've gotten wrong · Clears as you correct them`},
       ].map(m=>React.createElement('div',{key:m.v,className:`mode-card${mode===m.v?' sel':''}`,onClick:()=>setMode(m.v)},
         React.createElement('div',{className:'mode-icon'},m.icon),
         React.createElement('div',{className:'mode-title'},m.t),
@@ -1831,11 +1431,16 @@ function App({allQ}){
         DOMAINS.map((d,i)=>React.createElement('button',{key:d,className:`chip${domainFilter.includes(d)?' active':''}`,onClick:()=>setDF(f=>f.includes(d)?f.filter(x=>x!==d):[...f,d])},DSHORT[i]))
       )
     ),
+    mode==='missed'&&!(progress.wrongIds||[]).length&&React.createElement('p',{style:{fontSize:13,color:'var(--grn2)',margin:'0.5rem 0 1rem',fontWeight:500}},'✓ No missed questions on record — start a session to track them.'),
     React.createElement('div',{className:'div'}),
     React.createElement('div',{style:{display:'flex',gap:8,alignItems:'center',flexWrap:'wrap'}},
-      React.createElement('button',{className:'btn btn-rose',onClick:startExam,style:{minWidth:160,justifyContent:'center',fontSize:15}},
+      React.createElement('button',{
+        className:'btn btn-rose',onClick:startExam,
+        disabled:mode==='missed'&&!(progress.wrongIds||[]).length,
+        style:{minWidth:160,justifyContent:'center',fontSize:15}
+      },
         mode==='marathon'&&progress.marathonIdx>0?'▶  Continue Marathon 🏃':'▶  '+
-        (mode==='exam'?'Start Exam':mode==='practice'?'Start Practice':mode==='pbq'?'Start PBQs':mode==='marathon'?'Start Marathon':'Start Study')
+        (mode==='exam'?'Start Exam':mode==='practice'?'Start Practice':mode==='pbq'?'Start PBQs':mode==='marathon'?'Start Marathon':mode==='missed'?'Review Missed':'Start Study')
       ),
       mode==='marathon'&&progress.marathonIdx>0&&React.createElement('button',{className:'btn btn-sm btn-ghost',onClick:()=>setProgress(p=>{const u={...p,marathonIdx:0};saveProgress(u);return u;})},
         'Restart from Q1'
@@ -1844,13 +1449,9 @@ function App({allQ}){
     React.createElement('div',{style:{display:'flex',gap:8,alignItems:'center',marginTop:'1rem',flexWrap:'wrap'}},
       React.createElement('span',{style:{fontSize:11,color:'#4a6070',flex:1}},'Progress saves automatically across sessions'),
       React.createElement('button',{className:'btn btn-xs btn-ghost',style:{color:'#4a6070'},
-        onClick:()=>{if(window.confirm('Reset ALL progress, XP, badges, marathon position, and stats?')){localStorage.removeItem(PROG_KEY);setProgress({...DEFAULT_PROG});}}},
+        onClick:()=>{if(window.confirm('Reset ALL progress, marathon position, and stats?')){localStorage.removeItem(PROG_KEY);setProgress({...DEFAULT_PROG});}}},
         'Reset progress'
       )
-    ),
-    progress.badges.length>0&&React.createElement('div',{style:{marginTop:'1.5rem'}},
-      React.createElement('h3',{style:{marginBottom:10}},'Your badges'),
-      React.createElement(BadgeShelf,{earned:progress.badges})
     )
   );
 
@@ -1860,11 +1461,11 @@ function App({allQ}){
   if(screen==='exam'&&q) return React.createElement('div',null,
     isDrill&&React.createElement('div',{className:'drill-header'},
       React.createElement('span',{className:'badge badge-gold'},'🎯 Drill Mode'),
-      React.createElement('span',{style:{fontSize:13,color:'#f5c842',fontWeight:500}},`${idx+1} of ${questions.length} missed questions`),
-      streak>=3&&React.createElement('span',{className:`streak-badge${streak>=5?' hot':''}`,style:{marginLeft:'auto'}},`🔥 ${streak} streak`)
+      React.createElement('span',{style:{fontSize:13,color:'#f5c842',fontWeight:500}},`${idx+1} of ${questions.length} missed questions`)
     ),
-    !isDrill&&streak>=3&&React.createElement('div',{style:{display:'flex',justifyContent:'flex-end',marginBottom:8}},
-      React.createElement('span',{className:`streak-badge${streak>=5?' hot':''}`},`🔥 ${streak} in a row!`)
+    mode==='missed'&&!isDrill&&React.createElement('div',{className:'drill-header'},
+      React.createElement('span',{className:'badge badge-teal'},'🔁 Missed Questions'),
+      React.createElement('span',{style:{fontSize:13,color:'var(--teal2)',fontWeight:500}},`${idx+1} of ${questions.length}`)
     ),
     React.createElement('div',{style:{display:'flex',alignItems:'center',gap:10,marginBottom:'1rem',flexWrap:'wrap'}},
       React.createElement('div',{className:'prog',style:{flex:1,minWidth:100}},React.createElement('div',{className:'prog-fill',style:{width:`${(idx+1)/questions.length*100}%`}})),
@@ -1874,23 +1475,17 @@ function App({allQ}){
       hasPBQ&&React.createElement('span',{className:'badge badge-teal'},'PBQ')
     ),
     hasPBQ
-      ?React.createElement(PBQQuestion,{pbq:q,answer:answers[qid],onAnswer:(ans,ev)=>handleAnswer(qid,ans,ev),revealed:isRev||(mode==='practice')||isDrill})
-      :React.createElement(MCQuestion,{q,answer:answers[qid],onAnswer:(ans)=>{
-          handleAnswer(qid,ans,null);
-        },revealed:isRev||(mode==='practice'&&hasAns)||isDrill||mode==='marathon'}),
-    encMsg&&encMsg.qid===qid&&React.createElement('div',{className:'enc-toast'},
-      React.createElement('span',{className:'enc-heart'},'💙'),
-      React.createElement('span',null,encMsg.msg)
-    ),
+      ?React.createElement(PBQQuestion,{pbq:q,answer:answers[qid],onAnswer:(ans)=>handleAnswer(qid,ans),revealed:isRev||(mode==='practice')||isDrill})
+      :React.createElement(MCQuestion,{q,answer:answers[qid],onAnswer:(ans)=>handleAnswer(qid,ans),revealed:isRev}),
     React.createElement('div',{className:'nav-row'},
       React.createElement('button',{className:'btn btn-ghost',onClick:()=>setIdx(i=>Math.max(0,i-1)),disabled:!idx},'← Prev'),
       React.createElement('div',{style:{display:'flex',gap:8,alignItems:'center',flexWrap:'wrap',justifyContent:'center'}},
         mode==='practice'&&!isRev&&hasAns&&!hasPBQ&&!isDrill&&React.createElement('button',{className:'btn btn-sm',onClick:()=>setRevealed(r=>new Set([...r,qid]))},'Show answer'),
         idx<questions.length-1
           ?React.createElement('button',{className:'btn btn-rose',onClick:()=>setIdx(i=>i+1)},'Next →')
-          :React.createElement('button',{className:'btn btn-rose',onClick:submit},isDrill?'Finish drill ✓':'Submit exam ✓')
+          :React.createElement('button',{className:'btn btn-rose',onClick:submit},isDrill||mode==='missed'?'Finish ✓':'Submit exam ✓')
       ),
-      React.createElement('button',{className:'btn btn-ghost btn-sm',onClick:submit,style:{color:'#4a6070'}},isDrill?'Finish':'Submit')
+      React.createElement('button',{className:'btn btn-ghost btn-sm',onClick:submit,style:{color:'#4a6070'}},isDrill||mode==='missed'?'Finish':'Submit')
     ),
     React.createElement('div',{className:'div',style:{margin:'1rem 0 0.5rem'}}),
     React.createElement('div',{className:'q-grid'},
@@ -1898,7 +1493,7 @@ function App({allQ}){
         const id=qn.id;const isCur=i===idx;const isPBQn=isPBQ(qn);
         const a=answers[id];const hasA=isPBQn?(a&&(a.selected!==undefined||a.aclRules||a.rbacSelections||a.vpn||a.slots||a.resil)):a!==undefined;
         let revOk=false,revBad=false;
-        if((mode==='practice'||isDrill)&&hasA){const ok=isPBQn?pbqCorrect(qn,a):mcCorrect(qn,a);revOk=ok;revBad=!ok;}
+        if((mode==='practice'||mode==='missed'||isDrill)&&hasA){const ok=isPBQn?pbqCorrect(qn,a):mcCorrect(qn,a);revOk=ok;revBad=!ok;}
         let cls='q-dot';
         if(isCur)cls+=' current';else if(flags.has(id))cls+=' flagged';else if(revOk)cls+=' correct-d';else if(revBad)cls+=' wrong-d';else if(hasA)cls+=' answered';else if(isPBQn)cls+=' pbq';
         return React.createElement('div',{key:i,className:cls,onClick:()=>setIdx(i),title:`Q${i+1}${isPBQn?' (PBQ)':''}${flags.has(id)?' ⚑':''}`},isPBQn?'PBQ':i+1);
@@ -1930,7 +1525,9 @@ function App({allQ}){
           React.createElement('p',{style:{fontSize:13,color:'#8fa3b1',marginTop:4}},
             isDrill?`${correct}/${total} missed questions corrected`:`CompTIA threshold: 750/900 (≈83%)`
           ),
-          React.createElement(XPBar,{progress})
+          React.createElement('p',{style:{fontSize:13,color:'#8fa3b1',marginTop:4}},
+            `Session ${progress.sessions} · Best: ${progress.bestScore>0?Math.round(progress.bestScore*9)+'/900':'—'}`
+          )
         )
       ),
       React.createElement('div',{className:'stat-grid',style:{marginBottom:'1.25rem'}},
@@ -1941,7 +1538,7 @@ function App({allQ}){
         ))
       ),
       React.createElement('div',{className:'tabs',style:{marginBottom:'1.25rem'}},
-        [{v:'score',l:'📊 Domain Scores'},{v:'weak',l:'🔍 Weak Areas'},{v:'badges',l:'🏅 Badges'},{v:'review',l:'📋 Review'}].map(({v,l})=>
+        [{v:'score',l:'📊 Domain Scores'},{v:'weak',l:'🔍 Weak Areas'},{v:'review',l:'📋 Review'}].map(({v,l})=>
           React.createElement('button',{key:v,className:`tab${resultsTab===v?' active':''}`,onClick:()=>setResultsTab(v)},l)
         )
       ),
@@ -1993,10 +1590,6 @@ function App({allQ}){
         )
       ),
       resultsTab==='weak'&&React.createElement(WeakAreasPanel,{analysis,onDrill:startDrill}),
-      resultsTab==='badges'&&React.createElement('div',null,
-        React.createElement('p',{style:{fontSize:13,color:'#8fa3b1',marginBottom:12}},`${progress.badges.length} of ${BADGES.length} badges earned`),
-        React.createElement(BadgeShelf,{earned:progress.badges})
-      ),
       resultsTab==='review'&&React.createElement(ReviewPanel,{questions,answers,flags,onDrill:startDrill})
     );
   }
