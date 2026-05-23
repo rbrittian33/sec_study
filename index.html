@@ -1999,56 +1999,75 @@ function App({allQ}){
 /* ══════════════════════════════════════════════════════════
    FILE LOADER + BOOTSTRAP
 ══════════════════════════════════════════════════════════ */
-let appRoot=null;
 
-function launchApp(data){
-  try {
-    const q=Array.isArray(data)?data:data.questions||[];
-    if(!q||!q.length){showErr('JSON loaded, but no questions were found inside it.');return;}
-
-    try{sessionStorage.setItem('sx701_q',JSON.stringify(data));}catch(e){}
-
-    document.getElementById('load-overlay').style.display='none';
-    document.getElementById('root').style.display='block';
-
-    if(!appRoot)appRoot=ReactDOM.createRoot(document.getElementById('root'));
-    appRoot.render(React.createElement(App,{allQ:q}));
-
-  } catch(err) {
-    document.getElementById('root').style.display='block';
-    document.getElementById('root').innerHTML = `
-      <div style="padding: 2rem; color: #e05252; text-align: center; background: var(--navy2); border-radius: var(--radl); margin-top: 2rem; border: 1px solid #e05252;">
-        <h3>Application Render Error</h3>
-        <p style="font-family: monospace;">${err.message}</p>
-      </div>`;
-    console.error("React Render Error:", err);
+/* ── REACT ERROR BOUNDARY ──
+   React 18 concurrent mode throws render errors asynchronously —
+   a plain try/catch around appRoot.render() never fires.
+   This class component is the only way to catch them. */
+class ErrorBoundary extends React.Component {
+  constructor(props){super(props);this.state={err:null};}
+  static getDerivedStateFromError(err){return{err};}
+  componentDidCatch(err,info){console.error('React render error:',err,info);}
+  render(){
+    if(this.state.err){
+      return React.createElement('div',{style:{padding:'2rem',color:'#e05252',textAlign:'center',background:'var(--navy2)',borderRadius:'var(--radl)',marginTop:'2rem',border:'1px solid #e05252'}},
+        React.createElement('h3',null,'Application Render Error'),
+        React.createElement('p',{style:{fontFamily:'monospace',marginTop:8,fontSize:13}},this.state.err.message||String(this.state.err)),
+        React.createElement('p',{style:{fontSize:12,color:'#8fa3b1',marginTop:12}},'Open the browser console for full details.')
+      );
+    }
+    return this.props.children;
   }
 }
 
+let appRoot=null;
+
 function showErr(msg){const el=document.getElementById('load-err');if(el){el.textContent=msg;el.style.display='block';}}
 
+function showLoading(){
+  const root=document.getElementById('root');
+  root.style.display='block';
+  root.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:60vh;gap:16px;color:#8fa3b1">'
+    +'<div style="font-size:36px">⏳</div>'
+    +'<div style="font-size:14px;font-weight:500">Loading question bank…</div>'
+    +'</div>';
+}
+
+function launchApp(data){
+  const q=Array.isArray(data)?data:data.questions||[];
+  if(!q||!q.length){showErr('JSON loaded, but no questions were found inside it.');return;}
+
+  document.getElementById('load-overlay').style.display='none';
+  document.getElementById('root').style.display='block';
+
+  if(!appRoot)appRoot=ReactDOM.createRoot(document.getElementById('root'));
+  appRoot.render(React.createElement(ErrorBoundary,null,React.createElement(App,{allQ:q})));
+
+  // Cache after render is kicked off so it doesn't block the UI
+  setTimeout(()=>{try{sessionStorage.setItem('sx701_q',JSON.stringify(data));}catch(e){}},0);
+}
+
 function initApp(){
+  showLoading();
   fetch('./secplus_701_enriched.json')
     .then(r=>{
-      if(!r.ok) throw new Error(`HTTP ${r.status}: JSON not found. Check exact case-sensitivity of the filename!`);
+      if(!r.ok) throw new Error(`HTTP ${r.status}: JSON not found. Check filename casing!`);
       return r.json();
     })
     .then(data=>launchApp(data))
     .catch((err)=>{
       console.error("Initialization Error:", err);
-      showErr(`Network Error: ${err.message}`);
 
+      // Try sessionStorage cache before giving up
       try{
         const c=sessionStorage.getItem('sx701_q');
-        if(c){
-          launchApp(JSON.parse(c));
-          return;
-        }
-      }catch(e){
-        console.error("Session storage fallback failed:", e);
-      }
+        if(c){launchApp(JSON.parse(c));return;}
+      }catch(e){console.error("Session cache failed:",e);}
 
+      // Nothing worked — show file picker with the error
+      document.getElementById('root').style.display='none';
       document.getElementById('load-overlay').style.display='flex';
+      showErr(`Could not load questions: ${err.message}`);
     });
 }
 
