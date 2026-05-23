@@ -469,11 +469,11 @@ const {useState,useEffect,useRef,useCallback,useMemo}=React;
    AUTH  — SHA-256 hashed credentials
    To change: update SALT, USER_HASH, PASS_HASH.
    Hash = sha256(SALT + value)  via https://emn178.github.io/online-tools/sha256.html
-   Current: secure701 / NexusSecPlus2026!
+   Current: Paige (case-insensitive) / Cleveland
 ══════════════════════════════════════════════════════════ */
 const SALT='nx7s4lt';
-const UH='a2e801c9da41dca63f45577af27bb31f3e6e70facd41d261138916ce6e22871f';
-const PH='fa8467a032e317f1e0ff47d5d2a78b7e2b548e22e1440ea80037f29e7537f091';
+const UH='06d8e5eb1b919c2ecc4fea92b3694ce15c627bfa12dd92ea4b776671c1a020d4';
+const PH='1f729fad5b5ae29cb96d8828a9e4d563fb6404ef7d2a9badf959e0e92075ea1e';
 const AK='sx701_auth';
 
 async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
@@ -489,7 +489,7 @@ document.getElementById('auth-submit').addEventListener('click',async()=>{
       throw new Error("Secure context required. Ensure GitHub Pages 'Enforce HTTPS' is checked.");
     }
 
-    const [uh,ph]=await Promise.all([sha256(SALT+u),sha256(SALT+p)]);
+    const [uh,ph]=await Promise.all([sha256(SALT+u.toLowerCase()),sha256(SALT+p)]);
     if(uh===UH&&ph===PH){
       sessionStorage.setItem(AK,'1');
       document.getElementById('auth-screen').style.display='none';
