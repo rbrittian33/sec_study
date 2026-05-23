@@ -1632,68 +1632,12 @@ function App({allQ}){
     setIdx(0);setStreak(0);setTimeLeft(90*60);setScreen('exam');
   },[questions,answers]);
 
-  /* ── ANSWER HANDLING with streak + XP ── */
+  /* ── FINISH / SUBMIT ── */
+  /* NOTE: finishExam must be declared before handleAnswer because handleAnswer
+     lists it in its useCallback dep array, which is evaluated immediately on
+     render. const has a Temporal Dead Zone — forward references in dep arrays crash. */
   const [encMsg,setEncMsg]=React.useState(null);
 
-  const handleAnswer=React.useCallback((qid,ans,event)=>{
-    setAnswers(a=>{
-      const newA={...a,[qid]:ans};
-      const q=questions.find(x=>x.id===qid);if(!q)return newA;
-      const ok=isPBQ(q)?pbqCorrect(q,ans):mcCorrect(q,ans);
-      const domain=isPBQ(q)?q.domain:q.d;
-      const autoReveal=mode==='practice'||mode==='marathon'||isDrill;
-      if(autoReveal){
-        setRevealed(r=>new Set([...r,qid]));
-        if(!ok)setEncMsg({qid,msg:getRandEnc()});
-        else setEncMsg(null);
-      }
-      setProgress(p=>{
-        const ds={...p.domainStats};
-        if(!ds[domain])ds[domain]={correct:0,total:0};
-        ds[domain]={correct:ds[domain].correct+(ok?1:0),total:ds[domain].total+1};
-        const wi=ok?p.wrongIds:[...new Set([...(p.wrongIds||[]),String(qid)])];
-        const upd={...p,domainStats:ds,wrongIds:wi,
-          lifetimeCorrect:(p.lifetimeCorrect||0)+(ok?1:0),
-          lifetimeTotal:(p.lifetimeTotal||0)+1};
-        saveProgress(upd);return upd;
-      });
-      if(ok){
-        const xpAmt=isPBQ(q)?XP_PER.pbq_correct:(isDrill?XP_PER.drill_correct:XP_PER.correct);
-        const x=event?event.clientX:window.innerWidth/2;
-        const y=event?event.clientY:200;
-        setStreak(s=>{
-          const ns=s+1;
-          const bonus=ns>1?Math.min(ns,5)*XP_PER.streak_bonus:0;
-          awardXP(xpAmt+bonus,x,y);
-          if(ns===5){awardBadge('streak_5');showCelebration('🔥','5 in a Row!','You\'re on fire, Paige! Keep going! 🔥',false);}
-          if(ns===10){const m=getPaigeMsg('streak_10');showCelebration(m.emoji,m.title,m.msg,true);}
-          if(ns===20)awardBadge('streak_20');
-          return ns;
-        });
-      }else{
-        setStreak(0);
-      }
-      if(mode==='marathon'&&autoReveal){
-        const delay=ok?1800:3200;
-        setTimeout(()=>{
-          setEncMsg(null);
-          setIdx(i=>{
-            const ni=i+1;
-            if(ni>=questions.length){
-              setProgress(p=>{const u={...p,marathonIdx:0};saveProgress(u);return u;});
-              finishExam(questions,newA);
-              return i;
-            }
-            setProgress(p=>{const u={...p,marathonIdx:ni};saveProgress(u);return u;});
-            return ni;
-          });
-        },delay);
-      }
-      return newA;
-    });
-  },[questions,mode,isDrill,idx,awardXP,awardBadge,finishExam]);
-
-  /* ── FINISH / SUBMIT ── */
   const finishExam=React.useCallback((qs,ans)=>{
     clearInterval(timerRef.current);
     const qToUse=qs||questions;const aToUse=ans||answers;
@@ -1754,6 +1698,65 @@ function App({allQ}){
     clearInterval(timerRef.current);
     setIsDrill(false);setPrevAnswers(null);setStreak(0);setScreen('home');
   },[]);
+
+  /* ── ANSWER HANDLING with streak + XP ── */
+  const handleAnswer=React.useCallback((qid,ans,event)=>{
+    setAnswers(a=>{
+      const newA={...a,[qid]:ans};
+      const q=questions.find(x=>x.id===qid);if(!q)return newA;
+      const ok=isPBQ(q)?pbqCorrect(q,ans):mcCorrect(q,ans);
+      const domain=isPBQ(q)?q.domain:q.d;
+      const autoReveal=mode==='practice'||mode==='marathon'||isDrill;
+      if(autoReveal){
+        setRevealed(r=>new Set([...r,qid]));
+        if(!ok)setEncMsg({qid,msg:getRandEnc()});
+        else setEncMsg(null);
+      }
+      setProgress(p=>{
+        const ds={...p.domainStats};
+        if(!ds[domain])ds[domain]={correct:0,total:0};
+        ds[domain]={correct:ds[domain].correct+(ok?1:0),total:ds[domain].total+1};
+        const wi=ok?p.wrongIds:[...new Set([...(p.wrongIds||[]),String(qid)])];
+        const upd={...p,domainStats:ds,wrongIds:wi,
+          lifetimeCorrect:(p.lifetimeCorrect||0)+(ok?1:0),
+          lifetimeTotal:(p.lifetimeTotal||0)+1};
+        saveProgress(upd);return upd;
+      });
+      if(ok){
+        const xpAmt=isPBQ(q)?XP_PER.pbq_correct:(isDrill?XP_PER.drill_correct:XP_PER.correct);
+        const x=event?event.clientX:window.innerWidth/2;
+        const y=event?event.clientY:200;
+        setStreak(s=>{
+          const ns=s+1;
+          const bonus=ns>1?Math.min(ns,5)*XP_PER.streak_bonus:0;
+          awardXP(xpAmt+bonus,x,y);
+          if(ns===5){awardBadge('streak_5');showCelebration('🔥','5 in a Row!','You\'re on fire, Paige! Keep going! 🔥',false);}
+          if(ns===10){const m=getPaigeMsg('streak_10');showCelebration(m.emoji,m.title,m.msg,true);}
+          if(ns===20)awardBadge('streak_20');
+          return ns;
+        });
+      }else{
+        setStreak(0);
+      }
+      if(mode==='marathon'&&autoReveal){
+        const delay=ok?1800:3200;
+        setTimeout(()=>{
+          setEncMsg(null);
+          setIdx(i=>{
+            const ni=i+1;
+            if(ni>=questions.length){
+              setProgress(p=>{const u={...p,marathonIdx:0};saveProgress(u);return u;});
+              finishExam(questions,newA);
+              return i;
+            }
+            setProgress(p=>{const u={...p,marathonIdx:ni};saveProgress(u);return u;});
+            return ni;
+          });
+        },delay);
+      }
+      return newA;
+    });
+  },[questions,mode,isDrill,idx,awardXP,awardBadge,finishExam]);
 
   React.useEffect(()=>()=>clearInterval(timerRef.current),[]);
 
