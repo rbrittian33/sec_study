@@ -385,6 +385,8 @@ button{font-family:'Sora',inherit;cursor:pointer;transition:all 0.18s}
 
 <!-- LOGOUT -->
 <button class="btn btn-sm btn-ghost logout-btn" id="logout-btn" style="display:none" onclick="doLogout()">Sign out</button>
+<!-- DASHBOARD NAV -->
+<button class="btn btn-sm btn-ghost" id="dash-nav-btn" style="display:none;position:fixed;top:14px;left:14px;z-index:100" onclick="window._goHome&&window._goHome()">🏠 Dashboard</button>
 
 <!-- APP ROOT -->
 <div id="root" style="display:none"></div>
@@ -1351,6 +1353,12 @@ function App({allQ}){
     setIsDrill(false);setPrevAnswers(null);setScreen('home');
   },[mode,isDrill,answers,idx]);
 
+  React.useEffect(()=>{
+    window._goHome=saveAndGoHome;
+    const btn=document.getElementById('dash-nav-btn');
+    if(btn)btn.style.display=screen==='home'?'none':'';
+  },[saveAndGoHome,screen]);
+
   /* ── ANSWER HANDLING ── */
   const handleAnswer=React.useCallback((qid,ans)=>{
     const q=questions.find(x=>x.id===qid);
@@ -1485,8 +1493,7 @@ function App({allQ}){
       React.createElement('span',{style:{fontSize:12,color:'#8fa3b1',minWidth:52,fontFamily:'IBM Plex Mono,monospace'}},`${idx+1}/${questions.length}`),
       mode==='exam'&&!isDrill&&React.createElement('span',{className:`timer${timerWarn?' warn':''}`},'⏱ ',fmtTime(timeLeft)),
       React.createElement('button',{className:`flag-btn${flags.has(qid)?' flagged':''}`,onClick:()=>toggleFlag(qid),title:'Flag for review'},'⚑'),
-      hasPBQ&&React.createElement('span',{className:'badge badge-teal'},'PBQ'),
-      React.createElement('button',{className:'btn btn-xs btn-ghost',onClick:saveAndGoHome,style:{fontSize:11,padding:'3px 10px',color:'#8fa3b1'},title:mode==='marathon'&&!isDrill?'Save progress & go to dashboard':'Go to dashboard'},mode==='marathon'&&!isDrill?'💾 Save':'🏠')
+      hasPBQ&&React.createElement('span',{className:'badge badge-teal'},'PBQ')
     ),
     hasPBQ
       ?React.createElement(PBQQuestion,{pbq:q,answer:answers[qid],onAnswer:(ans)=>handleAnswer(qid,ans),revealed:isRev||(mode==='practice')||isDrill})
@@ -1543,9 +1550,6 @@ function App({allQ}){
             `Session ${progress.sessions} · Best: ${progress.bestScore>0?Math.round(progress.bestScore*9)+'/900':'—'}`
           )
         )
-      ),
-      React.createElement('div',{style:{display:'flex',justifyContent:'flex-end',marginBottom:'0.75rem'}},
-        React.createElement('button',{className:'btn btn-sm btn-ghost',onClick:newExam,style:{color:'#8fa3b1'}},'🏠 Dashboard')
       ),
       pass&&!isDrill&&React.createElement('div',{style:{background:'linear-gradient(135deg,rgba(76,175,130,0.08),rgba(245,200,66,0.08))',border:'1.5px solid rgba(76,175,130,0.35)',borderRadius:14,padding:'1.1rem 1.3rem',marginBottom:'1.25rem',textAlign:'center'}},
         React.createElement('div',{style:{fontSize:22,marginBottom:6}},'💍🎉💙'),
