@@ -441,7 +441,7 @@ document.getElementById('auth-submit').addEventListener('click',async()=>{
    PERSISTENT PROGRESS (localStorage)
 ══════════════════════════════════════════════════════════ */
 const PROG_KEY='sx701_progress';
-const DEFAULT_PROG={sessions:0,bestScore:0,marathonIdx:0,domainStats:{},wrongIds:[],lifetimeCorrect:0,lifetimeTotal:0,lastSeen:null};
+const DEFAULT_PROG={sessions:0,bestScore:0,marathonIdx:0,marathonAnswers:{},domainStats:{},wrongIds:[],lifetimeCorrect:0,lifetimeTotal:0,lastSeen:null};
 
 function loadProgress(){
   try{const s=localStorage.getItem(PROG_KEY);return s?{...DEFAULT_PROG,...JSON.parse(s)}:DEFAULT_PROG;}
@@ -1262,9 +1262,10 @@ function App({allQ}){
   const seedRef=React.useRef(Date.now()%99999999);
 
   /* ── EXAM LAUNCH ── */
-  const launchExam=React.useCallback((qs,practiceMode,startIdx=0)=>{
+  const launchExam=React.useCallback((qs,practiceMode,startIdx=0,savedAnswers={})=>{
     clearInterval(timerRef.current);
-    setQuestions(qs);setAnswers({});setFlags(new Set());setRevealed(new Set());
+    setQuestions(qs);setAnswers(savedAnswers);setFlags(new Set());
+    setRevealed(new Set(Object.keys(savedAnswers)));
     setIdx(startIdx);setTimeLeft(90*60);setScreen('exam');
     if(!practiceMode&&mode==='exam'){
       timerRef.current=setInterval(()=>setTimeLeft(t=>{
@@ -1286,7 +1287,8 @@ function App({allQ}){
     }
     const examQs=buildExam(allQ,seedRef.current,domainFilter,mode);
     const startIdx=mode==='marathon'?(progress.marathonIdx||0):0;
-    launchExam(examQs,mode!=='exam',startIdx);
+    const savedAnswers=mode==='marathon'&&startIdx>0?(progress.marathonAnswers||{}):{};
+    launchExam(examQs,mode!=='exam',startIdx,savedAnswers);
   },[allQ,domainFilter,mode,progress.wrongIds,progress.marathonIdx,launchExam]);
 
   const startDrill=React.useCallback((specificQs)=>{
@@ -1356,11 +1358,11 @@ function App({allQ}){
           setIdx(i=>{
             const ni=i+1;
             if(ni>=questions.length){
-              setProgress(p=>{const u={...p,marathonIdx:0};saveProgress(u);return u;});
+              setProgress(p=>{const u={...p,marathonIdx:0,marathonAnswers:{}};saveProgress(u);return u;});
               finishExam(questions,newA);
               return i;
             }
-            setProgress(p=>{const u={...p,marathonIdx:ni};saveProgress(u);return u;});
+            setProgress(p=>{const u={...p,marathonIdx:ni,marathonAnswers:newA};saveProgress(u);return u;});
             return ni;
           });
         },delay);
@@ -1442,7 +1444,7 @@ function App({allQ}){
         mode==='marathon'&&progress.marathonIdx>0?'▶  Continue Marathon 🏃':'▶  '+
         (mode==='exam'?'Start Exam':mode==='practice'?'Start Practice':mode==='pbq'?'Start PBQs':mode==='marathon'?'Start Marathon':mode==='missed'?'Review Missed':'Start Study')
       ),
-      mode==='marathon'&&progress.marathonIdx>0&&React.createElement('button',{className:'btn btn-sm btn-ghost',onClick:()=>setProgress(p=>{const u={...p,marathonIdx:0};saveProgress(u);return u;})},
+      mode==='marathon'&&progress.marathonIdx>0&&React.createElement('button',{className:'btn btn-sm btn-ghost',onClick:()=>setProgress(p=>{const u={...p,marathonIdx:0,marathonAnswers:{}};saveProgress(u);return u;})},
         'Restart from Q1'
       )
     ),
