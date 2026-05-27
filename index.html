@@ -1201,7 +1201,7 @@ function WeakAreasPanel({analysis,onDrill}){
 
 /* REVIEW PANEL */
 function ReviewPanel({questions,answers,flags,onDrill}){
-  const [tab,setTab]=React.useState('wrong');
+  const [tab,setTab]=React.useState('all');
   const allWrong=questions.filter(q=>isPBQ(q)?!pbqCorrect(q,answers[q.id]):!mcCorrect(q,answers[q.id]));
   const filtered=questions.filter(q=>{
     const id=q.id;const pb=isPBQ(q);
@@ -1332,7 +1332,7 @@ function App({allQ}){
         domainStats:ds,wrongIds:wi,lifetimeCorrect:lc,lifetimeTotal:lt};
       saveProgress(updated);return updated;
     });
-    setScreen('results');setResultsTab('score');
+    setScreen('results');setResultsTab('review');
   },[questions,answers]);
 
   const submit=React.useCallback(()=>finishExam(questions,answers),[finishExam,questions,answers]);
