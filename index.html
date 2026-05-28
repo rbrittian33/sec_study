@@ -1350,21 +1350,21 @@ function App({allQ}){
   const submit=React.useCallback(()=>finishExam(questions,answers),[finishExam,questions,answers]);
 
   const handleSubmitOrWarn=React.useCallback(()=>{
-    if(mode==='exam'&&!isDrill){
-      const firstUnanswered=questions.findIndex(q=>{
-        const a=answers[q.id];
-        return isPBQ(q)
-          ?!(a&&(a.selected!==undefined||a.aclRules||a.rbacSelections||a.vpn||a.slots||a.resil))
-          :a===undefined;
-      });
-      if(firstUnanswered!==-1){
-        setSkipWarning({qNum:firstUnanswered+1,qIdx:firstUnanswered});
-        return;
-      }
-    }
-    setSkipWarning(null);
+    // DISABLED — unanswered-question gate (re-enable block below to restore)
+    // if(mode==='exam'&&!isDrill){
+    //   const firstUnanswered=questions.findIndex(q=>{
+    //     const a=answers[q.id];
+    //     return isPBQ(q)
+    //       ?!(a&&(a.selected!==undefined||a.aclRules||a.rbacSelections||a.vpn||a.slots||a.resil))
+    //       :a===undefined;
+    //   });
+    //   if(firstUnanswered!==-1){
+    //     setSkipWarning({qNum:firstUnanswered+1,qIdx:firstUnanswered});
+    //     return;
+    //   }
+    // }
     submit();
-  },[mode,isDrill,questions,answers,submit]);
+  },[submit]);
 
   const newExam=React.useCallback(()=>{
     clearInterval(timerRef.current);
