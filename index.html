@@ -1271,13 +1271,14 @@ function App({allQ}){
   const [isDrill,setIsDrill]=React.useState(false);
   const [prevAnswers,setPrevAnswers]=React.useState(null);
   const [progress,setProgress]=React.useState(loadProgress);
+  const [skipWarning,setSkipWarning]=React.useState(null);
   const timerRef=React.useRef(null);
   const seedRef=React.useRef(Date.now()%99999999);
 
   /* ── EXAM LAUNCH ── */
   const launchExam=React.useCallback((qs,practiceMode,startIdx=0,savedAnswers={})=>{
     clearInterval(timerRef.current);
-    setQuestions(qs);setAnswers(savedAnswers);setFlags(new Set());
+    setQuestions(qs);setAnswers(savedAnswers);setFlags(new Set());setSkipWarning(null);
     setRevealed(new Set(Object.keys(savedAnswers)));
     setIdx(startIdx);setTimeLeft(90*60);setScreen('exam');
     if(!practiceMode&&mode==='exam'){
@@ -1347,6 +1348,23 @@ function App({allQ}){
   },[questions,answers]);
 
   const submit=React.useCallback(()=>finishExam(questions,answers),[finishExam,questions,answers]);
+
+  const handleSubmitOrWarn=React.useCallback(()=>{
+    if(mode==='exam'&&!isDrill){
+      const firstUnanswered=questions.findIndex(q=>{
+        const a=answers[q.id];
+        return isPBQ(q)
+          ?!(a&&(a.selected!==undefined||a.aclRules||a.rbacSelections||a.vpn||a.slots||a.resil))
+          :a===undefined;
+      });
+      if(firstUnanswered!==-1){
+        setSkipWarning({qNum:firstUnanswered+1,qIdx:firstUnanswered});
+        return;
+      }
+    }
+    setSkipWarning(null);
+    submit();
+  },[mode,isDrill,questions,answers,submit]);
 
   const newExam=React.useCallback(()=>{
     clearInterval(timerRef.current);
@@ -1509,15 +1527,19 @@ function App({allQ}){
     hasPBQ
       ?React.createElement(PBQQuestion,{pbq:q,answer:answers[qid],onAnswer:(ans)=>handleAnswer(qid,ans),revealed:isRev||(mode==='practice')||isDrill})
       :React.createElement(MCQuestion,{q,answer:answers[qid],onAnswer:(ans)=>handleAnswer(qid,ans),revealed:isRev}),
+    skipWarning!==null&&React.createElement('div',{style:{margin:'0.75rem 0 0',border:'1.5px solid var(--amb)',borderRadius:'var(--radl)',background:'rgba(224,155,52,0.07)',padding:'0.85rem 1rem',display:'flex',alignItems:'center',gap:'0.75rem',flexWrap:'wrap'}},
+      React.createElement('span',{style:{flex:1,fontSize:13,color:'var(--t1)',lineHeight:1.65}},`Hey love 💙 you skipped question ${skipWarning.qNum} — go back and give it your best guess! I believe in every answer you give. I love you, Paige!`),
+      React.createElement('button',{className:'btn btn-rose btn-sm',onClick:()=>{setIdx(skipWarning.qIdx);setSkipWarning(null);}},'Take me there 💙')
+    ),
     React.createElement('div',{className:'nav-row'},
       React.createElement('button',{className:'btn btn-ghost',onClick:()=>setIdx(i=>Math.max(0,i-1)),disabled:!idx},'← Prev'),
       React.createElement('div',{style:{display:'flex',gap:8,alignItems:'center',flexWrap:'wrap',justifyContent:'center'}},
         mode==='practice'&&!isRev&&hasAns&&!hasPBQ&&!isDrill&&React.createElement('button',{className:'btn btn-sm',onClick:()=>setRevealed(r=>new Set([...r,qid]))},'Show answer'),
         idx<questions.length-1
           ?React.createElement('button',{className:'btn btn-rose',onClick:()=>setIdx(i=>i+1)},'Next →')
-          :React.createElement('button',{className:'btn btn-rose',onClick:submit},isDrill||mode==='missed'?'Finish ✓':'Submit exam ✓')
+          :React.createElement('button',{className:'btn btn-rose',onClick:handleSubmitOrWarn},isDrill||mode==='missed'?'Finish ✓':'Submit exam ✓')
       ),
-      React.createElement('button',{className:'btn btn-ghost btn-sm',onClick:submit,style:{color:'#4a6070'}},isDrill||mode==='missed'?'Finish':'Submit')
+      React.createElement('button',{className:'btn btn-ghost btn-sm',onClick:handleSubmitOrWarn,style:{color:'#4a6070'}},isDrill||mode==='missed'?'Finish':'Submit')
     ),
     React.createElement('div',{className:'div',style:{margin:'1rem 0 0.5rem'}}),
     React.createElement('div',{className:'q-grid'},
