@@ -1031,8 +1031,9 @@ function NetDiagSim({pbq,ans,upd,revealed}){
 
 function SlotBtn({slot,val,icons,revealed,pickerOpen,setPickerOpen,onSet,pbq}){
   const hasVal=val&&val!=='?';
-  const isOk=revealed&&val===slot.correct;
-  const isBad=revealed&&hasVal&&val!==slot.correct;
+  const zoneCorrects=pbq.slots.filter(s=>s.area===slot.area).map(s=>s.correct);
+  const isOk=revealed&&hasVal&&zoneCorrects.includes(val);
+  const isBad=revealed&&hasVal&&!zoneCorrects.includes(val);
   const showCorrect=revealed&&!hasVal;
   return React.createElement('div',{style:{display:'flex',flexDirection:'column',alignItems:'center',gap:3}},
     React.createElement('button',{
@@ -1054,7 +1055,17 @@ function SlotBtn({slot,val,icons,revealed,pickerOpen,setPickerOpen,onSet,pbq}){
 function netdiagCorrect(pbq,ans){
   if(!ans)return false;
   const sv=ans.slots||{};const subnet=ans.subnet||'';
-  const slotsOk=pbq.slots.every(s=>sv[s.id]===s.correct);
+  const areas={};
+  pbq.slots.forEach(s=>{
+    if(!areas[s.area])areas[s.area]={correct:[],placed:[]};
+    areas[s.area].correct.push(s.correct);
+    if(sv[s.id])areas[s.area].placed.push(sv[s.id]);
+  });
+  const slotsOk=Object.values(areas).every(a=>{
+    if(a.correct.length!==a.placed.length)return false;
+    const sc=[...a.correct].sort(),sp=[...a.placed].sort();
+    return sc.every((v,i)=>v===sp[i]);
+  });
   return slotsOk&&subnet===pbq.subnetDropdown.correct;
 }
 
