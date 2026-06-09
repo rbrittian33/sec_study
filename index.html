@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Security+ SY0-701 study app — built with love by Russ for Paige.">
+<meta name="description" content="Security+ SY0-701 study app — CompTIA exam preparation.">
 <meta name="theme-color" content="#0d1b2a">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
-<title>Security+ SY0-701 — Study with Paige</title>
+<title>Security+ SY0-701 — Study App</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -362,9 +362,9 @@ button{font-family:'Sora',inherit;cursor:pointer;transition:all 0.18s}
 <div id="auth-screen">
   <div class="auth-box">
     <div class="auth-logo"><span></span>Nexus Integrations LLC</div>
-    <div class="auth-heart">💙</div>
-    <h1 class="auth-title">Hey, Paige!</h1>
-    <p class="auth-sub">Your personal Security+ study companion.<br>Russ made this just for you. 🔐</p>
+    <div class="auth-heart">🔐</div>
+    <h1 class="auth-title">Welcome Back!</h1>
+    <p class="auth-sub">Your Security+ SY0-701 study companion.<br>Sign in to continue. 🚀</p>
     <div class="auth-field"><label>Username</label><input type="text" id="auth-user" placeholder="Enter username" autocomplete="username"></div>
     <div class="auth-field"><label>Password</label><input type="password" id="auth-pass" placeholder="Enter password" autocomplete="current-password"></div>
     <div class="auth-err" id="auth-err"></div>
@@ -398,18 +398,22 @@ button{font-family:'Sora',inherit;cursor:pointer;transition:all 0.18s}
 const {useState,useEffect,useRef,useCallback,useMemo}=React;
 
 /* ══════════════════════════════════════════════════════════
-   AUTH  — SHA-256 hashed credentials
-   To change: update SALT, USER_HASH, PASS_HASH.
+   AUTH  — SHA-256 hashed credentials (multi-user)
    Hash = sha256(SALT + value)  via https://emn178.github.io/online-tools/sha256.html
-   Current: Paige (case-insensitive) / Cleveland
+   USERS maps sha256(SALT+username_lowercase) → sha256(SALT+password)
 ══════════════════════════════════════════════════════════ */
 const SALT='nx7s4lt';
-const UH='06d8e5eb1b919c2ecc4fea92b3694ce15c627bfa12dd92ea4b776671c1a020d4';
-const PH='1f729fad5b5ae29cb96d8828a9e4d563fb6404ef7d2a9badf959e0e92075ea1e';
+const USERS={
+  '06d8e5eb1b919c2ecc4fea92b3694ce15c627bfa12dd92ea4b776671c1a020d4':'1f729fad5b5ae29cb96d8828a9e4d563fb6404ef7d2a9badf959e0e92075ea1e',
+  'cdffe24906df9616c3f9784bd41c801ec0b93d4bbe75404c27068691c04c84b9':'aeb30d7f60ddf4ccfef282e4c365c5b2d045ebeae2a90b7e436936943ab95110',
+  '598a5c3c8860ed675a29ee043168175ee96b50c4ed154a1b1c62de508a612e1b':'f30d4d0699f98e42c95ab52cfa6235fda94ab7d290025e13f1064b7601ca7fb2',
+};
 const AK='sx701_auth';
+const UK='sx701_user';
 
 async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
 function isAuthed(){return sessionStorage.getItem(AK)==='1';}
+function getCurrentUser(){return sessionStorage.getItem(UK)||'User';}
 function doLogout(){sessionStorage.clear();location.reload();}
 
 document.getElementById('auth-submit').addEventListener('click',async()=>{
@@ -422,8 +426,9 @@ document.getElementById('auth-submit').addEventListener('click',async()=>{
     }
 
     const [uh,ph]=await Promise.all([sha256(SALT+u.toLowerCase()),sha256(SALT+p)]);
-    if(uh===UH&&ph===PH){
+    if(USERS[uh]===ph){
       sessionStorage.setItem(AK,'1');
+      sessionStorage.setItem(UK,u);
       document.getElementById('auth-screen').style.display='none';
       document.getElementById('logout-btn').style.display='';
       initApp();
@@ -442,15 +447,16 @@ document.getElementById('auth-submit').addEventListener('click',async()=>{
 /* ══════════════════════════════════════════════════════════
    PERSISTENT PROGRESS (localStorage)
 ══════════════════════════════════════════════════════════ */
-const PROG_KEY='sx701_progress';
+const PROG_BASE='sx701_progress';
 const DEFAULT_PROG={sessions:0,bestScore:0,marathonIdx:0,marathonAnswers:{},domainStats:{},wrongIds:[],lifetimeCorrect:0,lifetimeTotal:0,lastSeen:null};
+function getProgKey(){return PROG_BASE+'_'+(sessionStorage.getItem(UK)||'default').toLowerCase();}
 
 function loadProgress(){
-  try{const s=localStorage.getItem(PROG_KEY);return s?{...DEFAULT_PROG,...JSON.parse(s)}:DEFAULT_PROG;}
+  try{const s=localStorage.getItem(getProgKey());return s?{...DEFAULT_PROG,...JSON.parse(s)}:DEFAULT_PROG;}
   catch(e){return DEFAULT_PROG;}
 }
 function saveProgress(p){
-  try{localStorage.setItem(PROG_KEY,JSON.stringify({...p,lastSeen:new Date().toISOString()}));}catch(e){}
+  try{localStorage.setItem(getProgKey(),JSON.stringify({...p,lastSeen:new Date().toISOString()}));}catch(e){}
 }
 </script>
 <script>
@@ -1436,7 +1442,7 @@ function App({allQ}){
   if(screen==='home') return React.createElement('div',{style:{paddingTop:'0.5rem'}},
     React.createElement('div',{className:'home-hero'},
       React.createElement('div',{className:'home-greeting'},
-        progress.sessions>0?`Welcome back, Paige! 👋 Session ${progress.sessions+1}`:'Ready to study, Paige? 💙'
+        progress.sessions>0?`Welcome back, ${getCurrentUser()}! 👋 Session ${progress.sessions+1}`:`Ready to study, ${getCurrentUser()}? Let's go! 💪`
       ),
       React.createElement('h1',{className:'home-title'},'Security+ SY0-701'),
       React.createElement('p',{className:'home-sub'},
@@ -1499,7 +1505,7 @@ function App({allQ}){
     React.createElement('div',{style:{display:'flex',gap:8,alignItems:'center',marginTop:'1rem',flexWrap:'wrap'}},
       React.createElement('span',{style:{fontSize:11,color:'#4a6070',flex:1}},'Progress saves automatically across sessions'),
       React.createElement('button',{className:'btn btn-xs btn-ghost',style:{color:'#4a6070'},
-        onClick:()=>{if(window.confirm('Reset ALL progress, marathon position, and stats?')){localStorage.removeItem(PROG_KEY);setProgress({...DEFAULT_PROG});}}},
+        onClick:()=>{if(window.confirm('Reset ALL progress, marathon position, and stats?')){localStorage.removeItem(getProgKey());setProgress({...DEFAULT_PROG});}}},
         'Reset progress'
       )
     )
@@ -1528,8 +1534,8 @@ function App({allQ}){
       ?React.createElement(PBQQuestion,{pbq:q,answer:answers[qid],onAnswer:(ans)=>handleAnswer(qid,ans),revealed:isRev||(mode==='practice')||isDrill})
       :React.createElement(MCQuestion,{q,answer:answers[qid],onAnswer:(ans)=>handleAnswer(qid,ans),revealed:isRev}),
     skipWarning!==null&&React.createElement('div',{style:{margin:'0.75rem 0 0',border:'1.5px solid var(--amb)',borderRadius:'var(--radl)',background:'rgba(224,155,52,0.07)',padding:'0.85rem 1rem',display:'flex',alignItems:'center',gap:'0.75rem',flexWrap:'wrap'}},
-      React.createElement('span',{style:{flex:1,fontSize:13,color:'var(--t1)',lineHeight:1.65}},`Hey love 💙 you skipped question ${skipWarning.qNum} — go back and give it your best guess! I believe in every answer you give. I love you, Paige!`),
-      React.createElement('button',{className:'btn btn-rose btn-sm',onClick:()=>{setIdx(skipWarning.qIdx);setSkipWarning(null);}},'Take me there 💙')
+      React.createElement('span',{style:{flex:1,fontSize:13,color:'var(--t1)',lineHeight:1.65}},`You skipped question ${skipWarning.qNum} — go back and give it your best guess! Every attempt counts. You've got this!`),
+      React.createElement('button',{className:'btn btn-rose btn-sm',onClick:()=>{setIdx(skipWarning.qIdx);setSkipWarning(null);}},'Take me there')
     ),
     React.createElement('div',{className:'nav-row'},
       React.createElement('button',{className:'btn btn-ghost',onClick:()=>setIdx(i=>Math.max(0,i-1)),disabled:!idx},'← Prev'),
@@ -1575,7 +1581,7 @@ function App({allQ}){
       React.createElement('div',{className:'score-ring-wrap'},
         React.createElement(ScoreRing,{pct,scaledScore}),
         React.createElement('div',null,
-          React.createElement('h2',null,isDrill?'Drill complete!':pass?'You passed! 🎉':'Keep going, Paige!'),
+          React.createElement('h2',null,isDrill?'Drill complete!':pass?'You passed! 🎉':'Keep going! You\'ve got this!'),
           React.createElement('p',{style:{fontSize:13,color:'#8fa3b1',marginTop:4}},
             isDrill?`${correct}/${total} missed questions corrected`:`CompTIA threshold: 750/900 (≈83%)`
           ),
@@ -1585,10 +1591,10 @@ function App({allQ}){
         )
       ),
       pass&&!isDrill&&React.createElement('div',{style:{background:'linear-gradient(135deg,rgba(76,175,130,0.08),rgba(245,200,66,0.08))',border:'1.5px solid rgba(76,175,130,0.35)',borderRadius:14,padding:'1.1rem 1.3rem',marginBottom:'1.25rem',textAlign:'center'}},
-        React.createElement('div',{style:{fontSize:22,marginBottom:6}},'💍🎉💙'),
-        React.createElement('p',{style:{fontSize:15,fontWeight:700,color:'#f0f4f7',margin:'0 0 8px',lineHeight:1.4}},'Congratulations, my Love! 🎊'),
+        React.createElement('div',{style:{fontSize:22,marginBottom:6}},'🏆🎉✨'),
+        React.createElement('p',{style:{fontSize:15,fontWeight:700,color:'#f0f4f7',margin:'0 0 8px',lineHeight:1.4}},'Outstanding work! 🎊'),
         React.createElement('p',{style:{fontSize:13,color:'#c8dbe8',margin:0,lineHeight:1.65}},
-          'Congratulations my Love 🥹💍 I am so proud of you baby. I knew you could do it. I can\'t wait to marry you and be by the lake in Arkansas. You\'re truly amazing baby and you make me the luckiest man alive. 💙🎉'
+          'You cleared the CompTIA threshold — that\'s a real achievement. All the hours of study paid off. Keep that momentum going and you\'ll crush the real exam! 🚀'
         )
       ),
       React.createElement('div',{className:'stat-grid',style:{marginBottom:'1.25rem'}},
