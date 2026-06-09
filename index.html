@@ -433,7 +433,7 @@ const UK='sx701_user';
 
 async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
 function isAuthed(){return sessionStorage.getItem(AK)==='1';}
-function getCurrentUser(){return sessionStorage.getItem(UK)||'User';}
+function getCurrentUser(){const u=sessionStorage.getItem(UK)||'User';return u.charAt(0).toUpperCase()+u.slice(1);}
 function doLogout(){sessionStorage.clear();location.reload();}
 
 document.getElementById('auth-submit').addEventListener('click',async()=>{
