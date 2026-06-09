@@ -243,7 +243,7 @@ button{font-family:'Sora',inherit;cursor:pointer;transition:all 0.18s}
 /* ── AUTH SCREEN ── */
 #auth-screen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center}
 #auth-screen::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 30% 40%,rgba(232,99,122,0.12) 0%,transparent 60%),var(--navy);z-index:-1}
-.auth-box{width:360px;background:rgba(27,45,66,0.9);backdrop-filter:blur(20px);border:1px solid var(--bdr2);border-radius:var(--radx);padding:2.25rem;box-shadow:var(--shadow)}
+.auth-box{width:min(360px,calc(100vw - 2rem));background:rgba(27,45,66,0.9);backdrop-filter:blur(20px);border:1px solid var(--bdr2);border-radius:var(--radx);padding:2.25rem;box-shadow:var(--shadow)}
 .auth-logo{font-size:11px;font-weight:600;color:var(--t3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.75rem;display:flex;align-items:center;gap:6px}
 .auth-logo span{width:6px;height:6px;border-radius:50%;background:var(--rose);display:inline-block}
 .auth-heart{font-size:28px;margin-bottom:10px}
@@ -353,6 +353,26 @@ button{font-family:'Sora',inherit;cursor:pointer;transition:all 0.18s}
   .home-title{font-size:22px}
   .celebrate-card{padding:2rem 1.25rem}
   .mode-grid{grid-template-columns:1fr 1fr}
+  /* auth box fluid on phones */
+  .auth-box{padding:1.75rem 1.25rem}
+  /* resiliency sim stacks to single column */
+  .resil-grid{grid-template-columns:1fr}
+  /* domain bars: shrink label so bar has room */
+  .dbar-lbl{min-width:100px}
+  /* concept rows: let name shrink naturally */
+  .concept-name{min-width:0;flex:1 1 auto}
+  /* vpn config label shrink */
+  .vpn-label{min-width:90px}
+  /* tighter side padding */
+  #root{padding:1.25rem 0.875rem 5rem}
+}
+@media(max-width:400px){
+  /* single-column mode cards on very narrow phones */
+  .mode-grid{grid-template-columns:1fr}
+  .auth-box{padding:1.5rem 1rem}
+  .home-title{font-size:20px}
+  /* tabs: smaller text so all three fit */
+  .tab{font-size:11px;padding:6px 6px}
 }
 </style>
 </head>
